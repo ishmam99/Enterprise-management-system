@@ -1,14 +1,14 @@
 <template>
-  <nav class="bg-slate-900/90 backdrop-blur-md shadow-lg sticky top-0 z-50 border-b border-white/5">
+  <nav class="bg-slate-900/90 backdrop-blur-md shadow-lg sticky top-0 z-50 border-b py-2 border-white/5">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex justify-between items-center h-16">
 
         <!-- Logo -->
         <router-link to="/" class="flex-shrink-0 flex items-center gap-2">
-          <img src="/logo-white.png" alt="Vermont Composites Logo" class="w-24 rounded bg-slate-600" />
-          <span class="text-xl font-bold text-slate-100 hidden sm:block">
+          <img src="/logo-white.png" alt="Vermont Composites Logo" class="w-36 rounded " />
+          <!-- <span class="text-xl font-bold text-slate-100 hidden sm:block">
             Vermont Composites
-          </span>
+          </span> -->
         </router-link>
 
         <!-- Desktop Navigation -->
