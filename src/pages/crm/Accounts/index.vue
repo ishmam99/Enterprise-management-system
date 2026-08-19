@@ -1,0 +1,1156 @@
+<script setup>
+import { ref, onMounted, reactive, watch, computed } from 'vue'
+import { onClickOutside } from '@vueuse/core'
+import { useAuthStore } from '@/stores/AuthStore'
+import Breadcrumb from '@/components/Breadcrumb.vue'
+import api from '@/config/api'
+
+const authStore = useAuthStore()
+authStore.sidebarOpen = true
+
+const currentPage = ref(1)
+const perPage = ref(20)
+const totalPages = ref(1)
+const totalAccounts = ref(0)
+const fields = ref([])
+const leads = ref([])
+const stats = ref({})
+const isLoading = ref(true)
+const getAssignments = ref([])
+const toast = reactive({
+  show: false,
+  message: '',
+  type: 'success'
+})
+const showDropdown = ref(false)
+const dropdownRef = ref(null)
+
+const toggleDropdown = () => {
+  showDropdown.value = !showDropdown.value
+}
+
+onClickOutside(dropdownRef, () => {
+  showDropdown.value = false
+})
+const showToast = (message, type = 'success') => {
+  toast.show = true
+  toast.message = message
+  toast.type = type
+  setTimeout(() => (toast.show = false), 3000)
+}
+const fetchFields = async () => {
+  const { data } = await api().get('/crm/modules/1/fields')
+  // fields.value = data.data.filter(e => e.order_group == 0)
+  fields.value = data.data.filter((e) => e.order != null)
+}
+const fetchLeads = async (page = 1) => {
+  try {
+    isLoading.value = true
+    const { data } = await api().get(
+      `/crm/modules/2/records?page=${page}&per_page=${perPage.value}`
+    )
+    leads.value = data.data
+    currentPage.value = data.current_page
+    totalPages.value = data.last_page
+    totalAccounts.value = data.total
+    getAssignments.value = data.assignments
+  } catch (error) {
+    console.error('Failed to fetch leads:', error)
+    showToast('Failed to fetch leads', 'error')
+  } finally {
+    isLoading.value = false
+  }
+}
+
+const goToPage = (page) => {
+  if (page < 1 || page > totalPages.value) return
+
+  fetchLeads(page)
+}
+watch(perPage, () => {
+  fetchLeads(1)
+})
+
+//mass update by Rasik 😎
+const showMassModal = ref(false)
+const selectedField = ref(null)
+const fieldValue = ref(null)
+const selectedIds = ref([])
+
+const openMassUpdate = () => {
+  selectedField.value = null
+  fieldValue.value = null
+  showMassModal.value = true
+}
+
+const closeMassUpdate = () => {
+  showMassModal.value = false
+  selectedIds.value = []
+}
+
+const toggleSelection = (id, event) => {
+  if (event.target.checked) {
+    if (!selectedIds.value.includes(id)) {
+      selectedIds.value.push(id)
+    }
+  } else {
+    selectedIds.value = selectedIds.value.filter((e) => e !== id)
+  }
+}
+
+const toggleAll = (event) => {
+  if (event.target.checked) {
+    selectedIds.value = leads.value.map((e) => e.id)
+  } else {
+    selectedIds.value = []
+  }
+}
+
+const isUpdating = ref(false)
+const submitMassUpdate = async () => {
+  isUpdating.value = true
+  if (!selectedField.value) {
+    showToast('Please select a field', 'error')
+    return
+  }
+
+  const payload = {
+    record_ids: selectedIds.value,
+    field_id: selectedField.value.id,
+    value: fieldValue.value
+  }
+
+  try {
+    await api().post('/crm/bulk-update-records', payload)
+    showToast('Mass update successful')
+
+    closeMassUpdate()
+    fetchLeads(currentPage.value)
+    selectedIds.value = []
+  } catch (e) {
+    showToast('Mass update failed', 'error')
+  } finally {
+    isUpdating.value = false
+  }
+}
+
+//mass assign by Rasik 😎
+const getManagerName = (lead) => {
+  const manager = lead.assignments?.find((a) => a.role === 'manager-sales')
+  return manager?.user?.name || null
+}
+
+const getExecutiveName = (lead) => {
+  const exec = lead.assignments?.find((a) => a.role === 'sales-executive')
+  return exec?.user?.name || null
+}
+const getCsManagerName = (lead) => {
+  const cs_manager = lead.assignments?.find((a) => a.role === 'manager-cs')
+  return cs_manager?.user?.name || null
+}
+
+const getCsExecutiveName = (lead) => {
+  const cs_exec = lead.assignments?.find((a) => a.role === 'executive-cs')
+  return cs_exec?.user?.name || null
+}
+const showMassAssignModal = ref(false)
+const selectedAssignRole = ref('') // 'manager' or 'executive'
+const assignUserId = ref('')
+const assignLoading = ref(false)
+
+const executives = ref([])
+const managers = ref([])
+const cs_executives = ref([])
+const cs_managers = ref([])
+
+const fetchExecutives = async () => {
+  try {
+    const { data } = await api().get(
+      `/users?where=[{"column":"role","operator":"=","value":"sales-executive"}]`
+    )
+    executives.value = data.data
+  } catch (e) {
+    console.log(e)
+  }
+}
+
+const fetchManagers = async () => {
+  try {
+    const { data } = await api().get(
+      `/users?where=[{"column":"role","operator":"=","value":"manager-sales"}]`
+    )
+    managers.value = data.data
+  } catch (e) {
+    console.log(e)
+  }
+}
+
+const fetchCsExecutives = async () => {
+  try {
+    const { data } = await api().get(
+      `/users?where=[{"column":"role","operator":"=","value":"executive-cs"}]`
+    )
+    cs_executives.value = data.data
+  } catch (e) {
+    console.log(e)
+  }
+}
+
+const fetchCsManagers = async () => {
+  try {
+    const { data } = await api().get(
+      `/users?where=[{"column":"role","operator":"=","value":"manager-cs"}]`
+    )
+    cs_managers.value = data.data
+  } catch (e) {
+    console.log(e)
+  }
+}
+
+const openMassAssignModal = async (roleType) => {
+  // roleType = "manager" OR "executive"
+  selectedAssignRole.value = roleType
+  assignUserId.value = ''
+  showMassAssignModal.value = true
+
+  if (roleType === 'manager') {
+    await fetchManagers()
+  } else if (roleType === 'executive') {
+    await fetchExecutives()
+  } else if (roleType === 'cs_manager') {
+    await fetchCsManagers()
+  } else if (roleType === 'cs_executive') {
+    await fetchCsExecutives()
+  }
+}
+
+const closeMassAssign = () => {
+  showMassAssignModal.value = false
+  selectedIds.value = []
+}
+
+const submitMassAssign = async () => {
+  if (!assignUserId.value) return
+
+  assignLoading.value = true
+
+  // Correct role + permission mapping
+  const roleMap = {
+    manager: {
+      role: 'manager-sales',
+      permission: 'edit'
+    },
+    executive: {
+      role: 'sales-executive',
+      permission: 'view'
+    },
+    cs_manager: {
+      role: 'manager-cs',
+      permission: 'edit'
+    },
+    cs_executive: {
+      role: 'executive-cs',
+      permission: 'view'
+    }
+  }
+
+  const payload = {
+    record_ids: selectedIds.value,
+    user_id: assignUserId.value,
+    role: roleMap[selectedAssignRole.value].role,
+    permission_level: roleMap[selectedAssignRole.value].permission
+  }
+
+  try {
+    await api().post('/crm/assign-records', payload)
+
+    showToast('Mass assign successful!')
+    showMassAssignModal.value = false
+    selectedIds.value = []
+    fetchLeads(currentPage.value)
+  } catch (e) {
+    showToast('Mass assign failed', 'error')
+  } finally {
+    assignLoading.value = false
+  }
+}
+
+// ===== IMPORT EXCEL =====
+const showImportModal = ref(false)
+const importFile = ref(null)
+const importLoading = ref(false)
+
+const openImportModal = () => {
+  importFile.value = null
+  showImportModal.value = true
+}
+
+const closeImportModal = () => {
+  showImportModal.value = false
+  importFile.value = null
+}
+
+const handleFileChange = (e) => {
+  importFile.value = e.target.files[0]
+}
+
+const submitImport = async () => {
+  if (!importFile.value) {
+    showToast('Please select an Excel file', 'error')
+    return
+  }
+
+  importLoading.value = true
+
+  try {
+    const formData = new FormData()
+    formData.append('file', importFile.value)
+
+    await api().post('/crm/modules/2/import/excel', formData)
+
+    showToast('Excel imported successfully!')
+    closeImportModal()
+    fetchLeads(currentPage.value)
+  } catch (e) {
+    console.error(e)
+    showToast('Excel import failed', 'error')
+  } finally {
+    importLoading.value = false
+  }
+}
+
+onMounted(async () => {
+  await Promise.all([
+    fetchFields(),
+    fetchLeads(),
+    fetchExecutives(),
+    fetchManagers(),
+    fetchCsExecutives(),
+    fetchCsManagers()
+  ])
+})
+</script>
+
+<template>
+  <div class="bg-gray-50 min-h-screen px-4">
+    <div class="container mx-auto">
+      <Breadcrumb title="Accounts" />
+
+      <!-- Card -->
+      <div class="bg-white rounded-2xl shadow-lg p-6">
+        <!-- Header controls -->
+        <div class="flex flex-col sm:flex-row justify-between items-center gap-4 mb-6">
+          <div class="flex gap-2 items-center">
+            <h2 class="text-2xl font-bold text-gray-800 mb-1">Accounts</h2>
+            <div class="flex items-center gap-2">
+              <!-- <label for="perPage" class="text-sm text-gray-600">Showing:</label> -->
+              <select
+                id="perPage"
+                v-model="perPage"
+                class="border rounded-lg pe-5 py-1 text-sm focus:ring-2 focus:ring-yellow-500 focus:outline-none"
+              >
+                <option value="20">20 Per Page</option>
+                <option value="50">50 Per Page</option>
+                <option value="100">100 Per Page</option>
+                <option value="200">200 Per Page</option>
+                <!-- <option value="100">100</option> -->
+              </select>
+              <!-- <label for="perPage" class="text-sm text-gray-600">Per Page</label> -->
+              <!-- <span>of {{ totalAccounts }} Leads </span> -->
+            </div>
+          </div>
+
+          <div class="flex items-center gap-2">
+            <div class="flex items-center justify-center gap-3">
+              <!-- Import -->
+              <button
+                @click="openImportModal"
+                class="bg-cyan-600 flex items-center gap-1 rounded text-sm px-3 py-1.5 font-semibold hover:bg-cyan-700 text-white"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  width="14"
+                  height="14"
+                  fill="currentColor"
+                >
+                  <path
+                    d="M2.85858 2.87732L15.4293 1.0815C15.7027 1.04245 15.9559 1.2324 15.995 1.50577C15.9983 1.52919 16 1.55282 16 1.57648V22.4235C16 22.6996 15.7761 22.9235 15.5 22.9235C15.4763 22.9235 15.4527 22.9218 15.4293 22.9184L2.85858 21.1226C2.36593 21.0522 2 20.6303 2 20.1327V3.86727C2 3.36962 2.36593 2.9477 2.85858 2.87732ZM4 4.73457V19.2654L14 20.694V3.30599L4 4.73457ZM17 19H20V4.99997H17V2.99997H21C21.5523 2.99997 22 3.44769 22 3.99997V20C22 20.5523 21.5523 21 21 21H17V19ZM10.2 12L13 16H10.6L9 13.7143L7.39999 16H5L7.8 12L5 7.99997H7.39999L9 10.2857L10.6 7.99997H13L10.2 12Z"
+                  ></path>
+                </svg>
+                Import from Excel
+              </button>
+
+              <!-- Create -->
+              <router-link
+                to="/crm/accounts/create"
+                class="bg-blue-600 flex items-center gap-1 rounded text-sm px-3 py-1 font-semibold hover:bg-blue-700 text-white"
+              >
+                <svg class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M11 12V9H13V12H16V14H13V17H11V14H8V12H11Z" />
+                </svg>
+                Create Account
+              </router-link>
+
+              <!-- Mass Actions Dropdown -->
+              <div class="relative" ref="dropdownRef">
+                <button
+                  @click="toggleDropdown"
+                  :disabled="selectedIds.length === 0"
+                  class="bg-indigo-600 flex items-center gap-2 rounded text-sm px-3 py-1.5 font-semibold hover:bg-indigo-700 text-white disabled:opacity-50"
+                >
+                  Mass Actions
+                  <svg
+                    class="w-4 h-4"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    viewBox="0 0 24 24"
+                  >
+                    <path d="M19 9l-7 7-7-7" />
+                  </svg>
+                </button>
+
+                <!-- Dropdown -->
+                <div
+                  v-if="showDropdown"
+                  class="absolute right-0 mt-2 w-72 bg-white border border-gray-200 rounded-lg shadow-lg z-50"
+                >
+                  <button
+                    @click="openMassUpdate"
+                    class="w-full text-left px-4 py-2 text-sm hover:bg-gray-100"
+                  >
+                    🔄 Mass Update
+                  </button>
+
+                  <div class="border-t my-1"></div>
+
+                  <button
+                    @click="openMassAssignModal('cs_manager')"
+                    class="w-full text-left px-4 py-2 text-sm hover:bg-gray-100"
+                  >
+                    👤 Assign Customer Success Manager
+                  </button>
+
+                  <button
+                    @click="openMassAssignModal('cs_executive')"
+                    class="w-full text-left px-4 py-2 text-sm hover:bg-gray-100"
+                  >
+                    👥 Assign Customer Success Executive
+                  </button>
+
+                  <div class="border-t my-1"></div>
+
+                  <button
+                    @click="openMassAssignModal('manager')"
+                    class="w-full text-left px-4 py-2 text-sm hover:bg-gray-100"
+                  >
+                    💼 Assign Sales Manager
+                  </button>
+
+                  <button
+                    @click="openMassAssignModal('executive')"
+                    class="w-full text-left px-4 py-2 text-sm hover:bg-gray-100"
+                  >
+                    📈 Assign Sales Executive
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- MASS ASSIGN MODAL -->
+        <div
+          v-if="showMassAssignModal"
+          class="fixed inset-0 bg-black/40 flex items-center justify-center z-50"
+        >
+          <div class="bg-white w-full max-w-lg rounded-xl shadow-2xl animate-fadeIn">
+            <!-- Header -->
+            <div class="px-6 py-4 border-b flex justify-between items-center">
+              <h2 class="text-xl font-semibold text-gray-800">
+                Assign
+                {{
+                  selectedAssignRole === 'manager'
+                    ? 'Sales Manager'
+                    : selectedAssignRole === 'executive'
+                    ? 'Sales Executive'
+                    : selectedAssignRole === 'cs_manager'
+                    ? 'Customer Success Manager'
+                    : 'Customer Success Executive'
+                }}
+              </h2>
+              <button @click="closeMassAssign" class="text-xl">&times;</button>
+            </div>
+
+            <!-- Body -->
+            <div class="px-6 py-5 space-y-4">
+              <label class="text-sm font-medium text-gray-700"
+                >Select
+                {{
+                  selectedAssignRole === 'manager'
+                    ? 'Sales Manager'
+                    : selectedAssignRole === 'executive'
+                    ? 'Sales Executive'
+                    : selectedAssignRole === 'cs_manager'
+                    ? 'Customer Success Manager'
+                    : 'Customer Success Executive'
+                }}</label
+              >
+
+              <select
+                v-model="assignUserId"
+                class="w-full border px-3 py-2 rounded-lg focus:ring-2 focus:ring-indigo-500"
+              >
+                <option value="" disabled>
+                  Select
+                  {{
+                    selectedAssignRole === 'manager'
+                      ? 'Sales Manager'
+                      : selectedAssignRole === 'executive'
+                      ? 'Sales Executive'
+                      : selectedAssignRole === 'cs_manager'
+                      ? 'Customer Success Manager'
+                      : 'Customer Success Executive'
+                  }}
+                </option>
+
+                <option
+                  v-for="user in selectedAssignRole === 'manager'
+                    ? managers
+                    : selectedAssignRole === 'executive'
+                    ? executives
+                    : selectedAssignRole === 'cs_manager'
+                    ? cs_managers
+                    : selectedAssignRole === 'cs_executive'
+                    ? cs_executives
+                    : []"
+                  :key="user.id"
+                  :value="user.id"
+                >
+                  {{ user.name }} — {{ user.email }}
+                </option>
+              </select>
+            </div>
+
+            <!-- Footer -->
+            <div class="px-6 py-4 border-t bg-gray-50 flex justify-end gap-3">
+              <button
+                @click="closeMassAssign"
+                class="px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300"
+              >
+                Cancel
+              </button>
+
+              <button
+                @click="submitMassAssign"
+                :disabled="!assignUserId || assignLoading"
+                class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 disabled:opacity-50 flex items-center gap-2"
+              >
+                <span v-if="!assignLoading">Assign</span>
+
+                <span v-else class="flex items-center gap-2">
+                  <svg class="animate-spin h-5 w-5" viewBox="0 0 24 24">
+                    <circle
+                      class="opacity-20"
+                      cx="12"
+                      cy="12"
+                      r="10"
+                      stroke="currentColor"
+                      stroke-width="4"
+                    />
+                    <path
+                      class="opacity-80"
+                      fill="currentColor"
+                      d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
+                    />
+                  </svg>
+                  Assigning…
+                </span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- IMPORT EXCEL MODAL -->
+        <div
+          v-if="showImportModal"
+          class="fixed inset-0 bg-black/40 flex items-center justify-center z-50"
+        >
+          <div class="bg-white w-full max-w-md rounded-xl shadow-2xl animate-fadeIn">
+            <!-- Header -->
+            <div class="px-6 py-4 border-b flex justify-between items-center">
+              <h2 class="text-xl font-semibold text-gray-800">Import Accounts from Excel File</h2>
+              <button @click="closeImportModal" class="text-xl">&times;</button>
+            </div>
+
+            <!-- Body -->
+            <div class="px-6 py-5 space-y-4">
+              <label class="text-sm font-medium text-gray-700">
+                Select Excel File (.xls, .xlsx)
+              </label>
+
+              <input
+                type="file"
+                accept=".xls,.xlsx"
+                @change="handleFileChange"
+                class="w-full border px-3 py-2 rounded-lg focus:ring-2 focus:ring-indigo-500"
+              />
+            </div>
+
+            <!-- Footer -->
+            <div class="px-6 py-4 border-t bg-gray-50 flex justify-end gap-3">
+              <button
+                @click="closeImportModal"
+                class="px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300"
+              >
+                Cancel
+              </button>
+
+              <button
+                @click="submitImport"
+                :disabled="importLoading"
+                class="px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 disabled:opacity-50 flex items-center gap-2"
+              >
+                <span v-if="!importLoading">Upload &amp; Import</span>
+
+                <span v-else class="flex items-center gap-2">
+                  <svg class="animate-spin h-5 w-5" viewBox="0 0 24 24">
+                    <circle
+                      class="opacity-20"
+                      cx="12"
+                      cy="12"
+                      r="10"
+                      stroke="currentColor"
+                      stroke-width="4"
+                    />
+                    <path
+                      class="opacity-80"
+                      fill="currentColor"
+                      d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
+                    />
+                  </svg>
+                  Uploading…
+                </span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Loader -->
+        <div v-if="isLoading" class="flex justify-center items-center py-16">
+          <div
+            class="animate-spin rounded-full h-10 w-10 border-4 border-yellow-500 border-t-transparent"
+          ></div>
+        </div>
+
+        <!-- Table Content -->
+        <div v-else class="overflow-x-auto">
+          <table class="min-w-full divide-y divide-gray-200 table-zebra">
+            <thead class="bg-gradient-to-r from-emerald-50 to-teal-50">
+              <tr>
+                <th
+                  class="px-6 py-2 text-left border-x font-bold text-emerald-700 uppercase tracking-wider"
+                >
+                  <input
+                    type="checkbox"
+                    class="w-4 h-4 cursor-pointer"
+                    :checked="selectedIds.length === leads.length"
+                    @change="toggleAll($event)"
+                  />
+                </th>
+                <th
+                  class="px-6 py-2 text-nowrap text-left border-x font-bold text-xs text-emerald-700 uppercase tracking-wider"
+                >
+                  Assigned Customer Success
+                </th>
+                <th
+                  class="px-6 py-2 text-left text-nowrap border-x font-bold text-xs text-emerald-700 uppercase tracking-wider"
+                >
+                  Assigned Sales Person
+                </th>
+                <th
+                  v-for="field in fields"
+                  :key="field.id"
+                  class="px-6 py-2 text-nowrap text-left text-xs border-e font-bold text-emerald-700 uppercase tracking-wider"
+                >
+                  {{ field.label }}
+                </th>
+              </tr>
+            </thead>
+            <tbody class="bg-white divide-y divide-gray-100">
+              <tr v-if="isLoading" class="hover:bg-emerald-50 transition-colors">
+                <td colspan="8" class="px-6 py-8 text-center text-gray-500">
+                  <div class="flex items-center justify-center gap-3">
+                    <Icon name="eos-icons:loading" class="w-8 h-8 text-emerald-500 animate-spin" />
+                    <span class="text-lg">Loading accounts...</span>
+                  </div>
+                </td>
+              </tr>
+              <tr v-else-if="leads.length === 0" class="hover:bg-emerald-50 transition-colors">
+                <td colspan="8" class="px-6 py-12 text-center text-gray-500">
+                  <div class="flex flex-col items-center gap-4">
+                    <div class="relative">
+                      <div
+                        class="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center"
+                      >
+                        <Icon name="material-symbols:person" class="w-12 h-12 text-gray-400" />
+                      </div>
+                      <div
+                        class="absolute -bottom-2 -right-2 w-8 h-8 bg-emerald-100 rounded-full flex items-center justify-center"
+                      >
+                        <Icon name="material-symbols:settings" class="w-5 h-5 text-emerald-600" />
+                      </div>
+                    </div>
+                    <div class="text-center">
+                      <h3 class="text-xl font-semibold text-gray-700 mb-2">No accounts found</h3>
+                      <p class="text-gray-500 mb-4">Get started by creating your first Account</p>
+                      <router-link
+                        to="/crm/accounts/create"
+                        class="bg-gradient-to-r from-emerald-500 to-teal-600 text-white px-6 py-3 rounded-xl hover:from-emerald-600 hover:to-teal-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 flex items-center gap-2 mx-auto"
+                      >
+                        <Icon name="material-symbols:add" class="w-5 h-5" />
+                        + Create Account
+                      </router-link>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <tr
+                v-else
+                v-for="(lead, index) in leads"
+                :key="lead.id"
+                class="hover:bg-gradient-to-r hover:from-emerald-50 hover:to-teal-50 transition-all duration-300"
+              >
+                <td class="px-6 py-1 whitespace-nowrap">
+                  <input
+                    type="checkbox"
+                    class="w-4 h-4 cursor-pointer"
+                    :value="lead.id"
+                    :checked="selectedIds.includes(lead.id)"
+                    @change="toggleSelection(lead.id, $event)"
+                  />
+                </td>
+
+                <td class="px-6 py-1 whitespace-nowrap text-sm text-gray-600 font-medium">
+                  <div class="flex flex-col gap-1 p-1">
+                    <span class="border px-2 rounded border-emerald-600 text-emerald-600">
+                      <router-link
+                        :to="{
+                          name: 'crm-Accounts-accountsDetails-id',
+                          params: { id: lead.id }
+                        }"
+                      >
+                        Manager: {{ getCsManagerName(lead) || 'Not Assigned' }}
+                      </router-link>
+                    </span>
+                    <span class="border px-2 rounded border-emerald-600 text-emerald-600">
+                      <router-link
+                        :to="{
+                          name: 'crm-Accounts-accountsDetails-id',
+                          params: { id: lead.id }
+                        }"
+                      >
+                        Executive: {{ getCsExecutiveName(lead) || 'Not Assigned' }}
+                      </router-link>
+                    </span>
+                  </div>
+                </td>
+                <td class="px-6 py-1 whitespace-nowrap text-sm text-gray-600 font-medium">
+                  <div class="flex flex-col gap-1 p-1">
+                    <span class="border px-2 rounded text-violet-600 border-violet-600">
+                      <router-link
+                        :to="{
+                          name: 'crm-Accounts-accountsDetails-id',
+                          params: { id: lead.id }
+                        }"
+                      >
+                        Manager: {{ getManagerName(lead) || 'Not Assigned' }}
+                      </router-link>
+                    </span>
+                    <span class="border px-2 rounded text-violet-600 border-violet-600">
+                      <router-link
+                        :to="{
+                          name: 'crm-Accounts-accountsDetails-id',
+                          params: { id: lead.id }
+                        }"
+                      >
+                        Executive: {{ getExecutiveName(lead) || 'Not Assigned' }}
+                      </router-link>
+                    </span>
+                  </div>
+                </td>
+                <!-- <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-medium">
+                  {{ getExecutiveName(lead) || 'Not Assigned' }}
+                </td> -->
+                <td
+                  v-for="field in fields"
+                  :key="field.id"
+                  class="px-6 py-1 whitespace-nowrap text-sm text-gray-600 font-medium"
+                >
+                  <router-link
+                    :to="{
+                      name: 'crm-Accounts-accountsDetails-id',
+                      params: { id: lead.id }
+                    }"
+                    class="hover:underline"
+                  >
+                    {{ lead.values.find((e) => e.field_id == field.id)?.value }}
+                  </router-link>
+
+                  <!-- {{lead.values.find(e=>e.field_id == field.id)?.value }} -->
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Pagination -->
+        <div class="flex justify-between items-center mt-6">
+          <p class="text-sm text-gray-600">
+            Showing page <span class="font-semibold">{{ currentPage }}</span> of
+            <span class="font-semibold"
+              >{{ totalPages }} || Total Accounts {{ totalAccounts }}</span
+            >
+          </p>
+
+          <div class="flex items-center gap-2">
+            <button
+              @click="goToPage(currentPage - 1)"
+              :disabled="currentPage === 1"
+              class="px-4 py-2 rounded-lg border text-sm font-medium bg-white text-gray-700 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              Prev
+            </button>
+
+            <!-- <button
+              v-for="page in totalPages"
+              :key="page"
+              @click="goToPage(page)"
+              class="px-3 py-1 rounded-lg text-sm font-medium"
+              :class="page === currentPage ? 'bg-cyan-500 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'"
+            >
+              {{ page }}
+            </button> -->
+
+            <button
+              @click="goToPage(currentPage + 1)"
+              :disabled="currentPage === totalPages"
+              class="px-4 py-2 rounded-lg border text-sm font-medium bg-white text-gray-700 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              Next
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- MASS UPDATE MODAL -->
+  <div
+    v-if="showMassModal"
+    class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50"
+  >
+    <div class="bg-white rounded-xl shadow-2xl w-full max-w-lg animate-fadeIn">
+      <!-- HEADER -->
+      <div class="px-6 py-4 border-b flex justify-between items-center">
+        <h2 class="text-xl font-semibold text-gray-800">Mass Update Records</h2>
+        <button @click="closeMassUpdate" class="text-gray-500 hover:text-gray-700 text-xl">
+          &times;
+        </button>
+      </div>
+
+      <!-- BODY -->
+      <div class="px-6 py-5 space-y-4">
+        <!-- Field Dropdown -->
+        <div>
+          <label class="text-sm font-medium text-gray-700">Select Field</label>
+          <select
+            v-model="selectedField"
+            class="mt-1 w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+          >
+            <option disabled value="">-- Choose Field --</option>
+            <option v-for="field in fields" :key="field.id" :value="field">
+              {{ field.label }}
+            </option>
+          </select>
+        </div>
+
+        <!-- Dynamic Input -->
+        <div v-if="selectedField">
+          <label class="text-sm font-medium text-gray-700">Value</label>
+
+          <!-- Text / Number -->
+          <input
+            v-if="selectedField.type === 'text' || selectedField.type === 'number'"
+            v-model="fieldValue"
+            :type="selectedField.type"
+            class="mt-1 w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+          />
+
+          <!-- Select -->
+          <select
+            v-if="selectedField.type === 'select'"
+            v-model="fieldValue"
+            class="mt-1 w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+          >
+            <option disabled value="">Select…</option>
+            <option v-for="o in selectedField.options" :key="o" :value="o">
+              {{ o }}
+            </option>
+          </select>
+
+          <!-- Date -->
+          <input
+            v-if="selectedField.type === 'date'"
+            v-model="fieldValue"
+            type="date"
+            class="mt-1 w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
+      </div>
+
+      <!-- FOOTER -->
+      <div class="px-6 py-4 border-t flex justify-end space-x-3 bg-gray-50 rounded-b-xl">
+        <button
+          @click="closeMassUpdate"
+          class="bg-red-500 hover:bg-red-700 text-white px-4 py-2 rounded-lg font-medium"
+        >
+          Cancel
+        </button>
+        <button
+          @click="submitMassUpdate"
+          :disabled="isUpdating"
+          class="px-4 py-2 rounded-lg bg-blue-600 text-white font-medium hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+        >
+          <span v-if="!isUpdating">Update Records</span>
+
+          <!-- Loader -->
+          <span v-else class="flex items-center gap-2">
+            <svg
+              class="animate-spin h-5 w-5 text-white"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <circle
+                class="opacity-25"
+                cx="12"
+                cy="12"
+                r="10"
+                stroke="currentColor"
+                stroke-width="4"
+              ></circle>
+              <path
+                class="opacity-75"
+                fill="currentColor"
+                d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
+              ></path>
+            </svg>
+            Updating…
+          </span>
+        </button>
+      </div>
+    </div>
+  </div>
+</template>
+
+<style scoped>
+/* Enhanced Accounts Management Dashboard Styles */
+.accounts-management-dashboard {
+  @apply p-6 bg-gradient-to-br from-gray-50 to-violet-50 min-h-screen;
+}
+
+/* Custom animations and effects */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.animate-fadeIn {
+  animation: fadeIn 0.25s ease-out;
+}
+
+/* Apply animations to elements */
+.accounts-management-dashboard > * {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+.accounts-management-dashboard > *:nth-child(2) {
+  animation-delay: 0.1s;
+}
+
+.accounts-management-dashboard > *:nth-child(3) {
+  animation-delay: 0.2s;
+}
+
+.accounts-management-dashboard > *:nth-child(4) {
+  animation-delay: 0.3s;
+}
+
+/* Enhanced hover effects */
+.hover\:shadow-2xl:hover {
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
+
+/* Custom scrollbar for table */
+.overflow-x-auto::-webkit-scrollbar {
+  height: 8px;
+}
+
+.overflow-x-auto::-webkit-scrollbar-track {
+  background: #f1f5f9;
+  border-radius: 4px;
+}
+
+.overflow-x-auto::-webkit-scrollbar-thumb {
+  background: linear-gradient(to right, #8b5cf6, #a855f7);
+  border-radius: 4px;
+}
+
+.overflow-x-auto::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(to right, #7c3aed, #9333ea);
+}
+
+/* Enhanced focus states */
+button:focus,
+a:focus,
+input:focus,
+select:focus {
+  outline: 2px solid #8b5cf6;
+  outline-offset: 2px;
+}
+
+/* Smooth transitions for all interactive elements */
+* {
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 300ms;
+}
+
+/* Custom gradient text effect */
+.gradient-text {
+  background: linear-gradient(135deg, #8b5cf6 0%, #a855f7 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Enhanced card shadows */
+.shadow-xl {
+  box-shadow:
+    0 20px 25px -5px rgba(0, 0, 0, 0.1),
+    0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+/* Responsive design improvements */
+@media (max-width: 768px) {
+  .accounts-management-dashboard {
+    @apply p-4;
+  }
+
+  .bg-gradient-to-r.from-violet-600.via-purple-600.to-fuchsia-700 {
+    @apply p-6;
+  }
+
+  .bg-gradient-to-r.from-violet-600.via-purple-600.to-fuchsia-700 h1 {
+    @apply text-2xl;
+  }
+
+  .bg-gradient-to-r.from-violet-600.via-purple-600.to-fuchsia-700 p {
+    @apply text-base;
+  }
+}
+
+/* Loading animation enhancement */
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.animate-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Status badge enhancements */
+.status-active {
+  background: linear-gradient(135deg, #10b981 0%, #14b8a6 100%);
+  color: white;
+  box-shadow: 0 4px 14px 0 rgba(16, 185, 129, 0.4);
+}
+
+.status-inactive {
+  background: linear-gradient(135deg, #ef4444 0%, #f43f5e 100%);
+  color: white;
+  box-shadow: 0 4px 14px 0 rgba(239, 68, 68, 0.4);
+}
+
+.status-pending {
+  background: linear-gradient(135deg, #f59e0b 0%, #f97316 100%);
+  color: white;
+  box-shadow: 0 4px 14px 0 rgba(245, 158, 11, 0.4);
+}
+
+.status-suspended {
+  background: linear-gradient(135deg, #6b7280 0%, #475569 100%);
+  color: white;
+  box-shadow: 0 4px 14px 0 rgba(107, 114, 128, 0.4);
+}
+
+.table-zebra tr:nth-child(even) {
+  background-color: #f9fafb8e;
+}
+/* ✨ Alternate row background (striped look) */
+tbody tr:nth-child(odd) td {
+  background-color: #f8fcff7e; /* very light cyan */
+}
+
+tbody tr:nth-child(even) td {
+  background-color: #e5f6ff; /* soft blue tint */
+  border: 0.5px solid #909aa146;
+}
+
+/* Optional hover glow */
+tbody tr:hover td {
+  background-color: #bdeeff;
+  transition: background-color 0.25s ease;
+  border: 0.5px solid #909aa146;
+}
+tbody tr td {
+  border: 0.5px solid #909aa146;
+}
+tbody tr th {
+  border: 0.5px solid #909aa146;
+}
+</style>

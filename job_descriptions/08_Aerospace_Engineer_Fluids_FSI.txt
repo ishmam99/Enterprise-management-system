@@ -1,0 +1,107 @@
+================================================================================
+                         JOB DESCRIPTION
+================================================================================
+
+POSITION TITLE:     Aerospace Engineer - Fluids & FSI Specialist
+DEPARTMENT:         MSC Software Technical Sales & Support
+LOCATION:           [Location]
+EMPLOYMENT TYPE:    Full-Time
+REPORTS TO:         Technical Sales Manager
+
+================================================================================
+POSITION OVERVIEW
+================================================================================
+
+We are seeking an Aerospace Engineer specializing in Fluids and FSI to join 
+our MSC Software team. This role focuses on Dytran software for bird strike 
+certification, ditching analysis, and foreign object damage (FOD) simulation 
+in the aerospace sector.
+
+================================================================================
+KEY RESPONSIBILITIES
+================================================================================
+
+• Conduct Dytran training for bird strike certification and ditching analysis
+
+• Provide technical support for foreign object damage (FOD) and ice impact 
+  simulation
+
+• Drive aerospace sales through FAA bird strike and water impact demonstrations
+
+• Develop workflows for fuel sloshing in aircraft tanks and thermal 
+  aero-heating
+
+• Support customers in meeting bird strike certification requirements 
+  (CS-25, FAR-25)
+
+• Assist in coupled FSI analysis for engine ingestion and blade-out scenarios
+
+• Collaborate with aerospace teams on thermal protection system design
+
+• Present case studies on ditching performance and emergency landing 
+  simulations
+
+================================================================================
+REQUIRED QUALIFICATIONS
+================================================================================
+
+EDUCATION:
+  • B.S./M.S. in Aerospace Engineering
+
+EXPERIENCE:
+  • 3+ years in bird strike, ditching, or impact analysis
+  • Knowledge of CS-25/FAR-25 bird strike certification
+  • Experience with foreign object damage and fuel sloshing
+  • Background in aerospace safety or certification engineering
+
+================================================================================
+KEY SKILLS & COMPETENCIES
+================================================================================
+
+Technical Skills:
+  • Bird Strike
+  • Ditching
+  • FOD (Foreign Object Damage)
+  • CS-25/FAR-25
+  • Fuel Sloshing
+  • TPS (Thermal Protection Systems)
+
+Professional Skills:
+  • Dytran software expertise
+  • Technical training and presentation
+  • Aerospace certification knowledge
+  • Customer relationship management
+  • Problem-solving
+  • Travel flexibility
+
+================================================================================
+COMPENSATION & BENEFITS
+================================================================================
+
+• Industry-leading compensation
+• Comprehensive health benefits package
+• 401(k) with company matching
+• Professional certification support
+• Remote work options available
+• Generous PTO and holidays
+• Stock options
+• Conference attendance opportunities
+
+================================================================================
+ABOUT THE ROLE
+================================================================================
+
+Support aerospace customers in critical safety analyses including bird strike 
+certification and ditching performance. Work with leading OEMs on cutting-edge 
+safety challenges. Travel requirements approximately 30-50%.
+
+================================================================================
+TO APPLY
+================================================================================
+
+Please submit your resume, cover letter, and references to:
+[Contact Information]
+
+We are an equal opportunity employer and value diversity in our workforce.
+
+================================================================================

@@ -1,0 +1,106 @@
+================================================================================
+                         JOB DESCRIPTION
+================================================================================
+
+POSITION TITLE:     Aerospace Engineer - Autonomous Systems Specialist
+DEPARTMENT:         MSC Software Technical Sales & Support
+LOCATION:           [Location]
+EMPLOYMENT TYPE:    Full-Time
+REPORTS TO:         Technical Sales Manager
+
+================================================================================
+POSITION OVERVIEW
+================================================================================
+
+We are seeking an Aerospace Engineer specializing in Autonomous Systems to join 
+our MSC Software team. This role focuses on Adams software for eVTOL (electric 
+Vertical Take-Off and Landing), UAV (Unmanned Aerial Vehicle), and autonomous 
+aircraft applications.
+
+================================================================================
+KEY RESPONSIBILITIES
+================================================================================
+
+• Conduct Adams training for eVTOL, UAV, and autonomous aircraft dynamics
+
+• Provide technical support for autonomous flight control and electric 
+  propulsion
+
+• Drive aerospace sales through urban air mobility (UAM) simulation 
+  demonstrations
+
+• Develop workflows for rotor dynamics, battery management, and flight envelope
+
+• Support customers in certifying autonomous aircraft under EASA/FAA 
+  regulations
+
+• Assist in multi-rotor vehicle stability and control law validation
+
+• Collaborate with eVTOL startups on virtual testing and prototype reduction
+
+• Present case studies on autonomous landing systems and collision avoidance
+
+================================================================================
+REQUIRED QUALIFICATIONS
+================================================================================
+
+EDUCATION:
+  • B.S./M.S. in Aerospace Engineering or related field
+
+EXPERIENCE:
+  • 3+ years in UAV, eVTOL, or autonomous aerial systems
+  • Knowledge of autonomous flight control and electric propulsion
+  • Experience with multi-rotor dynamics and certification (EASA/FAA)
+  • Background in urban air mobility or advanced air mobility (AAM)
+
+================================================================================
+KEY SKILLS & COMPETENCIES
+================================================================================
+
+Technical Skills:
+  • UAV
+  • eVTOL
+  • Flight Controls
+  • Electric Propulsion
+  • Urban Air Mobility
+  • Autonomy
+
+Professional Skills:
+  • Adams software expertise
+  • Technical training and presentation
+  • Certification knowledge (EASA/FAA)
+  • Customer engagement
+  • Innovation mindset
+  • International travel capability
+
+================================================================================
+COMPENSATION & BENEFITS
+================================================================================
+
+• Industry-leading compensation package
+• Comprehensive health, dental, and vision insurance
+• 401(k) with company matching
+• Professional certification support
+• Remote work options available
+• Generous PTO and holidays
+• Stock options
+• Conference and training attendance
+
+================================================================================
+ABOUT THE ROLE
+================================================================================
+
+Be at the forefront of the urban air mobility revolution. Work with innovative 
+eVTOL startups and established aerospace companies developing the future of 
+autonomous flight. Travel requirements approximately 30-50%.
+
+================================================================================
+TO APPLY
+================================================================================
+
+Please submit your resume, cover letter, and references to:
+[Contact Information]
+
+We are an equal opportunity employer and value diversity in our workforce.
+
+================================================================================

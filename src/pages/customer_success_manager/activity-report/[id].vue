@@ -1,0 +1,744 @@
+
+<template>
+  <div class="bg-slate-50 min-h-screen py-8 px-4 md:px-6 font-sans text-slate-900">
+
+    <!-- Header Bar (matches form header) -->
+    <div class="bg-gradient-to-r from-blue-900 to-cyan-700 text-white rounded-xl shadow-lg mb-6 p-5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 no-print">
+      <div class="flex items-center gap-3">
+        <div class="w-11 h-11 bg-white/15 rounded-lg flex items-center justify-center backdrop-blur-sm">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+            <polyline points="14,2 14,8 20,8"/>
+            <line x1="16" y1="13" x2="8" y2="13"/>
+            <line x1="16" y1="17" x2="8" y2="17"/>
+            <polyline points="10,9 9,9 8,9"/>
+          </svg>
+        </div>
+        <div>
+          <h1 class="font-display text-xl font-bold tracking-tight">Activity Report</h1>
+          <p class="text-sm opacity-75">{{ report?.period }} • {{ report?.success_team?.name }}</p>
+        </div>
+      </div>
+      <div :class="[
+        'text-xs font-semibold tracking-wide uppercase py-1.5 px-3 rounded-full backdrop-blur-sm',
+        statusClass(report?.status)
+      ]">
+        {{ statusText(report?.status) }}
+      </div>
+    </div>
+
+    <!-- Action Buttons (aligned with form actions) -->
+   <div>
+  <div class="pdf-container">
+
+    <!-- ACTION BAR (NOT PRINTED) -->
+<div class="no-print flex justify-between items-center mb-4">
+  <button @click="$router.back()" class="btn-secondary">← Back</button>
+
+  <div class="flex gap-2">
+    <button @click="showPdf = true" class="btn-primary">
+      Show as PDF
+    </button>
+
+    <button @click="downloadPdf" class="btn-primary">
+      Download PDF
+    </button>
+  </div>
+</div>
+
+    <!-- PDF CONTENT -->
+    <div v-if="showPdf" class="pdf-page" id="pdfContent">
+
+
+      <!-- HEADER -->
+      <div class="pdf-header">
+        <div class="flex items-center gap-3">
+          <div class="logo-box">H</div>
+          <div>
+            <h1 class="company-name">Hi-Tech <span>SoftSys</span></h1>
+          </div>
+        </div>
+
+        <div class="company-info">
+          <p>850 Central Pkwy E, Suite 248, Plano TX 75075</p>
+          <p>www.hitechsoftsys.net</p>
+        </div>
+      </div>
+
+      <hr class="divider"/>
+
+      <!-- TITLE -->
+      <div class="text-center mt-6">
+        <h2 class="report-title">Monthly Activity Report</h2>
+        <p class="report-period">
+          Period: {{ (report?.period) }}
+        </p>
+      </div>
+
+      <!-- A. SUMMARY -->
+      <section class="pdf-section">
+        <h3>A. Summary of Activities</h3>
+
+        <div v-for="(item, i) in report?.summary_activities" :key="i" class="item">
+          <b>A{{ i + 1 }}.</b> {{ item }}
+        </div>
+      </section>
+
+      <!-- B. KEY OUTCOMES -->
+      <section class="pdf-section">
+        <h3>B. Key Outcomes</h3>
+
+        <div v-for="(item, i) in report?.key_outcomes" :key="i" class="item">
+          <b>B{{ i + 1 }}.</b> {{ item }}
+        </div>
+      </section>
+
+      <!-- C. ENGAGEMENT -->
+      <section class="pdf-section">
+        <h3>C. Engagement Activities</h3>
+
+        <div v-for="(group, gIdx) in groupedOutputs" :key="gIdx" class="task-block">
+
+          <!-- Task Title -->
+          <div class="task-title">
+            <b>C{{ gIdx + 1 }}.</b> {{ group.task_name }}
+          </div>
+
+          <!-- Sub Items -->
+          <div
+            v-for="(output, oIdx) in group.outputs"
+            :key="oIdx"
+            class="sub-item"
+          >
+            <b>C{{ gIdx + 1 }}.{{ oIdx + 1 }}</b>
+            {{ output.output }}
+            <span class="date">— {{ formatDate(output.date) }}</span>
+          </div>
+
+        </div>
+      </section>
+
+    </div>
+  </div>
+</div>
+
+    <!-- Loading State -->
+    <div v-if="loading" class="flex flex-col items-center justify-center min-h-[400px] text-slate-500">
+      <span class="inline-block w-10 h-10 border-3 border-slate-200 border-t-blue-600 rounded-full animate-spin mb-3"></span>
+      <p class="text-sm">Loading report data...</p>
+    </div>
+
+    <template v-else-if="report">
+    <div v-if="!showPdf">       <!-- Section A: Report Metadata -->
+      <div class="bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden print-border">
+        <div class="flex items-center gap-2.5 py-2.5 px-4 border-b border-slate-200 bg-blue-50 print-exact">
+          <span class="w-7 h-7 rounded-md flex items-center justify-center font-display text-sm font-bold text-white bg-blue-600 shrink-0">A</span>
+          <h2 class="font-display text-sm font-bold">Report Information</h2>
+        </div>
+        <div class="p-5 grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div class="space-y-1">
+            <p class="text-xs font-bold text-slate-500 uppercase">Generated By</p>
+            <p class="text-base font-semibold text-slate-900">{{ report?.user?.name }}</p>
+            <p class="text-sm text-slate-600">{{ report?.user?.email }}</p>
+          </div>
+          <div class="space-y-1">
+            <p class="text-xs font-bold text-slate-500 uppercase">Success Team</p>
+            <p class="text-base font-semibold text-slate-900">{{ report?.success_team?.name }}</p>
+            <p class="text-sm text-slate-600">ID: #{{ report?.success_team?.id }}</p>
+          </div>
+          <div class="space-y-1">
+            <p class="text-xs font-bold text-slate-500 uppercase">Report Details</p>
+            <p class="text-base font-semibold text-slate-900">{{ formatDateTime(report?.created_at) }}</p>
+            <p class="text-sm text-slate-600">Report ID: #{{ report?.id }}</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section B: Key Statistics -->
+      <div class="bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden">
+        <div class="flex items-center gap-2.5 py-2.5 px-4 border-b border-slate-200 bg-green-50 print-exact">
+          <span class="w-7 h-7 rounded-md flex items-center justify-center font-display text-sm font-bold text-white bg-green-600 shrink-0">B</span>
+          <h2 class="font-display text-sm font-bold">Performance Summary</h2>
+        </div>
+        <div class="p-5">
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div v-for="stat in stats" :key="stat.label" :class="['p-4 rounded-lg border text-center', stat.bgClass, stat.borderClass]">
+              <p :class="['text-xs font-bold uppercase tracking-wide', stat.textClass]">{{ stat.label }}</p>
+              <p :class="['text-2xl font-bold mt-1', stat.valClass]">{{ stat.value }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section C: Summary of Activities -->
+      <div v-if="report?.summary_activities?.length" class="bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden">
+        <div class="flex items-center gap-2.5 py-2.5 px-4 border-b border-slate-200 bg-amber-50 print-exact">
+          <span class="w-7 h-7 rounded-md flex items-center justify-center font-display text-sm font-bold text-white bg-amber-600 shrink-0">C</span>
+          <h2 class="font-display text-sm font-bold">Summary of Activities</h2>
+        </div>
+        <div class="p-5">
+          <ul class="space-y-2">
+            <li v-for="(activity, idx) in report.summary_activities" :key="idx" class="flex items-start gap-3 bg-slate-50 border border-slate-200 rounded-md py-2.5 px-4 text-sm">
+              <span class="font-display font-bold text-xs py-0.5 px-2 rounded-md text-white bg-amber-600 shrink-0 mt-0.5">C{{ idx + 1 }}</span>
+              <span class="text-slate-900 leading-relaxed">{{ activity }}</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Section D: Key Outcomes -->
+      <div v-if="report?.key_outcomes?.length" class="bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden">
+        <div class="flex items-center gap-2.5 py-2.5 px-4 border-b border-slate-200 bg-orange-50 print-exact">
+          <span class="w-7 h-7 rounded-md flex items-center justify-center font-display text-sm font-bold text-white bg-orange-600 shrink-0">D</span>
+          <h2 class="font-display text-sm font-bold">Key Outcomes</h2>
+        </div>
+        <div class="p-5">
+          <ul class="space-y-2">
+            <li v-for="(outcome, idx) in report.key_outcomes" :key="idx" class="flex items-start gap-3 bg-slate-50 border border-slate-200 rounded-md py-2.5 px-4 text-sm">
+              <span class="font-display font-bold text-xs py-0.5 px-2 rounded-md text-white bg-orange-600 shrink-0 mt-0.5">D{{ idx + 1 }}</span>
+              <span class="text-slate-900 leading-relaxed">{{ outcome }}</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Section E: Engagement Activities (Detailed Logs) -->
+      <div class="bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden">
+        <div class="flex flex-wrap items-center justify-between gap-2 py-2.5 px-4 border-b border-slate-200 bg-cyan-50 print-exact">
+          <div class="flex items-center gap-2.5">
+            <span class="w-7 h-7 rounded-md flex items-center justify-center font-display text-sm font-bold text-white bg-cyan-600 shrink-0">E</span>
+            <h2 class="font-display text-sm font-bold">Engagement Activity Logs</h2>
+          </div>
+          <span class="text-xs text-slate-500 bg-slate-100 px-2 py-1 rounded-md">
+            {{ outputs.length }} total entries
+          </span>
+        </div>
+
+        <div class="p-5">
+          <div v-if="groupedOutputs.length" class="space-y-4">
+            <div
+              v-for="(group, gIdx) in groupedOutputs"
+              :key="group.task_id"
+              class="border border-slate-200 rounded-lg overflow-hidden"
+            >
+              <!-- Task Header -->
+              <div class="bg-gradient-to-r from-cyan-50 to-white border-b border-cyan-100 py-3 px-4 print-exact">
+                <div class="flex flex-wrap items-center gap-2">
+                  <span class="text-[0.65rem] font-bold tracking-wide uppercase bg-cyan-600 text-white py-0.5 px-2 rounded-full">E{{ gIdx + 1 }}</span>
+                  <h3 class="font-bold text-slate-900 text-sm">{{ group.task_name }}</h3>
+                  <span class="text-[0.7rem] text-slate-500 ml-auto">
+                    {{ group.task_type }} • Due: {{ formatDate(group.task_date) }}
+                  </span>
+                </div>
+                <p class="text-xs text-slate-600 mt-1">
+                  Assigned to: <span class="font-medium text-slate-900">{{ group.assigned_to_name }}</span>
+                </p>
+              </div>
+
+              <!-- Outputs Table -->
+              <div class="overflow-x-auto">
+                <table class="w-full text-left text-sm">
+                  <thead class="bg-slate-50 border-b border-slate-200 print-exact">
+                    <tr>
+                      <th class="px-4 py-3 font-bold text-slate-700 text-xs uppercase tracking-wide">#</th>
+                      <th class="px-4 py-3 font-bold text-slate-700 text-xs uppercase tracking-wide">Date</th>
+                      <th class="px-4 py-3 font-bold text-slate-700 text-xs uppercase tracking-wide">Activity Output</th>
+                      <th class="px-4 py-3 font-bold text-slate-700 text-xs uppercase tracking-wide">Status</th>
+                      <th class="px-4 py-3 font-bold text-slate-700 text-xs uppercase tracking-wide no-print">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody class="divide-y divide-slate-100">
+                    <tr v-for="(output, oIdx) in group.outputs" :key="output.id" class="hover:bg-slate-50/50 transition-colors">
+                      <td class="px-4 py-3 whitespace-nowrap">
+                        <span class="font-display font-bold text-xs py-0.5 px-2 rounded-md text-white bg-cyan-600">E{{ gIdx + 1 }}.{{ oIdx + 1 }}</span>
+                      </td>
+                      <td class="px-4 py-3 whitespace-nowrap font-medium text-slate-900 text-xs">
+                        {{ formatDate(output.date) }}
+                      </td>
+                      <td class="px-4 py-3 text-slate-700 leading-relaxed text-xs">
+                        {{ output.output }}
+                      </td>
+                      <td class="px-4 py-3 whitespace-nowrap">
+                        <span
+                          class="text-[0.65rem] font-bold uppercase tracking-wide py-0.5 px-2 rounded-full"
+                          :class="output.status === '1' ? 'bg-green-100 text-green-700' : 'bg-amber-100 text-amber-700'"
+                        >
+                          {{ output.status === '1' ? 'Completed' : 'Pending' }}
+                        </span>
+                      </td>
+                      <td class="px-4 py-3 whitespace-nowrap no-print">
+                        <button
+                          @click="viewActivityDetails(output)"
+                          class="text-blue-600 hover:text-blue-800 text-xs font-medium transition-colors"
+                        >
+                          View
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <div v-else class="text-center py-12">
+            <div class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-slate-100 mb-3">
+              <svg class="w-6 h-6 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+              </svg>
+            </div>
+            <p class="text-sm text-slate-500">No engagement activities recorded for this period.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <div class="text-center text-xs text-slate-400 py-6 no-print">
+        <p>Report generated on {{ formatDateTime(new Date()) }}</p>
+      </div> </div>
+
+
+    </template>
+
+    <!-- Error State -->
+    <div v-else class="flex flex-col items-center justify-center min-h-[400px] text-center">
+      <div class="w-16 h-16 rounded-full bg-red-100 flex items-center justify-center mb-4">
+        <svg class="w-8 h-8 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+        </svg>
+      </div>
+      <h3 class="text-lg font-semibold text-slate-900 mb-1">Report Not Found</h3>
+      <p class="text-sm text-slate-500 mb-4">The requested report could not be loaded.</p>
+      <button
+        @click="$router.back()"
+        class="inline-flex items-center gap-1.5 bg-blue-600 text-white text-sm font-semibold py-2 px-4 rounded-lg transition-colors hover:bg-blue-700"
+      >
+        Return to Reports
+      </button>
+    </div>
+
+  </div>
+</template>
+
+<script setup>
+
+import { ref, onMounted, computed, nextTick } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+import api from '@/config/api'
+import html2pdf from 'html2pdf.js'
+const showPdf = ref(false)
+const route = useRoute()
+const router = useRouter()
+const loading = ref(true)
+const report = ref(null)
+const outputs = ref([])
+
+onMounted(() => {
+  if(route.query?.type === 'pdf' ){showPdf.value = true}
+  console.log(route.query)
+  console.log(showPdf.value)
+  fetchReport()})
+
+async function fetchReport() {
+  loading.value = true
+  try {
+    const { data } = await api().get(`/success-team-activity-reports/${route.params.id}`)
+    report.value = data.report
+    outputs.value = data.outputs || []
+  } catch (err) {
+    console.error('Failed to fetch report:', err)
+    report.value = null
+  } finally {
+    loading.value = false
+  }
+}
+
+// ─── Statistics Computed ─────────────────────────────────────────────────────
+const stats = computed(() => {
+  const total = outputs.value.length
+  const completed = outputs.value.filter(o => o.status === '1').length
+  const rate = total ? Math.round((completed / total) * 100) : 0
+
+  return [
+    {
+      label: 'Total Activities',
+      value: total,
+      bgClass: 'bg-blue-50',
+      borderClass: 'border-blue-100',
+      textClass: 'text-blue-600',
+      valClass: 'text-blue-900'
+    },
+    {
+      label: 'Completed',
+      value: completed,
+      bgClass: 'bg-green-50',
+      borderClass: 'border-green-100',
+      textClass: 'text-green-600',
+      valClass: 'text-green-900'
+    },
+    {
+      label: 'Unique Tasks',
+      value: groupedOutputs.value.length,
+      bgClass: 'bg-purple-50',
+      borderClass: 'border-purple-100',
+      textClass: 'text-purple-600',
+      valClass: 'text-purple-900'
+    },
+    {
+      label: 'Success Rate',
+      value: `${rate}%`,
+      bgClass: 'bg-amber-50',
+      borderClass: 'border-amber-100',
+      textClass: 'text-amber-600',
+      valClass: 'text-amber-900'
+    }
+  ]
+})
+
+// ─── Grouped Outputs ─────────────────────────────────────────────────────────
+const groupedOutputs = computed(() => {
+  const map = {}
+  outputs.value.forEach(output => {
+    const task = output.success_team_task
+    if (!task) return
+
+    if (!map[task.id]) {
+      map[task.id] = {
+        task_id: task.id,
+        task_name: task.description || 'Unnamed Task',
+        task_type: task.type || 'General',
+        task_status: task.status || 'pending',
+        task_date: task.due_date || task.created_at,
+        assigned_to_name: task.assigned_person?.name || 'Unassigned',
+        outputs: []
+      }
+    }
+    map[task.id].outputs.push(output)
+  })
+  return Object.values(map)
+})
+
+// ─── Helpers ─────────────────────────────────────────────────────────────────
+const statusText = (s) => ({
+  '0': 'Draft',
+  '1': 'Submitted',
+  '2': 'Approved'
+}[s] || 'Unknown')
+
+const statusClass = (s) => ({
+  '0': 'bg-white/20 text-white',
+  '1': 'bg-blue-600/30 text-blue-100',
+  '2': 'bg-green-600/30 text-green-100'
+}[s] || 'bg-white/20 text-white')
+
+const formatDate = (d) => {
+  if (!d) return '—'
+  try {
+    return new Intl.DateTimeFormat('en-GB', {
+      day: 'numeric',
+      month: 'short',
+      year: 'numeric'
+    }).format(new Date(d))
+  } catch {
+    return d
+  }
+}
+
+const formatDateTime = (d) => {
+  if (!d) return '—'
+  try {
+    return new Intl.DateTimeFormat('en-GB', {
+      day: '2-digit',
+      month: 'short',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
+    }).format(new Date(d))
+  } catch {
+    return d
+  }
+}
+
+
+
+const downloadPdf = async () => {
+  try {
+    showPdf.value = true
+
+    await nextTick()
+    await new Promise(resolve => setTimeout(resolve, 500))
+
+    const element = document.getElementById('pdfContent')
+
+    if (!element) {
+      console.error('PDF element not found')
+      return
+    }
+
+    const opt = {
+      margin: 10,
+      filename: `activity-report-${report.value?.id || 'file'}.pdf`,
+
+      image: {
+        type: 'jpeg',
+        quality: 0.98
+      },
+
+  html2canvas: {
+  scale: 2,
+  useCORS: true,
+
+  onclone: (doc) => {
+    const all = doc.querySelectorAll('*')
+
+    all.forEach(el => {
+      const style = window.getComputedStyle(el)
+
+      const fixColor = (val, fallback) => {
+        if (!val) return fallback
+
+        // 🔥 catch ALL unsupported modern color formats
+        if (
+          val.includes('oklch') ||
+          val.includes('oklab') ||
+          val.includes('color(')
+        ) {
+          return fallback
+        }
+
+        return val
+      }
+
+      el.style.color = fixColor(style.color, '#000000')
+      el.style.backgroundColor = fixColor(style.backgroundColor, '#ffffff')
+      el.style.borderColor = fixColor(style.borderColor, '#cccccc')
+    })
+  }
+},
+
+      jsPDF: {
+        unit: 'mm',
+        format: 'a4',
+        orientation: 'portrait'
+      },
+
+      pagebreak: {
+        mode: ['css', 'legacy']
+      }
+    }
+
+    await html2pdf().set(opt).from(element).save()
+
+  } catch (err) {
+    console.error('PDF generation failed:', err)
+  } finally {
+    showPdf.value = false
+  }
+}
+const printReport = () => {
+  // Ensure all images/styles are loaded before printing
+  setTimeout(() => window.print(), 100)
+}
+
+const viewActivityDetails = (output) => {
+  // Implement modal or navigation logic here
+  console.log('Viewing activity:', output)
+  // Example: router.push({ name: 'activity-detail', params: { id: output.id } })
+}
+</script>
+
+<style scoped>
+/* ─── Print-Specific Styles ───────────────────────────────────────────────── */
+.print-exact {
+  -webkit-print-color-adjust: exact !important;
+  print-color-adjust: exact !important;
+}
+
+.print-border {
+  border: 1px solid #e2e8f0 !important;
+}
+
+@media print {
+
+  /* Hide EVERYTHING */
+  body * {
+    visibility: hidden;
+  }
+
+  /* Show ONLY PDF content */
+  #pdfContent, #pdfContent * {
+    visibility: visible;
+  }
+
+  /* Position PDF properly */
+  #pdfContent {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+  }
+
+  /* Remove background + spacing issues */
+  body {
+    background: white;
+  }
+
+  /* Optional: remove page margin */
+  @page {
+    margin: 10mm;
+  }
+}
+
+/* ─── Animations (matching form component) ────────────────────────────────── */
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Smooth transitions for hover states */
+button {
+  transition: all 0.15s ease-in-out;
+}
+
+/* Ensure numbered badges are consistent */
+.font-display {
+  font-feature-settings: "tnum";
+  font-variant-numeric: tabular-nums;
+}
+.pdf-container {
+  background: #f8fafc;
+  padding: 20px;
+  font-family: "Times New Roman", serif;
+}
+
+.pdf-page {
+  background: white;
+  padding: 40px;
+  max-width: 900px;
+  margin: auto;
+  border: 1px solid #ddd;
+}
+
+/* HEADER */
+.pdf-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo-box {
+  width: 45px;
+  height: 45px;
+  background: #2563eb;
+  color: white;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+}
+
+.company-name {
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.company-name span {
+  color: red;
+}
+
+.company-info {
+  text-align: right;
+  font-size: 12px;
+  color: #444;
+}
+
+.divider {
+  border-top: 2px solid #c53030;
+  margin-top: 10px;
+}
+
+/* TITLE */
+.report-title {
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.report-period {
+  font-size: 14px;
+  margin-top: 4px;
+}
+
+/* SECTIONS */
+.pdf-section {
+  margin-top: 25px;
+}
+
+.pdf-section h3 {
+  font-size: 16px;
+  font-weight: bold;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 5px;
+}
+
+.item {
+  margin-top: 10px;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+/* TASK BLOCK */
+.task-block {
+  margin-top: 15px;
+  padding-left: 10px;
+}
+
+.task-title {
+  background: #f3f4f6;
+  padding: 8px;
+  border-left: 4px solid #e11d48;
+  font-size: 14px;
+  margin-bottom: 5px;
+}
+
+.sub-item {
+  margin-left: 15px;
+  margin-top: 6px;
+  font-size: 13px;
+}
+
+.date {
+  font-style: italic;
+  color: #666;
+}
+
+/* BUTTONS */
+.btn-primary {
+  background: #16a34a;
+  color: white;
+  padding: 8px 14px;
+  border-radius: 6px;
+}
+
+.btn-secondary {
+  background: #e5e7eb;
+  padding: 8px 14px;
+  border-radius: 6px;
+}
+
+/* PRINT */
+@media print {
+  .no-print {
+    display: none;
+  }
+
+  .pdf-page {
+    border: none;
+    margin: 0;
+    padding: 20px;
+  }
+
+  body {
+    background: white;
+  }
+}
+</style>

@@ -1,0 +1,107 @@
+================================================================================
+                         JOB DESCRIPTION
+================================================================================
+
+POSITION TITLE:     Aerospace Engineer - System Dynamics Specialist
+DEPARTMENT:         MSC Software Technical Sales & Support
+LOCATION:           [Location]
+EMPLOYMENT TYPE:    Full-Time
+REPORTS TO:         Technical Sales Manager
+
+================================================================================
+POSITION OVERVIEW
+================================================================================
+
+We are seeking an Aerospace Engineer specializing in System Dynamics to join 
+our MSC Software team. This role focuses on Adams software for landing gear 
+dynamics, flight control systems, eVTOL, and UAV applications. You will 
+support aerospace customers in virtual testing and certification of aircraft 
+systems.
+
+================================================================================
+KEY RESPONSIBILITIES
+================================================================================
+
+• Conduct Adams training for landing gear dynamics and flight control systems
+
+• Provide technical support for aircraft system kinematics and actuator 
+  modeling
+
+• Drive aerospace sales through eVTOL and UAV simulation demonstrations
+
+• Develop workflows for rotorcraft dynamics and tilt-rotor analysis
+
+• Support customers in aircraft ground handling and taxi simulation
+
+• Assist in flight control surface modeling and actuation system design
+
+• Collaborate with aerospace engineers on store separation and ejection seat 
+  analysis
+
+• Present case studies on autonomous flight systems and vehicle dynamics
+
+================================================================================
+REQUIRED QUALIFICATIONS
+================================================================================
+
+EDUCATION:
+  • B.S./M.S. in Aerospace or Mechanical Engineering
+
+EXPERIENCE:
+  • 3+ years in aircraft systems dynamics or landing gear design
+  • Knowledge of eVTOL, rotorcraft, or UAV dynamics
+  • Experience with flight control systems and actuators
+  • Background in aerospace OEM or defense contractor
+
+================================================================================
+KEY SKILLS & COMPETENCIES
+================================================================================
+
+Technical Skills:
+  • Landing Gear
+  • Flight Controls
+  • Rotorcraft
+  • eVTOL
+  • System Dynamics
+  • Adams, MATLAB/Simulink
+
+Professional Skills:
+  • Certification (EASA/FAA)
+  • Technical training and presentation
+  • Pre-sales support
+  • Customer engagement
+  • Aerospace domain expertise
+  • International travel capability
+
+================================================================================
+COMPENSATION & BENEFITS
+================================================================================
+
+• Industry-leading salary with performance incentives
+• Comprehensive health, dental, and vision insurance
+• 401(k) with company matching
+• Professional certification support
+• Remote work options available
+• Generous PTO and holidays
+• Stock options
+• Conference attendance opportunities
+
+================================================================================
+ABOUT THE ROLE
+================================================================================
+
+Work at the forefront of aerospace innovation with eVTOL, UAV, and advanced 
+aircraft systems. You'll collaborate with leading aerospace companies and 
+emerging startups to advance the future of flight through simulation. Travel 
+requirements approximately 30-50%.
+
+================================================================================
+TO APPLY
+================================================================================
+
+Please submit your resume, cover letter, and references to:
+[Contact Information]
+
+We are an equal opportunity employer and value diversity in our workforce.
+
+================================================================================

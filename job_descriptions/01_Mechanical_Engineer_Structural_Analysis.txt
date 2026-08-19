@@ -1,0 +1,112 @@
+================================================================================
+                         JOB DESCRIPTION
+================================================================================
+
+POSITION TITLE:     Mechanical Engineer - Structural Analysis Specialist
+DEPARTMENT:         MSC Software Technical Sales & Support
+LOCATION:           [Location]
+EMPLOYMENT TYPE:    Full-Time
+REPORTS TO:         Technical Sales Manager
+
+================================================================================
+POSITION OVERVIEW
+================================================================================
+
+We are seeking a talented Mechanical Engineer specializing in Structural 
+Analysis to join our MSC Software team. This role combines technical expertise 
+in FEA simulation with customer-facing responsibilities including training 
+delivery, technical support, and sales support. You will work with 
+manufacturing and industrial clients to help them leverage MSC Nastran, Marc, 
+and other structural analysis tools to solve complex engineering challenges.
+
+================================================================================
+KEY RESPONSIBILITIES
+================================================================================
+
+• Conduct MSC Nastran/Marc training for structural FEA and nonlinear analysis
+
+• Provide technical support for complex structural simulations and 
+  troubleshooting
+
+• Drive new sales by demonstrating FEA solutions to manufacturing and 
+  industrial clients
+
+• Develop simulation workflows for static, thermal, and dynamic structural 
+  problems
+
+• Assist customers in model validation and results interpretation
+
+• Collaborate with sales team to identify customer needs and propose MSC 
+  solutions
+
+• Create technical documentation and application examples for structural 
+  analysis
+
+• Support pre-sales demonstrations and proof-of-concept projects
+
+================================================================================
+REQUIRED QUALIFICATIONS
+================================================================================
+
+EDUCATION:
+  • B.S. in Mechanical Engineering (M.S. preferred)
+
+EXPERIENCE:
+  • 3+ years hands-on FEA experience with MSC Nastran or Marc
+  • Strong knowledge of structural mechanics and material properties
+  • Experience in manufacturing, automotive, or heavy machinery industries
+  • Proven ability to deliver technical training and presentations
+
+================================================================================
+KEY SKILLS & COMPETENCIES
+================================================================================
+
+Technical Skills:
+  • FEA (Finite Element Analysis)
+  • CAD (Computer-Aided Design)
+  • Python/Scripting
+  • DOE (Design of Experiments)
+  • Technical Writing
+  • MSC Nastran, Marc, Apex
+
+Professional Skills:
+  • Public Speaking
+  • Sales Support
+  • Customer Relationship Management
+  • Problem-solving and analytical thinking
+  • Excellent communication skills
+  • Willingness to travel for client engagements
+
+================================================================================
+COMPENSATION & BENEFITS
+================================================================================
+
+• Competitive salary with performance bonuses
+• Comprehensive health, dental, and vision insurance
+• 401(k) with company matching
+• Professional development and certification support
+• Flexible work arrangements
+• Generous PTO and paid holidays
+• Stock options
+• Tuition reimbursement program
+• Conference and training attendance
+
+================================================================================
+ABOUT THE ROLE
+================================================================================
+
+This position offers the unique opportunity to combine deep technical 
+expertise with customer interaction. You'll work with diverse industries, 
+solve challenging engineering problems, and help clients achieve breakthrough 
+results with MSC Software solutions. Travel requirements approximately 25-40%.
+
+================================================================================
+TO APPLY
+================================================================================
+
+Please submit your resume, cover letter, and references to:
+[Contact Information]
+
+We are an equal opportunity employer and value diversity in our workforce.
+
+================================================================================

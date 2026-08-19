@@ -1,0 +1,105 @@
+================================================================================
+                         JOB DESCRIPTION
+================================================================================
+
+POSITION TITLE:     Mechanical Engineer - Fluids & FSI Specialist
+DEPARTMENT:         MSC Software Technical Sales & Support
+LOCATION:           [Location]
+EMPLOYMENT TYPE:    Full-Time
+REPORTS TO:         Technical Sales Manager
+
+================================================================================
+POSITION OVERVIEW
+================================================================================
+
+We are seeking a Mechanical Engineer specializing in Fluids and Fluid-Structure 
+Interaction (FSI) to join our MSC Software team. This role focuses on Dytran 
+software for impact, crash, and coupled fluid-structure analysis in automotive 
+and manufacturing sectors.
+
+================================================================================
+KEY RESPONSIBILITIES
+================================================================================
+
+• Deliver Dytran FSI training for impact, crash, and coupled fluid-structure 
+  analysis
+
+• Provide technical support for explicit dynamics and thermal-structural 
+  coupling
+
+• Drive sales in automotive crash, packaging, and consumer product drop testing
+
+• Develop workflows for fluid sloshing, airbag deployment, and impact scenarios
+
+• Support customers in optimizing thermal management and cooling systems
+
+• Conduct demonstrations on fuel tank sloshing and drop test simulations
+
+• Assist in coupled thermal-stress analysis for electronic cooling applications
+
+• Create application examples for blast loading and underwater shock analysis
+
+================================================================================
+REQUIRED QUALIFICATIONS
+================================================================================
+
+EDUCATION:
+  • B.S. in Mechanical Engineering with thermal/fluids focus
+
+EXPERIENCE:
+  • 3+ years in FSI, thermal analysis, or impact simulation
+  • Experience with Dytran, LS-DYNA, or explicit FEA solvers
+  • Knowledge of fluid dynamics and heat transfer
+  • Experience in automotive crash or manufacturing simulation
+
+================================================================================
+KEY SKILLS & COMPETENCIES
+================================================================================
+
+Technical Skills:
+  • Dytran
+  • Explicit FEA
+  • FSI (Fluid-Structure Interaction)
+  • Thermal Analysis
+  • Impact Simulation
+  • CFD
+
+Professional Skills:
+  • Technical training delivery
+  • Customer support
+  • Pre-sales engineering
+  • Problem-solving
+  • Communication skills
+  • Travel flexibility
+
+================================================================================
+COMPENSATION & BENEFITS
+================================================================================
+
+• Competitive salary with performance bonuses
+• Comprehensive health benefits
+• 401(k) with company matching
+• Professional development opportunities
+• Flexible work arrangements
+• Generous PTO
+• Stock options
+• Training reimbursement
+
+================================================================================
+ABOUT THE ROLE
+================================================================================
+
+Work on challenging FSI and thermal problems across automotive, packaging, and 
+consumer products. Help customers optimize safety systems and thermal 
+management through simulation. Travel requirements approximately 25-40%.
+
+================================================================================
+TO APPLY
+================================================================================
+
+Please submit your resume, cover letter, and references to:
+[Contact Information]
+
+We are an equal opportunity employer and value diversity in our workforce.
+
+================================================================================

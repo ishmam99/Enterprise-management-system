@@ -1,0 +1,107 @@
+================================================================================
+                         JOB DESCRIPTION
+================================================================================
+
+POSITION TITLE:     Mechanical Engineer - Autonomous Systems Specialist
+DEPARTMENT:         MSC Software Technical Sales & Support
+LOCATION:           [Location]
+EMPLOYMENT TYPE:    Full-Time
+REPORTS TO:         Technical Sales Manager
+
+================================================================================
+POSITION OVERVIEW
+================================================================================
+
+We are seeking a Mechanical Engineer specializing in Autonomous Systems to join 
+our MSC Software team. This role focuses on Adams and Easy5 software for 
+autonomous ground vehicles, robotics, and ADAS (Advanced Driver Assistance 
+Systems) applications.
+
+================================================================================
+KEY RESPONSIBILITIES
+================================================================================
+
+• Deliver Adams/Easy5 training for autonomous ground vehicle and robotic 
+  systems
+
+• Provide technical support for sensor integration and autonomous control 
+  validation
+
+• Drive sales in automotive ADAS, industrial robotics, and autonomous machinery
+
+• Develop workflows for vehicle dynamics and path planning simulation
+
+• Support customers in virtual testing of autonomous algorithms and sensors
+
+• Conduct demonstrations on LiDAR mounting, camera shake, and sensor 
+  performance
+
+• Assist in hardware-in-the-loop (HIL) setup and real-time simulation
+
+• Create technical content on autonomous system virtual validation strategies
+
+================================================================================
+REQUIRED QUALIFICATIONS
+================================================================================
+
+EDUCATION:
+  • B.S./M.S. in Mechanical, Robotics, or Electrical Engineering
+
+EXPERIENCE:
+  • 3+ years in autonomous systems, robotics, or vehicle dynamics
+  • Experience with Adams, MATLAB/Simulink, or similar tools
+  • Knowledge of control systems, sensor fusion, and machine learning
+  • Background in automotive ADAS or autonomous vehicle development
+
+================================================================================
+KEY SKILLS & COMPETENCIES
+================================================================================
+
+Technical Skills:
+  • Adams
+  • ADAS
+  • Sensor Fusion
+  • Controls
+  • MATLAB
+  • HIL Testing
+  • Machine Learning
+
+Professional Skills:
+  • Technical training delivery
+  • Customer support and engagement
+  • Pre-sales demonstrations
+  • Problem-solving
+  • Communication skills
+  • Travel flexibility
+
+================================================================================
+COMPENSATION & BENEFITS
+================================================================================
+
+• Competitive compensation with performance incentives
+• Comprehensive health, dental, and vision insurance
+• 401(k) with company matching
+• Professional development opportunities
+• Flexible work arrangements
+• Generous PTO
+• Stock options
+• Training and certification support
+
+================================================================================
+ABOUT THE ROLE
+================================================================================
+
+Work at the cutting edge of autonomous vehicle technology. Help customers 
+develop and validate ADAS and autonomous systems through virtual simulation. 
+Travel requirements approximately 25-40%.
+
+================================================================================
+TO APPLY
+================================================================================
+
+Please submit your resume, cover letter, and references to:
+[Contact Information]
+
+We are an equal opportunity employer and value diversity in our workforce.
+
+================================================================================

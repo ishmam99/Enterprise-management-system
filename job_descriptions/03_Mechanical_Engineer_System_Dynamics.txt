@@ -1,0 +1,109 @@
+================================================================================
+                         JOB DESCRIPTION
+================================================================================
+
+POSITION TITLE:     Mechanical Engineer - System Dynamics Specialist
+DEPARTMENT:         MSC Software Technical Sales & Support
+LOCATION:           [Location]
+EMPLOYMENT TYPE:    Full-Time
+REPORTS TO:         Technical Sales Manager
+
+================================================================================
+POSITION OVERVIEW
+================================================================================
+
+We are seeking a Mechanical Engineer with expertise in Multibody Dynamics 
+(MBD) to join our MSC Software team. This role focuses on Adams software for 
+machinery, robotics, and mechanical system simulation. You will deliver 
+training, provide technical support, and drive sales in automotive, heavy 
+equipment, and industrial machinery sectors.
+
+================================================================================
+KEY RESPONSIBILITIES
+================================================================================
+
+• Deliver Adams MBD training for machinery, robotics, and mechanical system 
+  simulation
+
+• Provide technical support for kinematics, dynamics, and control system 
+  integration
+
+• Drive sales in automotive, heavy equipment, and industrial machinery sectors
+
+• Develop multibody dynamics workflows for mechanism design and optimization
+
+• Support customers in virtual prototyping and testing of mechanical systems
+
+• Conduct pre-sales demonstrations showcasing Adams motion analysis 
+  capabilities
+
+• Assist in co-simulation setup between Adams and FEA/CFD tools
+
+• Create application examples for landing gear, suspension, and linkage 
+  mechanisms
+
+================================================================================
+REQUIRED QUALIFICATIONS
+================================================================================
+
+EDUCATION:
+  • B.S. in Mechanical Engineering or related field
+
+EXPERIENCE:
+  • 3+ years experience with Adams or similar MBD software
+  • Strong understanding of kinematics, dynamics, and control systems
+  • Experience in machinery, robotics, or automotive industries
+  • Ability to conduct technical training and customer demonstrations
+
+================================================================================
+KEY SKILLS & COMPETENCIES
+================================================================================
+
+Technical Skills:
+  • Adams (Multibody Dynamics)
+  • MBD (Multibody Dynamics)
+  • Controls
+  • MATLAB/Simulink
+  • Co-simulation
+  • Mechanism design
+
+Professional Skills:
+  • Training Delivery
+  • Pre-sales engineering
+  • Customer relationship management
+  • Technical problem-solving
+  • Effective communication
+  • Travel flexibility
+
+================================================================================
+COMPENSATION & BENEFITS
+================================================================================
+
+• Competitive compensation with performance bonuses
+• Comprehensive health benefits package
+• 401(k) with company matching
+• Professional development opportunities
+• Flexible work arrangements
+• Generous PTO
+• Stock options
+• Training and certification support
+
+================================================================================
+ABOUT THE ROLE
+================================================================================
+
+Join our team to work with diverse industries on exciting mechanical systems 
+challenges. From robotics to heavy machinery, you'll help customers optimize 
+designs and reduce physical prototyping through virtual simulation. Travel 
+requirements approximately 25-40%.
+
+================================================================================
+TO APPLY
+================================================================================
+
+Please submit your resume, cover letter, and references to:
+[Contact Information]
+
+We are an equal opportunity employer and value diversity in our workforce.
+
+================================================================================

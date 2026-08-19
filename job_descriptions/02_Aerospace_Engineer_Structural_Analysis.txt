@@ -1,0 +1,115 @@
+================================================================================
+                         JOB DESCRIPTION
+================================================================================
+
+POSITION TITLE:     Aerospace Engineer - Structural Analysis Specialist
+DEPARTMENT:         MSC Software Technical Sales & Support
+LOCATION:           [Location]
+EMPLOYMENT TYPE:    Full-Time
+REPORTS TO:         Technical Sales Manager
+
+================================================================================
+POSITION OVERVIEW
+================================================================================
+
+We are seeking an experienced Aerospace Engineer specializing in Structural 
+Analysis to join our MSC Software team. This role focuses on supporting 
+aerospace OEMs and Tier-1 suppliers with MSC Nastran-based solutions for 
+aircraft certification, aeroelastic analysis, and composite structures. You 
+will deliver technical training, provide expert support, and drive sales in 
+the aerospace sector.
+
+================================================================================
+KEY RESPONSIBILITIES
+================================================================================
+
+• Deliver MSC Nastran training focused on aeroelastic analysis and aircraft 
+  certification
+
+• Provide expert technical support for aerospace structural integrity and 
+  flutter analysis
+
+• Drive aerospace sector sales through FAA/EASA certification workflow 
+  demonstrations
+
+• Develop simulation best practices for composite airframe and fuselage 
+  analysis
+
+• Support customers in meeting aerospace certification requirements 
+  (DO-160, etc.)
+
+• Conduct fatigue and damage tolerance analysis for aircraft components
+
+• Collaborate with aerospace OEMs to implement MSC solutions in design 
+  processes
+
+• Present technical webinars on aerospace-specific MSC Software applications
+
+================================================================================
+REQUIRED QUALIFICATIONS
+================================================================================
+
+EDUCATION:
+  • B.S./M.S. in Aerospace Engineering or related field
+
+EXPERIENCE:
+  • 3+ years in aerospace structural analysis and certification
+  • Knowledge of FAA/EASA regulations and DO-160 standards
+  • Experience with composite materials and aeroelasticity
+  • Background in aircraft OEM or Tier-1 supplier environment
+
+================================================================================
+KEY SKILLS & COMPETENCIES
+================================================================================
+
+Technical Skills:
+  • Aeroelasticity
+  • Composites
+  • Certification (FAA/EASA)
+  • Fatigue Analysis
+  • Technical Training
+  • MSC Nastran, Marc
+
+Professional Skills:
+  • CRM (Customer Relationship Management)
+  • Technical presentation and training delivery
+  • Pre-sales engineering
+  • Problem-solving in aerospace context
+  • Strong communication skills
+  • Willingness to travel domestically and internationally
+
+================================================================================
+COMPENSATION & BENEFITS
+================================================================================
+
+• Industry-leading salary packages with performance bonuses
+• Comprehensive health, dental, and vision insurance
+• 401(k) with company matching
+• Life and disability insurance
+• Professional certification support (PE, certifications)
+• Flexible work arrangements including remote options
+• Generous PTO and paid holidays
+• Stock options
+• Tuition reimbursement program
+• Conference and training attendance
+
+================================================================================
+ABOUT THE ROLE
+================================================================================
+
+This is an exceptional opportunity to work at the intersection of aerospace 
+engineering and cutting-edge simulation technology. You'll collaborate with 
+leading aerospace companies, contribute to aircraft certification programs, 
+and help advance the state-of-the-art in aerospace structural analysis. 
+Travel requirements approximately 30-50%.
+
+================================================================================
+TO APPLY
+================================================================================
+
+Please submit your resume, cover letter, and references to:
+[Contact Information]
+
+We are an equal opportunity employer and value diversity in our workforce.
+
+================================================================================
