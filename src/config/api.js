@@ -20,18 +20,18 @@ const projectURL = import.meta.env.VITE_BASE_URL+'/api/v1'
   instance.interceptors.response.use(
     (response) => response,
     (error) => {
-      if (error.response && error.response.status === 401) {
-        // Call the logout action
+      // if (error.response && error.response.status === 401) {
+        
 
-        Swal.fire({
-          icon: "error",
-          title: "Oops...",
-          text: "Your session has expired. Please log in again.",
-        });
-        setTimeout(() => {
-            authStore.logout()
-        },3000)
-      }
+      //   Swal.fire({
+      //     icon: "error",
+      //     title: "Oops...",
+      //     text: "Your session has expired. Please log in again.",
+      //   });
+      //   setTimeout(() => {
+      //       authStore.logout()
+      //   },3000)
+      // }
       return Promise.reject(error)
     }
   )

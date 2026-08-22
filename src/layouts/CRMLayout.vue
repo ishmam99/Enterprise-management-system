@@ -120,7 +120,7 @@ onMounted(() => {
         <button @click="toggleSidebar" class="hover:text-sky-300">
           <i class="ri-menu-line text-2xl"></i>
         </button>
-        <span class="font-semibold text-lg">HTSS CRM</span>
+        <span class="font-semibold text-lg">Vermont Composite CRM</span>
       </div>
 
       <!-- Center Tabs -->

@@ -1,12 +1,14 @@
 <script setup>
 import { ref } from 'vue'
 
-// Accordion state
 const openMenus = ref({
   projects: false,
+  milestones: false,
   tasks: false,
-  resources: false,
-  reports: false
+  timesheets: false,
+  expenses: false,
+  files: false,
+  risks: false
 })
 
 const toggleMenu = (menu) => {
@@ -34,7 +36,7 @@ const toggleMenu = (menu) => {
     <!-- Navigation -->
     <nav class="p-4 flex-1 space-y-1 overflow-y-auto">
 
-      <!-- Overview (no submenu) -->
+      <!-- Overview -->
       <RouterLink to="/project_management" v-slot="{ isExactActive }">
         <div
           :class="[
@@ -49,7 +51,7 @@ const toggleMenu = (menu) => {
         </div>
       </RouterLink>
 
-      <!-- Projects (accordion) -->
+      <!-- Projects -->
       <div>
         <div
           @click="toggleMenu('projects')"
@@ -64,7 +66,7 @@ const toggleMenu = (menu) => {
           </span>
         </div>
         <div v-show="openMenus.projects" class="ml-6 space-y-1 mt-1">
-          <RouterLink to="/project_management/project/AllProjects" v-slot="{ isActive }">
+          <RouterLink to="/project_management/project/allprojects" v-slot="{ isActive }">
             <div
               :class="[
                 'flex items-center gap-3 px-4 py-2.5 rounded-lg transition cursor-pointer text-sm',
@@ -75,10 +77,10 @@ const toggleMenu = (menu) => {
             >
               <span class="text-base">📄</span>
               All Projects
-              <span class="ml-auto text-xs bg-purple-600/30 text-purple-300 px-2 py-0.5 rounded-full">12</span>
+              <span class="ml-auto text-xs bg-purple-600/30 text-purple-300 px-2 py-0.5 rounded-full">8</span>
             </div>
           </RouterLink>
-          <RouterLink to="/project_management/project/timeline" v-slot="{ isActive }">
+          <RouterLink to="/project_management/project/createProject" v-slot="{ isActive }">
             <div
               :class="[
                 'flex items-center gap-3 px-4 py-2.5 rounded-lg transition cursor-pointer text-sm',
@@ -87,27 +89,59 @@ const toggleMenu = (menu) => {
                   : 'text-slate-400 hover:bg-slate-700/50 hover:text-white'
               ]"
             >
-              <span class="text-base">📅</span>
-              Timeline
-            </div>
-          </RouterLink>
-          <RouterLink to="/project_management/project/resources" v-slot="{ isActive }">
-            <div
-              :class="[
-                'flex items-center gap-3 px-4 py-2.5 rounded-lg transition cursor-pointer text-sm',
-                isActive
-                  ? 'bg-purple-600/20 text-purple-300 font-medium'
-                  : 'text-slate-400 hover:bg-slate-700/50 hover:text-white'
-              ]"
-            >
-              <span class="text-base">📦</span>
-              Resources
+              <span class="text-base">➕</span>
+              Add Project
             </div>
           </RouterLink>
         </div>
       </div>
 
-      <!-- Tasks (accordion) -->
+      <!-- Milestones -->
+      <div>
+        <div
+          @click="toggleMenu('milestones')"
+          class="flex items-center justify-between px-4 py-3 rounded-xl hover:bg-slate-700/50 text-slate-300 hover:text-white transition cursor-pointer"
+        >
+          <div class="flex items-center gap-3">
+            <span class="text-lg">🎯</span>
+            <span>Milestones</span>
+          </div>
+          <span class="text-xs transition-transform duration-300" :class="openMenus.milestones ? 'rotate-90' : ''">
+            ▶
+          </span>
+        </div>
+        <div v-show="openMenus.milestones" class="ml-6 space-y-1 mt-1">
+          <RouterLink to="/project_management/project/milestones" v-slot="{ isActive }">
+            <div
+              :class="[
+                'flex items-center gap-3 px-4 py-2.5 rounded-lg transition cursor-pointer text-sm',
+                isActive
+                  ? 'bg-purple-600/20 text-purple-300 font-medium'
+                  : 'text-slate-400 hover:bg-slate-700/50 hover:text-white'
+              ]"
+            >
+              <span class="text-base">📌</span>
+              All Milestones
+              <span class="ml-auto text-xs bg-purple-600/30 text-purple-300 px-2 py-0.5 rounded-full">6</span>
+            </div>
+          </RouterLink>
+          <RouterLink to="/project_management/project/createMilestone" v-slot="{ isActive }">
+            <div
+              :class="[
+                'flex items-center gap-3 px-4 py-2.5 rounded-lg transition cursor-pointer text-sm',
+                isActive
+                  ? 'bg-purple-600/20 text-purple-300 font-medium'
+                  : 'text-slate-400 hover:bg-slate-700/50 hover:text-white'
+              ]"
+            >
+              <span class="text-base">➕</span>
+              Add Milestone
+            </div>
+          </RouterLink>
+        </div>
+      </div>
+
+      <!-- Tasks -->
       <div>
         <div
           @click="toggleMenu('tasks')"
@@ -122,7 +156,7 @@ const toggleMenu = (menu) => {
           </span>
         </div>
         <div v-show="openMenus.tasks" class="ml-6 space-y-1 mt-1">
-          <RouterLink to="/project_management/project/AllTasks" v-slot="{ isActive }">
+          <RouterLink to="/project_management/project/tasks" v-slot="{ isActive }">
             <div
               :class="[
                 'flex items-center gap-3 px-4 py-2.5 rounded-lg transition cursor-pointer text-sm',
@@ -133,10 +167,10 @@ const toggleMenu = (menu) => {
             >
               <span class="text-base">📋</span>
               All Tasks
-              <span class="ml-auto text-xs bg-purple-600/30 text-purple-300 px-2 py-0.5 rounded-full">28</span>
+              <span class="ml-auto text-xs bg-purple-600/30 text-purple-300 px-2 py-0.5 rounded-full">12</span>
             </div>
           </RouterLink>
-          <RouterLink to="/project_management/project/BoardView" v-slot="{ isActive }">
+          <RouterLink to="/project_management/project/createTask" v-slot="{ isActive }">
             <div
               :class="[
                 'flex items-center gap-3 px-4 py-2.5 rounded-lg transition cursor-pointer text-sm',
@@ -145,99 +179,28 @@ const toggleMenu = (menu) => {
                   : 'text-slate-400 hover:bg-slate-700/50 hover:text-white'
               ]"
             >
-              <span class="text-base">📌</span>
-              Board View
-            </div>
-          </RouterLink>
-          <RouterLink to="/project_management/project/MyTasks" v-slot="{ isActive }">
-            <div
-              :class="[
-                'flex items-center gap-3 px-4 py-2.5 rounded-lg transition cursor-pointer text-sm',
-                isActive
-                  ? 'bg-purple-600/20 text-purple-300 font-medium'
-                  : 'text-slate-400 hover:bg-slate-700/50 hover:text-white'
-              ]"
-            >
-              <span class="text-base">👤</span>
-              My Tasks
-              <span class="ml-auto text-xs bg-purple-600/30 text-purple-300 px-2 py-0.5 rounded-full">6</span>
+              <span class="text-base">➕</span>
+              Add Task
             </div>
           </RouterLink>
         </div>
       </div>
 
-      <!-- Resources & Team (accordion) -->
+      <!-- Timesheets -->
       <div>
         <div
-          @click="toggleMenu('resources')"
+          @click="toggleMenu('timesheets')"
           class="flex items-center justify-between px-4 py-3 rounded-xl hover:bg-slate-700/50 text-slate-300 hover:text-white transition cursor-pointer"
         >
           <div class="flex items-center gap-3">
-            <span class="text-lg">👥</span>
-            <span>Resources</span>
+            <span class="text-lg">⏱️</span>
+            <span>Timesheets</span>
           </div>
-          <span class="text-xs transition-transform duration-300" :class="openMenus.resources ? 'rotate-90' : ''">
+          <span class="text-xs transition-transform duration-300" :class="openMenus.timesheets ? 'rotate-90' : ''">
             ▶
           </span>
         </div>
-        <div v-show="openMenus.resources" class="ml-6 space-y-1 mt-1">
-          <RouterLink to="/project_management/project/team" v-slot="{ isActive }">
-            <div
-              :class="[
-                'flex items-center gap-3 px-4 py-2.5 rounded-lg transition cursor-pointer text-sm',
-                isActive
-                  ? 'bg-purple-600/20 text-purple-300 font-medium'
-                  : 'text-slate-400 hover:bg-slate-700/50 hover:text-white'
-              ]"
-            >
-              <span class="text-base">👥</span>
-              Team
-            </div>
-          </RouterLink>
-          <RouterLink to="/project_management/project/calendar" v-slot="{ isActive }">
-            <div
-              :class="[
-                'flex items-center gap-3 px-4 py-2.5 rounded-lg transition cursor-pointer text-sm',
-                isActive
-                  ? 'bg-purple-600/20 text-purple-300 font-medium'
-                  : 'text-slate-400 hover:bg-slate-700/50 hover:text-white'
-              ]"
-            >
-              <span class="text-base">📆</span>
-              Calendar
-            </div>
-          </RouterLink>
-        </div>
-      </div>
-
-      <!-- Reports & Analytics (accordion) -->
-      <div>
-        <div
-          @click="toggleMenu('reports')"
-          class="flex items-center justify-between px-4 py-3 rounded-xl hover:bg-slate-700/50 text-slate-300 hover:text-white transition cursor-pointer"
-        >
-          <div class="flex items-center gap-3">
-            <span class="text-lg">📈</span>
-            <span>Reports</span>
-          </div>
-          <span class="text-xs transition-transform duration-300" :class="openMenus.reports ? 'rotate-90' : ''">
-            ▶
-          </span>
-        </div>
-        <div v-show="openMenus.reports" class="ml-6 space-y-1 mt-1">
-          <RouterLink to="/project_management/project/reports" v-slot="{ isActive }">
-            <div
-              :class="[
-                'flex items-center gap-3 px-4 py-2.5 rounded-lg transition cursor-pointer text-sm',
-                isActive
-                  ? 'bg-purple-600/20 text-purple-300 font-medium'
-                  : 'text-slate-400 hover:bg-slate-700/50 hover:text-white'
-              ]"
-            >
-              <span class="text-base">📊</span>
-              Project Reports
-            </div>
-          </RouterLink>
+        <div v-show="openMenus.timesheets" class="ml-6 space-y-1 mt-1">
           <RouterLink to="/project_management/project/timesheets" v-slot="{ isActive }">
             <div
               :class="[
@@ -247,27 +210,161 @@ const toggleMenu = (menu) => {
                   : 'text-slate-400 hover:bg-slate-700/50 hover:text-white'
               ]"
             >
-              <span class="text-base">⏱️</span>
-              Timesheets
+              <span class="text-base">📊</span>
+              All Timesheets
+              <span class="ml-auto text-xs bg-purple-600/30 text-purple-300 px-2 py-0.5 rounded-full">24</span>
+            </div>
+          </RouterLink>
+          <RouterLink to="/project_management/project/createTimesheet" v-slot="{ isActive }">
+            <div
+              :class="[
+                'flex items-center gap-3 px-4 py-2.5 rounded-lg transition cursor-pointer text-sm',
+                isActive
+                  ? 'bg-purple-600/20 text-purple-300 font-medium'
+                  : 'text-slate-400 hover:bg-slate-700/50 hover:text-white'
+              ]"
+            >
+              <span class="text-base">➕</span>
+              Log Hours
             </div>
           </RouterLink>
         </div>
       </div>
 
-      <!-- Settings (no submenu) -->
-      <RouterLink to="/project_management/project/settings" v-slot="{ isActive }">
+      <!-- Expenses -->
+      <div>
         <div
-          :class="[
-            'flex items-center gap-3 px-4 py-3 rounded-xl transition cursor-pointer',
-            isActive
-              ? 'bg-purple-600 text-white shadow-lg shadow-purple-600/20'
-              : 'text-slate-300 hover:bg-slate-700/50 hover:text-white'
-          ]"
+          @click="toggleMenu('expenses')"
+          class="flex items-center justify-between px-4 py-3 rounded-xl hover:bg-slate-700/50 text-slate-300 hover:text-white transition cursor-pointer"
         >
-          <span class="text-lg">⚙️</span>
-          Settings
+          <div class="flex items-center gap-3">
+            <span class="text-lg">💰</span>
+            <span>Expenses</span>
+          </div>
+          <span class="text-xs transition-transform duration-300" :class="openMenus.expenses ? 'rotate-90' : ''">
+            ▶
+          </span>
         </div>
-      </RouterLink>
+        <div v-show="openMenus.expenses" class="ml-6 space-y-1 mt-1">
+          <RouterLink to="/project_management/project/expenses" v-slot="{ isActive }">
+            <div
+              :class="[
+                'flex items-center gap-3 px-4 py-2.5 rounded-lg transition cursor-pointer text-sm',
+                isActive
+                  ? 'bg-purple-600/20 text-purple-300 font-medium'
+                  : 'text-slate-400 hover:bg-slate-700/50 hover:text-white'
+              ]"
+            >
+              <span class="text-base">📊</span>
+              All Expenses
+              <span class="ml-auto text-xs bg-purple-600/30 text-purple-300 px-2 py-0.5 rounded-full">16</span>
+            </div>
+          </RouterLink>
+          <RouterLink to="/project_management/project/createExpense" v-slot="{ isActive }">
+            <div
+              :class="[
+                'flex items-center gap-3 px-4 py-2.5 rounded-lg transition cursor-pointer text-sm',
+                isActive
+                  ? 'bg-purple-600/20 text-purple-300 font-medium'
+                  : 'text-slate-400 hover:bg-slate-700/50 hover:text-white'
+              ]"
+            >
+              <span class="text-base">➕</span>
+              Add Expense
+            </div>
+          </RouterLink>
+        </div>
+      </div>
+
+      <!-- Files -->
+      <div>
+        <div
+          @click="toggleMenu('files')"
+          class="flex items-center justify-between px-4 py-3 rounded-xl hover:bg-slate-700/50 text-slate-300 hover:text-white transition cursor-pointer"
+        >
+          <div class="flex items-center gap-3">
+            <span class="text-lg">📁</span>
+            <span>Files</span>
+          </div>
+          <span class="text-xs transition-transform duration-300" :class="openMenus.files ? 'rotate-90' : ''">
+            ▶
+          </span>
+        </div>
+        <div v-show="openMenus.files" class="ml-6 space-y-1 mt-1">
+          <RouterLink to="/project_management/project/files" v-slot="{ isActive }">
+            <div
+              :class="[
+                'flex items-center gap-3 px-4 py-2.5 rounded-lg transition cursor-pointer text-sm',
+                isActive
+                  ? 'bg-purple-600/20 text-purple-300 font-medium'
+                  : 'text-slate-400 hover:bg-slate-700/50 hover:text-white'
+              ]"
+            >
+              <span class="text-base">📄</span>
+              All Files
+              <span class="ml-auto text-xs bg-purple-600/30 text-purple-300 px-2 py-0.5 rounded-full">32</span>
+            </div>
+          </RouterLink>
+          <RouterLink to="/project_management/project/uploadFile" v-slot="{ isActive }">
+            <div
+              :class="[
+                'flex items-center gap-3 px-4 py-2.5 rounded-lg transition cursor-pointer text-sm',
+                isActive
+                  ? 'bg-purple-600/20 text-purple-300 font-medium'
+                  : 'text-slate-400 hover:bg-slate-700/50 hover:text-white'
+              ]"
+            >
+              <span class="text-base">➕</span>
+              Upload File
+            </div>
+          </RouterLink>
+        </div>
+      </div>
+
+      <!-- Risks -->
+      <div>
+        <div
+          @click="toggleMenu('risks')"
+          class="flex items-center justify-between px-4 py-3 rounded-xl hover:bg-slate-700/50 text-slate-300 hover:text-white transition cursor-pointer"
+        >
+          <div class="flex items-center gap-3">
+            <span class="text-lg">⚠️</span>
+            <span>Risks</span>
+          </div>
+          <span class="text-xs transition-transform duration-300" :class="openMenus.risks ? 'rotate-90' : ''">
+            ▶
+          </span>
+        </div>
+        <div v-show="openMenus.risks" class="ml-6 space-y-1 mt-1">
+          <RouterLink to="/project_management/project/risks" v-slot="{ isActive }">
+            <div
+              :class="[
+                'flex items-center gap-3 px-4 py-2.5 rounded-lg transition cursor-pointer text-sm',
+                isActive
+                  ? 'bg-purple-600/20 text-purple-300 font-medium'
+                  : 'text-slate-400 hover:bg-slate-700/50 hover:text-white'
+              ]"
+            >
+              <span class="text-base">📋</span>
+              All Risks
+              <span class="ml-auto text-xs bg-purple-600/30 text-purple-300 px-2 py-0.5 rounded-full">5</span>
+            </div>
+          </RouterLink>
+          <RouterLink to="/project_management/project/createRisk" v-slot="{ isActive }">
+            <div
+              :class="[
+                'flex items-center gap-3 px-4 py-2.5 rounded-lg transition cursor-pointer text-sm',
+                isActive
+                  ? 'bg-purple-600/20 text-purple-300 font-medium'
+                  : 'text-slate-400 hover:bg-slate-700/50 hover:text-white'
+              ]"
+            >
+              <span class="text-base">➕</span>
+              Add Risk
+            </div>
+          </RouterLink>
+        </div>
+      </div>
 
     </nav>
 

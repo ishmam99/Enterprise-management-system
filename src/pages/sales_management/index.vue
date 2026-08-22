@@ -4,7 +4,7 @@
     <div class="mb-8 bg-[#acdbe163] rounded-2xl p-8 text-slate-700 shadow-2xl">
       <div class="flex justify-between items-center">
         <div>
-          <h1 class="text-4xl font-bold mb-2 ">HTSS Sales Management System Dashboard</h1>
+          <h1 class="text-4xl font-bold mb-2 ">Vermont Composite Sales Management System Dashboard</h1>
           <p class="text-blue-600 text-lg">Track your sales performance and manage leads effectively</p>
         </div>
         <div class="text-right">

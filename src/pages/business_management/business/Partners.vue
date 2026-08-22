@@ -1,6 +1,6 @@
 <template>
-  <div class="min-h-screen w-4/5 bg-gray-50 p-6">
-    <div class="max-w-7xl mx-auto">
+  <div class="min-h-screen w-5/6 bg-gray-50 p-6">
+    <div class=" mx-auto">
       <!-- Header -->
       <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-6">
         <div>
@@ -46,29 +46,29 @@
       <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
         <div class="overflow-x-auto">
           <table class="w-full">
-            <thead class="bg-gray-50 border-b border-gray-100">
+            <thead class="bg-blue-50 table-zebra border-b border-gray-100">
               <tr>
-                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Name</th>
-                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Type</th>
-                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Email</th>
-                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Phone</th>
-                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Created</th>
-                <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">Actions</th>
+                <th class="px-6 border-e border-slate-200 py-3 text-left text-xs font-medium text-gray-500 uppercase">Name</th>
+                <th class="px-6 border-e border-slate-200 py-3 text-left text-xs font-medium text-gray-500 uppercase">Type</th>
+                <th class="px-6 border-e border-slate-200 py-3 text-left text-xs font-medium text-gray-500 uppercase">Email</th>
+                <th class="px-6 border-e border-slate-200 py-3 text-left text-xs font-medium text-gray-500 uppercase">Phone</th>
+                <th class="px-6 border-e border-slate-200 py-3 text-left text-xs font-medium text-gray-500 uppercase">Created</th>
+                <th class="px-6 border-e border-slate-200 py-3 text-right text-xs font-medium text-gray-500 uppercase">Actions</th>
               </tr>
             </thead>
             <tbody class="divide-y divide-gray-100">
               <tr v-if="filteredPartners.length === 0">
-                <td colspan="6" class="px-6 py-8 text-center text-gray-500">No partners found</td>
+                <td colspan="6" class="px-6 border-e border-slate-200 py-8 text-center text-gray-500">No partners found</td>
               </tr>
               <tr v-for="partner in filteredPartners" :key="partner.id" class="hover:bg-gray-50 transition">
-                <td class="px-6 py-4"><span class="text-sm font-medium text-gray-900">{{ partner.name }}</span></td>
-                <td class="px-6 py-4">
+                <td class="px-6 border-e border-slate-200 py-4"><span class="text-sm font-medium text-gray-900">{{ partner.name }}</span></td>
+                <td class="px-6 border-e border-slate-200 py-4">
                   <span class="text-xs px-2 py-1 rounded-full" :class="getTypeClass(partner.type)">{{ partner.type }}</span>
                 </td>
-                <td class="px-6 py-4"><span class="text-sm text-gray-600">{{ partner.email || '-' }}</span></td>
-                <td class="px-6 py-4"><span class="text-sm text-gray-600">{{ partner.phone || '-' }}</span></td>
-                <td class="px-6 py-4"><span class="text-sm text-gray-600">{{ partner.createdAt }}</span></td>
-                <td class="px-6 py-4 text-right">
+                <td class="px-6 border-e border-slate-200 py-4"><span class="text-sm text-gray-600">{{ partner.email || '-' }}</span></td>
+                <td class="px-6 border-e border-slate-200 py-4"><span class="text-sm text-gray-600">{{ partner.phone || '-' }}</span></td>
+                <td class="px-6 border-e border-slate-200 py-4"><span class="text-sm text-gray-600">{{ partner.createdAt }}</span></td>
+                <td class="px-6 border-e border-slate-200 py-4 text-right">
                   <router-link :to="`/business_management/business/partners/edit/${partner.id}`" class="text-blue-600 hover:text-blue-800 text-sm font-medium">Edit</router-link>
                   <button @click="confirmDelete(partner)" class="text-red-600 hover:text-red-800 ml-3 text-sm font-medium">Delete</button>
                 </td>

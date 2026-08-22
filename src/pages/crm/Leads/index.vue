@@ -31,7 +31,8 @@ const showToast = (message, type = 'success') => {
 }
 const fetchFields = async () => {
   const { data } = await api().get('/crm/modules/1/fields')
-  fields.value = data.data.filter(e=>e.order != null)
+  // fields.value = data.data.filter(e=>e.order != null)
+  fields.value = data.data.filter(e=>e.order == null)
 }
 const fetchLeads = async (page = 1) => {
   try {
@@ -324,7 +325,7 @@ onMounted(async () => {
 
           <div class="flex items-center gap-2">
             <div class="grid grid-cols-5 gap-2">
-              <button @click="openImportModal" class="btn btn-sm btn-neutral text-white">
+              <button @click="openImportModal" class="btn btn-sm bg-cyan-500 text-white">
                 Import from Excel
               </button>
               <router-link to="/crm/leads/create" class="btn btn-sm btn-primary text-white">

@@ -211,27 +211,27 @@ const menuUser = ref([
 
 const menuAdmin = ref([
 
-  {
-    to: "/Business_development_management",
-    label: "Business Development Management",
-    icon: "fas fa-chalkboard-user",
-    subMenus: [
-      { to: "/login?name=Business&role=Director&email=Business_director@hitechsoftsys.net", 
-        label: "Director", icon: "fa-solid fa-crown", color: "gold" },
-      { to: "/login?name=Business&role=VP&email=Business_vp@hitechsoftsys.net", 
-        label: "VP", icon: "fa-solid fa-star", color: "purple" },
-      { to: "/login?name=Business&role=Business-manager&email=Business_manager@hitechsoftsys.net", 
-        label: "Manager", icon: "fa-solid fa-chart-line", color: "blue" },
-      { to: "/login?name=Business&role=Executive&email=Business_executive@hitechsoftsys.net", 
-        label: "Executive", icon: "fa-solid fa-briefcase", color: "green" }
-    ]
-  },
+  // {
+  //   to: "/Business_development_management",
+  //   label: "Business Development Management",
+  //   icon: "fas fa-chalkboard-user",
+  //   subMenus: [
+  //     { to: "/login?name=Business&role=Director&email=Business_director@hitechsoftsys.net", 
+  //       label: "Director", icon: "fa-solid fa-crown", color: "gold" },
+  //     { to: "/login?name=Business&role=VP&email=Business_vp@hitechsoftsys.net", 
+  //       label: "VP", icon: "fa-solid fa-star", color: "purple" },
+  //     { to: "/login?name=Business&role=Business-manager&email=Business_manager@hitechsoftsys.net", 
+  //       label: "Manager", icon: "fa-solid fa-chart-line", color: "blue" },
+  //     { to: "/login?name=Business&role=Executive&email=Business_executive@hitechsoftsys.net", 
+  //       label: "Executive", icon: "fa-solid fa-briefcase", color: "green" }
+  //   ]
+  // },
   {
     to: "/login?name=Sales&role=Director&email=",
     label: "Sales Management",
     icon: "fas fa-chart-simple",
     subMenus: [
-      { to: "/login?name=Sales&role=Director&email=sales_director@hitechsoftsys.net", 
+      { to: "/login?name=Sales&role=Director&email=sales_director@mail.com", 
         label: "Director", icon: "fa-solid fa-crown", color: "gold" },
       { to: "/login?name=Sales&role=Manager&email=", 
         label: "Manager", icon: "fa-solid fa-chart-line", color: "blue" },
@@ -245,19 +245,19 @@ const menuAdmin = ref([
         label: "CS Executive", icon: "fa-solid fa-hand-peace", color: "pink" }
     ]
   },
-  // {
-  //   to: "/login?name=CRM&role=Director&email=",
-  //   label: "CRM System",
-  //   icon: "fas fa-address-card",
-  //   subMenus: [
-  //     { to: "/login?name=CRM&role=Director&email=crm_director@hitechsoftsys.net", 
-  //       label: "Director", icon: "fa-solid fa-crown", color: "gold" },
-  //     { to: "/login?name=CRM&role=Manager&email=", 
-  //       label: "Manager", icon: "fa-solid fa-chart-line", color: "blue" },
-  //     { to: "/login?name=CRM&role=Executive&email=", 
-  //       label: "Executive", icon: "fa-solid fa-briefcase", color: "green" }
-  //   ]
-  // },
+  {
+    to: "/login?name=CRM&role=Director&email=",
+    label: "CRM System",
+    icon: "fas fa-address-card",
+    subMenus: [
+      { to: "/login?name=CRM&role=Director&email=crm_director@mail.com", 
+        label: "Director", icon: "fa-solid fa-crown", color: "gold" },
+      { to: "/login?name=CRM&role=Manager&email=", 
+        label: "Manager", icon: "fa-solid fa-chart-line", color: "blue" },
+      { to: "/login?name=CRM&role=Executive&email=", 
+        label: "Executive", icon: "fa-solid fa-briefcase", color: "green" }
+    ]
+  },
   {
     to: "/marketing_management",
     label: "Marketing Management",
@@ -273,21 +273,21 @@ const menuAdmin = ref([
         label: "Executive", icon: "fa-solid fa-briefcase", color: "green" }
     ]
   },
-  {
-    to: "/project_Management_Login",
-    label: "Project Management",
-    icon: "fas fa-globe",
-    subMenus: [
-      { to: "/login?name=Project&role=Director&email=Project_director@hitechsoftsys.net", 
-        label: "Director", icon: "fa-solid fa-crown", color: "gold" },
-      { to: "/login?name=Project&role=VP&email=Project_vp@hitechsoftsys.net", 
-        label: "VP", icon: "fa-solid fa-star", color: "purple" },
-      { to: "/login?name=Project&role=Manager&email=Project_manager@hitechsoftsys.net", 
-        label: "Manager", icon: "fa-solid fa-chart-line", color: "blue" },
-      { to:"/login?name=Project&role=Executive&email=Project_executive@hitechsoftsys.net", 
-        label: "Executive", icon: "fa-solid fa-briefcase", color: "green" }
-    ]
-  },
+  // {
+  //   to: "/project_Management_Login",
+  //   label: "Project Management",
+  //   icon: "fas fa-globe",
+  //   subMenus: [
+  //     { to: "/login?name=Project&role=Director&email=Project_director@hitechsoftsys.net", 
+  //       label: "Director", icon: "fa-solid fa-crown", color: "gold" },
+  //     { to: "/login?name=Project&role=VP&email=Project_vp@hitechsoftsys.net", 
+  //       label: "VP", icon: "fa-solid fa-star", color: "purple" },
+  //     { to: "/login?name=Project&role=Manager&email=Project_manager@hitechsoftsys.net", 
+  //       label: "Manager", icon: "fa-solid fa-chart-line", color: "blue" },
+  //     { to:"/login?name=Project&role=Executive&email=Project_executive@hitechsoftsys.net", 
+  //       label: "Executive", icon: "fa-solid fa-briefcase", color: "green" }
+  //   ]
+  // },
 ]);
 
 const menuItemStyle = computed(() => (index) => {

@@ -43,7 +43,7 @@
         </router-link>
 
            <button
-          @click="authStore.logout(), router.push('/login/userLogin')"
+          @click="authStore.logout(), router.push('/login/adminLogin')"
           class="flex-1 px-6 py-3 bg-red-600 hover:bg-red-700 text-white font-medium rounded-lg transition-colors duration-200 flex items-center justify-center space-x-2"
         >
           <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">

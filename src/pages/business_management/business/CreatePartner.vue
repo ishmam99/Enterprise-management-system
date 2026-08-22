@@ -1,6 +1,6 @@
 <template>
-  <div class="min-h-screen w-4/5 bg-gray-50 p-6">
-    <div class="max-w-4xl mx-auto">
+  <div class="min-h-screen w-5/6 bg-gray-50 p-6">
+    <div class="max-w-7xl mx-auto">
       <!-- Header -->
       <div class="flex items-center gap-3 mb-6">
         <router-link to="/business_management/business/partners" class="text-gray-400 hover:text-gray-600 transition">
@@ -14,7 +14,7 @@
         </div>
       </div>
 
-      <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+      <div class="bg-green-50 rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
         <form @submit.prevent="savePartner" class="p-6 space-y-6">
           <!-- Form Fields -->
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">

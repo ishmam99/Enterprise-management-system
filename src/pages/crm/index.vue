@@ -4,7 +4,7 @@
     <div class="mb-8 bg-gradient-to-r from-sky-600 via-emerald-600 to-cyan-700/80 rounded-2xl p-8 text-white shadow-2xl">
       <div class="flex justify-between items-center">
         <div>
-          <h1 class="text-4xl font-bold mb-2 text-white">HTSS CRM Dashboard</h1>
+          <h1 class="text-4xl font-bold mb-2 text-white">Vermont Composite CRM Dashboard</h1>
           <p class="text-blue-100 text-lg">Monitor key CRM insights and manage your workflow effortlessly.</p>
         </div>
         <div class="text-right">

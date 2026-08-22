@@ -98,7 +98,7 @@ const toggleMenu = (menu) => {
               Add Partner
             </div>
           </RouterLink>
-          <RouterLink to="/business_management/business/partnersAnalytics" v-slot="{ isActive }">
+          <RouterLink to="/business_management/business/partnerAnalytics" v-slot="{ isActive }">
             <div
               :class="[
                 'flex items-center gap-3 px-4 py-2.5 rounded-lg transition cursor-pointer text-sm',
@@ -162,7 +162,7 @@ const toggleMenu = (menu) => {
               Add Market
             </div>
           </RouterLink>
-          <RouterLink to="/business_management/business/marketsStrategies" v-slot="{ isActive }">
+          <RouterLink to="/business_management/business/marketStrategies" v-slot="{ isActive }">
             <div
               :class="[
                 'flex items-center gap-3 px-4 py-2.5 rounded-lg transition cursor-pointer text-sm',
@@ -213,7 +213,7 @@ const toggleMenu = (menu) => {
               >
             </div>
           </RouterLink>
-          <RouterLink to="/business_management/business/createCompetitors" v-slot="{ isActive }">
+          <RouterLink to="/business_management/business/createCompetitor" v-slot="{ isActive }">
             <div
               :class="[
                 'flex items-center gap-3 px-4 py-2.5 rounded-lg transition cursor-pointer text-sm',
