@@ -488,7 +488,8 @@ const fetchFields = async () => {
     isLoading.value = true
     isLoading2.value = true
       const { data } = await api().get('/crm/modules/1/fields')
-  fields.value = data.data.filter(e=>e.order != null)
+  // fields.value = data.data.filter(e=>e.order != null)
+  fields.value = data.data.filter(e=>e.order == null)
   } catch (error) {
     console.error('Failed to fetch fields:', error)
     showToast('Failed to fetch fields', 'error')
