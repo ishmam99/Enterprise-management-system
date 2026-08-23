@@ -259,11 +259,11 @@ const menuAdmin = ref([
     ]
   },
   {
-    to: "/marketing_management",
+    to: "/marketing",
     label: "Marketing Management",
     icon: "fas fa-people-arrows",
     subMenus: [
-      { to: "/login?name=Marketing&role=Director&email=Marketing_director@hitechsoftsys.net", 
+      { to: "/login?name=Marketing&role=Director&email=Marketing_director@mail.com", 
         label: "Director", icon: "fa-solid fa-crown", color: "gold" },
       { to: "/login?name=Marketing&role=VP&email=Marketing_vp@hitechsoftsys.net", 
         label: "VP", icon: "fa-solid fa-star", color: "purple" },

@@ -64,7 +64,7 @@ const projectManagementRoutes = makeChildren('/project_management',routes.filter
 
 
 const businessManagementRoutes = makeChildren('/business_management', routes.filter(r => r.path.startsWith('/business_management')))
-const marketingManagementRoutes = makeChildren('/marketing_management', routes.filter(r => r.path.startsWith('/marketing_management')))
+const marketingManagementRoutes = makeChildren('/marketing', routes.filter(r => r.path.startsWith('/marketing')))
 
 
 
@@ -177,7 +177,7 @@ const finalRoutes = [
     children: businessManagementRoutes,
   },
     {
-    path: '/marketing_management',
+    path: '/marketing',
     component: MarketingManagementLayout,
     children: marketingManagementRoutes,
   },
@@ -223,7 +223,7 @@ const finalRoutes = [
     !r.path.startsWith('/partner_management') &&
 
     !r.path.startsWith('/business_management') &&
-    !r.path.startsWith('/marketing_management') &&
+    !r.path.startsWith('/marketing') &&
     !r.path.startsWith('/project_management') &&
 
 

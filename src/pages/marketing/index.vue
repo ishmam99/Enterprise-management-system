@@ -4,12 +4,15 @@
     <div class="mb-8 bg-[#acdbe163] rounded-2xl p-8 text-slate-700 shadow-2xl">
       <div class="flex justify-between items-center">
         <div>
-          <h1 class="text-4xl font-bold mb-2 ">Vermont Composite Sales Management System Dashboard</h1>
-          <p class="text-blue-600 text-lg">Track your sales performance and manage leads effectively</p>
+          <h1 class="text-3xl font-bold mb-2 ">Vermont Composite Marketing Management System Dashboard</h1>
+          <p class="text-blue-600 text-lg">Track your marketing performance and manage leads effectively</p>
         </div>
         <div class="text-right">
-          <p class="text-3xl font-bold text-slate-700 capitalize">{{ authStore?.user?.name ? authStore?.user?.name : 'Sales' }}, 
-            {{ authStore?.role == 'manager-cs' ? 'Customer Success Manager' : authStore?.role == 'executive-cs' ? 'Customer Success Executive' : authStore?.role }}</p>
+          <!-- <p class="text-3xl font-bold text-slate-700 capitalize">{{ authStore?.user?.name ? authStore?.user?.name : 'Sales' }}, 
+            {{ authStore?.role == 'manager-cs' ? 'Customer Success Manager' : authStore?.role == 'executive-cs' ? 'Customer Success Executive' : authStore?.role }}</p> -->
+          <p class="text-3xl font-bold text-slate-700 capitalize">Marketing Director, 
+            <!-- {{ authStore?.role == 'manager-cs' ? 'Customer Success Manager' : authStore?.role == 'executive-cs' ? 'Customer Success Executive' : authStore?.role }} -->
+          </p>
           <p class="text-blue-600">Welcome back!</p>
         </div>
       </div>

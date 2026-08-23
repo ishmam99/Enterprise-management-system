@@ -41,7 +41,8 @@ const showToast = (message, type = 'success') => {
 const fetchFields = async () => {
   const { data } = await api().get('/crm/modules/1/fields')
   // fields.value = data.data.filter(e => e.order_group == 0)
-  fields.value = data.data.filter((e) => e.order != null)
+  // fields.value = data.data.filter((e) => e.order != null)
+  fields.value = data.data
 }
 const fetchLeads = async (page = 1) => {
   try {

@@ -18,8 +18,8 @@
         <div class="flex items-center gap-4">
           <img
             :src="logoSrc"
-            alt="Hi Tech Softsys"
-            class="w-14 h-14 rounded-xl object-cover shadow-lg ring-2 ring-cyan-400/50"
+            alt="Vermont Composite"
+            class=" h-14 rounded-xl object-cover shadow-lg ring-2 ring-cyan-400/50"
           />
 
           <div>
@@ -33,7 +33,7 @@
               >
             </h1>
             <p class="text-sm text-gray-500 mt-1">
-              Convert this lead into an Account in your Hi Tech Softsys system
+              Convert this lead into an Account in your Vermont Composite system
             </p>
           </div>
         </div>
@@ -180,7 +180,7 @@ import { useRoute, useRouter } from 'vue-router'
 
 const route = useRoute()
 const router = useRouter()
-const logoSrc = '/src/assets/images/HHi-tech_softsys_Logo_Black.png'
+const logoSrc = '/logo.png'
 
 const leadId = ref(route.params.id)
 const leadName = ref(route.query.name)
@@ -190,11 +190,11 @@ const goBack = () => {
   router.go(-1)
 }
 const createDeal = ref(false)
-const owner = ref('HTSS')
+const owner = ref('Vermont Composite')
 const notifyOwner = ref(true)
 
 function pickOwner() {
-  const options = ['HTSS', 'Rasik', 'Admin', 'Sales Manager']
+  const options = ['Vermont Composite', 'Rasik', 'Admin', 'Sales Manager']
   const idx = (options.indexOf(owner.value) + 1) % options.length
   owner.value = options[idx]
 }
