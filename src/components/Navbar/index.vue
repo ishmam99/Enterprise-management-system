@@ -88,7 +88,7 @@
                   to="/home/equipment"
                   class="block px-4 py-2.5 text-sm text-gray-300 hover:bg-blue-600/20 hover:text-white transition-colors border-b border-white/5"
                 >
-                  Equipment &amp; Certificates
+                  Equipment &amp; Services
                 </router-link>
                 <router-link
                   to="/home/market"
