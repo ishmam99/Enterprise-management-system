@@ -26,7 +26,13 @@ onMounted(() => {
       'manager-cs',
       'vp-cs',
       'executive-cs',
-      'director-cs'
+      'director-cs',
+      'crm-director',
+      'crm-executive',
+      'crm-manager',
+      'marketing-director',
+      'marketing-executive',
+      'marketing-manager',
     ].includes(authStore.role)
   ) {
     router.push({ name: 'errors-not-authorized' })
