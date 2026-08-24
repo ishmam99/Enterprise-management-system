@@ -1,31 +1,33 @@
 <template>
-  <div class="bg-slate-950 text-white min-h-screen">
+  <div class="bg-slate-50 text-slate-900 min-h-screen">
     <!-- Hero Section -->
     <section class="relative overflow-hidden">
-      <!-- Background gradient -->
-      <div class="absolute inset-0 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950"></div>
-      <div class="absolute inset-0 opacity-10 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-blue-500/20 via-transparent to-transparent"></div>
+      <!-- Background -->
+      <div class="absolute inset-0 bg-gradient-to-br from-slate-100 via-white to-blue-50/50"></div>
+      <div class="absolute inset-0 opacity-30 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-blue-400/20 via-transparent to-transparent"></div>
       
       <!-- Decorative lines -->
       <div class="absolute inset-0 overflow-hidden">
-        <div class="absolute top-1/4 left-0 w-1/3 h-px bg-gradient-to-r from-transparent via-blue-500/30 to-transparent"></div>
-        <div class="absolute bottom-1/4 right-0 w-1/2 h-px bg-gradient-to-r from-transparent via-blue-400/20 to-transparent"></div>
+        <div class="absolute top-1/4 left-0 w-1/3 h-px bg-gradient-to-r from-transparent via-blue-400/30 to-transparent"></div>
+        <div class="absolute bottom-1/4 right-0 w-1/2 h-px bg-gradient-to-r from-transparent via-blue-300/20 to-transparent"></div>
+        <div class="absolute top-1/3 right-0 w-24 h-24 rounded-full bg-blue-400/5 blur-3xl"></div>
+        <div class="absolute bottom-1/4 left-0 w-32 h-32 rounded-full bg-blue-500/5 blur-3xl"></div>
       </div>
 
       <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-28 lg:py-36">
         <div class="text-center max-w-4xl mx-auto">
           <div class="inline-block mb-4">
-            <span class="text-xs font-semibold tracking-[0.3em] uppercase text-blue-400 bg-blue-500/10 border border-blue-500/20 px-4 py-2 rounded-full">
+            <span class="text-xs font-semibold tracking-[0.3em] uppercase text-blue-700 bg-blue-50 border border-blue-200/50 px-4 py-2 rounded-full">
               Customers &amp; Partners
             </span>
           </div>
           
-          <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight mb-6">
+          <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight mb-6 text-slate-900">
             Trusted by the Teams Behind
-            <span class="bg-gradient-to-r from-blue-400 via-blue-300 to-sky-400 bg-clip-text text-transparent">Mission-Critical Systems</span>
+            <span class="bg-gradient-to-r from-blue-600 via-blue-500 to-sky-500 bg-clip-text text-transparent">Mission-Critical Systems</span>
           </h1>
           
-          <p class="text-lg sm:text-xl text-slate-400 max-w-3xl mx-auto leading-relaxed">
+          <p class="text-lg sm:text-xl text-slate-600 max-w-3xl mx-auto leading-relaxed">
             Vermont Composites supports demanding aerospace, defense, space, and medical applications through advanced composite manufacturing and engineering expertise.
           </p>
         </div>
@@ -34,7 +36,7 @@
 
     <!-- Industry Filtering -->
     <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-8 relative z-10">
-      <div class="bg-slate-900/80 backdrop-blur-sm border border-slate-800/60 rounded-2xl p-4 md:p-6">
+      <div class="bg-white/90 backdrop-blur-sm border border-slate-200/80 rounded-2xl p-4 md:p-6 shadow-lg shadow-slate-200/50">
         <div class="flex flex-wrap items-center justify-center gap-2 md:gap-3">
           <button
             v-for="industry in industries"
@@ -42,8 +44,8 @@
             @click="activeIndustry = industry"
             class="px-4 md:px-6 py-2 rounded-full text-sm font-medium transition-all duration-300"
             :class="activeIndustry === industry 
-              ? 'bg-blue-600 text-white shadow-lg shadow-blue-600/25 ring-1 ring-blue-400/50' 
-              : 'text-slate-400 hover:text-white hover:bg-slate-800 border border-transparent hover:border-slate-700'"
+              ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/30 ring-1 ring-blue-400/50' 
+              : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100 border border-transparent hover:border-slate-200'"
           >
             {{ industry }}
           </button>
@@ -54,10 +56,10 @@
     <!-- Our Customers Section -->
     <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24">
       <div class="text-center mb-12 md:mb-16">
-        <h2 class="text-3xl md:text-4xl font-bold tracking-tight mb-4">
-          Our <span class="text-blue-400">Customers</span>
+        <h2 class="text-3xl md:text-4xl font-bold tracking-tight mb-4 text-slate-900">
+          Our <span class="text-blue-600">Customers</span>
         </h2>
-        <p class="text-slate-400 max-w-2xl mx-auto text-lg">
+        <p class="text-slate-600 max-w-2xl mx-auto text-lg">
           We work with organizations operating at the highest levels of aerospace, defense, space, and medical technology.
         </p>
         <div class="w-20 h-1 bg-gradient-to-r from-blue-600 to-sky-400 rounded-full mx-auto mt-4"></div>
@@ -71,22 +73,22 @@
         <div
           v-for="customer in filteredCustomers"
           :key="customer.name"
-          class="group bg-gradient-to-br from-slate-900/90 to-slate-800/50 backdrop-blur-sm border border-slate-800/60 hover:border-blue-500/40 rounded-2xl p-6 md:p-8 transition-all duration-500 hover:-translate-y-1 shadow-xl hover:shadow-2xl hover:shadow-blue-500/5"
+          class="group bg-white border border-slate-200/80 hover:border-blue-300/60 rounded-2xl p-6 md:p-8 transition-all duration-500 hover:-translate-y-1 shadow-md hover:shadow-xl hover:shadow-blue-500/10"
         >
           <!-- Logo/Icon -->
-          <div class="flex items-center justify-center w-16 h-16 rounded-xl bg-slate-800/80 border border-slate-700/50 mb-5 group-hover:border-blue-500/30 transition-colors duration-300">
-            <span class="text-2xl font-bold text-blue-400 group-hover:text-blue-300 transition-colors">
+          <div class="flex items-center justify-center w-16 h-16 rounded-xl bg-blue-50 border border-blue-200/60 mb-5 group-hover:border-blue-300/80 transition-colors duration-300">
+            <span class="text-2xl font-bold text-blue-600 group-hover:text-blue-500 transition-colors">
               {{ customer.name.charAt(0) }}
             </span>
           </div>
 
           <!-- Customer Name -->
-          <h3 class="text-xl font-bold text-white mb-1 group-hover:text-blue-300 transition-colors">
+          <h3 class="text-xl font-bold text-slate-900 mb-1 group-hover:text-blue-600 transition-colors">
             {{ customer.name }}
           </h3>
           
           <!-- Industry -->
-          <div class="inline-block bg-blue-500/10 border border-blue-500/20 rounded-full px-3 py-0.5 text-xs font-medium text-blue-400 mb-4">
+          <div class="inline-block bg-blue-50 border border-blue-200/60 rounded-full px-3 py-0.5 text-xs font-medium text-blue-700 mb-4">
             {{ customer.industry }}
           </div>
 
@@ -97,7 +99,7 @@
               <span
                 v-for="program in customer.programs"
                 :key="program"
-                class="text-xs bg-slate-800/80 border border-slate-700/50 rounded-full px-3 py-1 text-slate-300"
+                class="text-xs bg-slate-100 border border-slate-200 rounded-full px-3 py-1 text-slate-700"
               >
                 {{ program }}
               </span>
@@ -105,7 +107,7 @@
           </div>
 
           <!-- Relationship -->
-          <p class="text-sm text-slate-400 leading-relaxed mb-5 line-clamp-3">
+          <p class="text-sm text-slate-600 leading-relaxed mb-5 line-clamp-3">
             {{ customer.relationship }}
           </p>
 
@@ -115,7 +117,7 @@
             :href="customer.website"
             target="_blank"
             rel="noopener noreferrer"
-            class="inline-flex items-center text-sm font-medium text-blue-400 hover:text-blue-300 transition-colors group"
+            class="inline-flex items-center text-sm font-medium text-blue-600 hover:text-blue-700 transition-colors group"
           >
             Explore Customer
             <svg class="w-4 h-4 ml-2 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -127,7 +129,7 @@
 
       <!-- Empty State -->
       <div v-else class="text-center py-12">
-        <p class="text-slate-400">No customers found for this category.</p>
+        <p class="text-slate-500">No customers found for this category.</p>
       </div>
     </section>
 
@@ -135,25 +137,26 @@
     <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16 md:pb-24">
       <div 
         v-if="featuredCustomer"
-        class="relative overflow-hidden bg-gradient-to-br from-slate-900 to-slate-800/60 border border-slate-800/60 rounded-3xl p-8 md:p-12 lg:p-16"
+        class="relative overflow-hidden bg-white border border-slate-200/80 rounded-3xl p-8 md:p-12 lg:p-16 shadow-lg shadow-slate-200/50"
       >
         <!-- Decorative background -->
-        <div class="absolute top-0 right-0 w-1/3 h-full bg-gradient-to-l from-blue-500/5 to-transparent"></div>
-        <div class="absolute bottom-0 left-0 w-1/4 h-1/2 bg-gradient-to-t from-blue-400/5 to-transparent"></div>
+        <div class="absolute top-0 right-0 w-1/3 h-full bg-gradient-to-l from-blue-50/40 to-transparent"></div>
+        <div class="absolute bottom-0 left-0 w-1/4 h-1/2 bg-gradient-to-t from-blue-50/30 to-transparent"></div>
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 rounded-full bg-blue-400/5 blur-3xl"></div>
         
         <div class="relative grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
           <div>
             <div class="flex items-center gap-3 mb-3">
-              <span class="text-xs font-semibold tracking-[0.2em] uppercase text-blue-400 bg-blue-500/10 border border-blue-500/20 rounded-full px-4 py-1.5">
+              <span class="text-xs font-semibold tracking-[0.2em] uppercase text-blue-700 bg-blue-50 border border-blue-200/60 rounded-full px-4 py-1.5">
                 Featured Partner
               </span>
             </div>
             
-            <h3 class="text-3xl md:text-4xl font-bold tracking-tight mb-3">
+            <h3 class="text-3xl md:text-4xl font-bold tracking-tight mb-3 text-slate-900">
               {{ featuredCustomer.name }}
             </h3>
             
-            <div class="inline-block bg-blue-500/10 border border-blue-500/20 rounded-full px-3 py-0.5 text-sm font-medium text-blue-400 mb-4">
+            <div class="inline-block bg-blue-50 border border-blue-200/60 rounded-full px-3 py-0.5 text-sm font-medium text-blue-700 mb-4">
               {{ featuredCustomer.industry }}
             </div>
 
@@ -161,13 +164,13 @@
               <span
                 v-for="program in featuredCustomer.programs"
                 :key="program"
-                class="text-sm bg-slate-800/80 border border-slate-700/50 rounded-full px-4 py-1.5 text-slate-300"
+                class="text-sm bg-slate-100 border border-slate-200 rounded-full px-4 py-1.5 text-slate-700"
               >
                 {{ program }}
               </span>
             </div>
 
-            <p class="text-slate-300 leading-relaxed mb-6 max-w-xl">
+            <p class="text-slate-600 leading-relaxed mb-6 max-w-xl">
               {{ featuredCustomer.relationship }}
             </p>
 
@@ -175,7 +178,7 @@
               :href="featuredCustomer.website"
               target="_blank"
               rel="noopener noreferrer"
-              class="inline-flex items-center px-6 py-3 bg-blue-600 hover:bg-blue-500 text-white font-medium rounded-lg transition-all duration-300 shadow-lg shadow-blue-600/25 hover:shadow-blue-500/40 hover:-translate-y-0.5"
+              class="inline-flex items-center px-6 py-3 bg-blue-600 hover:bg-blue-500 text-white font-medium rounded-lg transition-all duration-300 shadow-lg shadow-blue-500/30 hover:shadow-blue-400/50 hover:-translate-y-0.5"
             >
               Learn More
               <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -185,10 +188,10 @@
           </div>
 
           <div class="hidden lg:flex items-center justify-center">
-            <div class="w-full aspect-square max-w-md rounded-2xl bg-gradient-to-br from-blue-600/10 via-slate-800/50 to-slate-900/80 border border-slate-700/50 flex items-center justify-center">
+            <div class="w-full aspect-square max-w-md rounded-2xl bg-gradient-to-br from-blue-100/60 via-slate-100/50 to-white border border-slate-200/60 flex items-center justify-center">
               <div class="text-center p-8">
-                <span class="text-7xl font-bold text-blue-400/30">{{ featuredCustomer.name.charAt(0) }}</span>
-                <p class="text-slate-500 text-sm mt-4">Premium Composite Solutions</p>
+                <span class="text-7xl font-bold text-blue-600/20">{{ featuredCustomer.name.charAt(0) }}</span>
+                <p class="text-slate-400 text-sm mt-4">Premium Composite Solutions</p>
               </div>
             </div>
           </div>
@@ -199,10 +202,10 @@
     <!-- Selected Programs Section -->
     <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16 md:pb-24">
       <div class="text-center mb-12">
-        <h2 class="text-3xl md:text-4xl font-bold tracking-tight mb-4">
-          Selected <span class="text-blue-400">Programs</span>
+        <h2 class="text-3xl md:text-4xl font-bold tracking-tight mb-4 text-slate-900">
+          Selected <span class="text-blue-600">Programs</span>
         </h2>
-        <p class="text-slate-400 max-w-2xl mx-auto">
+        <p class="text-slate-600 max-w-2xl mx-auto">
           These mission-critical platforms demonstrate the caliber of programs associated with Vermont Composites' customer relationships.
         </p>
         <div class="w-20 h-1 bg-gradient-to-r from-blue-600 to-sky-400 rounded-full mx-auto mt-4"></div>
@@ -212,42 +215,45 @@
         <div
           v-for="program in referencePrograms"
           :key="program.name"
-          class="bg-slate-900/60 border border-slate-800/60 hover:border-blue-500/30 rounded-xl p-5 text-center transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-blue-500/5"
+          class="bg-white border border-slate-200/80 hover:border-blue-300/60 rounded-xl p-5 text-center transition-all duration-300 hover:-translate-y-0.5 shadow-sm hover:shadow-md hover:shadow-blue-500/5"
         >
-          <div class="text-sm font-medium text-slate-300">{{ program.name }}</div>
-          <div class="text-xs text-slate-500 mt-1">{{ program.category }}</div>
+          <div class="text-sm font-medium text-slate-700">{{ program.name }}</div>
+          <div class="text-xs text-slate-400 mt-1">{{ program.category }}</div>
         </div>
       </div>
     </section>
 
     <!-- Final CTA -->
     <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16 md:pb-24">
-      <div class="relative overflow-hidden bg-gradient-to-br from-blue-950/40 via-slate-900 to-slate-950/80 border border-blue-500/20 rounded-3xl p-8 md:p-12 lg:p-16 text-center">
+      <div class="relative overflow-hidden bg-gradient-to-br from-blue-50/80 via-slate-50 to-white border border-blue-200/50 rounded-3xl p-8 md:p-12 lg:p-16 text-center shadow-lg shadow-blue-500/5">
         <!-- Decorative elements -->
-        <div class="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-blue-500/50 to-transparent"></div>
-        <div class="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-blue-400/30 to-transparent"></div>
+        <div class="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-blue-400/30 to-transparent"></div>
+        <div class="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-blue-300/20 to-transparent"></div>
+        <div class="absolute top-0 right-0 w-64 h-64 rounded-full bg-blue-400/5 blur-3xl"></div>
+        <div class="absolute bottom-0 left-0 w-64 h-64 rounded-full bg-blue-500/5 blur-3xl"></div>
         
-        <h3 class="text-2xl md:text-3xl lg:text-4xl font-bold tracking-tight mb-4">
-          Building the Next Generation of <span class="text-blue-400">Mission-Critical Systems</span>?
+        <h3 class="text-2xl md:text-3xl lg:text-4xl font-bold tracking-tight mb-4 text-slate-900 relative">
+          Building the Next Generation of <span class="text-blue-600">Mission-Critical Systems</span>?
         </h3>
         
-        <p class="text-slate-400 max-w-2xl mx-auto mb-8 text-lg">
+        <p class="text-slate-600 max-w-2xl mx-auto mb-8 text-lg relative">
           Talk with Vermont Composites about your next advanced composite manufacturing challenge.
         </p>
 
-        <div class="flex flex-wrap items-center justify-center gap-4">
-          <a
+        <div class="flex flex-wrap items-center justify-center gap-4 relative">
+          <router-link
+          to="/home/contactView"
             href="#"
-            class="px-8 py-3.5 bg-blue-600 hover:bg-blue-500 text-white font-medium rounded-lg transition-all duration-300 shadow-lg shadow-blue-600/30 hover:shadow-blue-500/50 hover:-translate-y-0.5"
+            class="px-8 py-3.5 bg-blue-600 hover:bg-blue-500 text-white font-medium rounded-lg transition-all duration-300 shadow-lg shadow-blue-500/30 hover:shadow-blue-400/50 hover:-translate-y-0.5"
           >
             Contact Our Team
-          </a>
-          <a
-            href="#"
-            class="px-8 py-3.5 bg-slate-800/80 hover:bg-slate-700/80 border border-slate-700/60 text-white font-medium rounded-lg transition-all duration-300 hover:-translate-y-0.5"
+          </router-link>
+          <router-link
+            to="/home/composite"
+            class="px-8 py-3.5 bg-white hover:bg-slate-50 border border-slate-300/80 text-slate-700 font-medium rounded-lg transition-all duration-300 hover:-translate-y-0.5 hover:border-blue-300/50"
           >
             Explore Capabilities
-          </a>
+          </router-link>
         </div>
       </div>
     </section>
@@ -259,7 +265,7 @@ import { ref, computed } from 'vue'
 
 const activeIndustry = ref('All')
 
-const industries = ['All', 'Aerospace & Defense', 'Space', 'Medical']
+const industries = ['All', 'Aerospace & Defense', 'Medical', 'Automotive']
 
 // Verified Customers based on research
 const customers = [
