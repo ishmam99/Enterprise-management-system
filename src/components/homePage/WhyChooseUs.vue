@@ -160,11 +160,11 @@
 
       <!-- Bottom CTA -->
       <div class="text-center mt-12">
-        <button
+        <router-link to="/home/contactView"
           class="bg-blue-600 hover:bg-blue-700 text-white px-10 py-4 rounded-xl font-bold transition shadow-lg shadow-blue-600/30"
         >
           Get In Touch
-        </button>
+        </router-link>
       </div>
     </div>
 

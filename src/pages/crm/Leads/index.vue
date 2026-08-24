@@ -1,5 +1,6 @@
 <script setup>
 import { ref, onMounted, reactive, watch, computed } from 'vue'
+import { onClickOutside } from '@vueuse/core'
 import { useAuthStore } from '@/stores/AuthStore'
 import Breadcrumb from '@/components/Breadcrumb.vue'
 import api from '@/config/api'
@@ -22,7 +23,16 @@ const toast = reactive({
   message: '',
   type: 'success'
 })
+const showDropdown = ref(false)
+const dropdownRef = ref(null)
 
+const toggleDropdown = () => {
+  showDropdown.value = !showDropdown.value
+}
+
+onClickOutside(dropdownRef, () => {
+  showDropdown.value = false
+})
 const showToast = (message, type = 'success') => {
   toast.show = true
   toast.message = message
@@ -77,6 +87,7 @@ const goToPage = (page) => {
 watch(perPage, () => {
   fetchLeads(1)
 })
+
 
 //mass update by Rasik 😎
 const showMassModal = ref(false)
@@ -143,13 +154,22 @@ const submitMassUpdate = async () => {
 
 //mass assign by Rasik 😎
 const getManagerName = (lead) => {
-  const manager = lead.assignments?.find((a) => a.role === 'sales-manager')
+  const manager = lead.assignments?.find((a) => a.role === 'manager-sales')
   return manager?.user?.name || null
 }
 
 const getExecutiveName = (lead) => {
   const exec = lead.assignments?.find((a) => a.role === 'sales-executive')
   return exec?.user?.name || null
+}
+const getMarketingManagerName = (lead) => {
+  const marketing_manager = lead.assignments?.find((a) => a.role === 'marketing-manager')
+  return marketing_manager?.user?.name || null
+}
+
+const getCsExecutiveName = (lead) => {
+  const cs_exec = lead.assignments?.find((a) => a.role === 'marketing-executive')
+  return cs_exec?.user?.name || null
 }
 const showMassAssignModal = ref(false)
 const selectedAssignRole = ref('') // 'manager' or 'executive'
@@ -158,6 +178,8 @@ const assignLoading = ref(false)
 
 const executives = ref([])
 const managers = ref([])
+const marketing_executives = ref([])
+const marketing_managers = ref([])
 
 const fetchExecutives = async () => {
   try {
@@ -173,9 +195,31 @@ const fetchExecutives = async () => {
 const fetchManagers = async () => {
   try {
     const { data } = await api().get(
-      `/users?where=[{"column":"role","operator":"=","value":"sales-manager"}]`
+      `/users?where=[{"column":"role","operator":"=","value":"manager-sales"}]`
     )
     managers.value = data.data
+  } catch (e) {
+    console.log(e)
+  }
+}
+
+const fetchMarketingExecutives = async () => {
+  try {
+    const { data } = await api().get(
+      `/users?where=[{"column":"role","operator":"=","value":"marketing-executive"}]`
+    )
+    marketing_executives.value = data.data
+  } catch (e) {
+    console.log(e)
+  }
+}
+
+const fetchMarketingManagers = async () => {
+  try {
+    const { data } = await api().get(
+      `/users?where=[{"column":"role","operator":"=","value":"marketing-manager"}]`
+    )
+    marketing_managers.value = data.data
   } catch (e) {
     console.log(e)
   }
@@ -189,8 +233,12 @@ const openMassAssignModal = async (roleType) => {
 
   if (roleType === 'manager') {
     await fetchManagers()
-  } else {
+  } else if (roleType === 'executive') {
     await fetchExecutives()
+  } else if (roleType === 'marketing_manager') {
+    await fetchMarketingManagers()
+  } else if (roleType === 'marketing_executive') {
+    await fetchMarketingExecutives()
   }
 }
 
@@ -207,11 +255,19 @@ const submitMassAssign = async () => {
   // Correct role + permission mapping
   const roleMap = {
     manager: {
-      role: 'sales-manager',
+      role: 'manager-sales',
       permission: 'edit'
     },
     executive: {
       role: 'sales-executive',
+      permission: 'view'
+    },
+    marketing_manager: {
+      role: 'marketing-manager',
+      permission: 'edit'
+    },
+    marketing_executive: {
+      role: 'marketing-executive',
       permission: 'view'
     }
   }
@@ -282,7 +338,7 @@ const submitImport = async () => {
 }
 
 onMounted(async () => {
-  await Promise.all([fetchFields(), fetchLeads(), fetchExecutives(), fetchManagers(), getViews()])
+  await Promise.all([fetchFields(), fetchLeads(), fetchExecutives(), fetchManagers(), fetchMarketingManagers(), fetchMarketingExecutives(), getViews()])
 })
 </script>
 
@@ -324,108 +380,136 @@ onMounted(async () => {
           </div>
 
           <div class="flex items-center gap-2">
-            <div class="grid grid-cols-5 gap-2">
-              <button @click="openImportModal" class="btn btn-sm bg-cyan-500 text-white">
+            <div class="grid grid-cols-3 gap-2">
+              <button @click="openImportModal" class="btn btn-sm bg-cyan-500 text-white px-2">
                 Import from Excel
               </button>
               <router-link to="/crm/leads/create" class="btn btn-sm btn-primary text-white">
                 Create New Lead
               </router-link>
-              <button
-                class="bg-sky-600 px-4 rounded text-sm font-semibold hover:bg-sky-700 text-white disabled:opacity-50 disabled:cursor-not-allowed"
-                @click="openMassUpdate"
-                :disabled="selectedIds.length === 0"
-              >
-                Mass Update
-              </button>
-              <button
-                class="bg-teal-600 px-4 py-1 rounded text-sm font-semibold hover:bg-teal-700 text-white disabled:opacity-50 disabled:cursor-not-allowed"
-                @click="openMassAssignModal('manager')"
-                :disabled="selectedIds.length === 0"
-              >
-                Mass Assign Manager
-              </button>
+             
+              <!-- Mass Actions Dropdown -->
+              <div class="relative" ref="dropdownRef">
+                <button @click="toggleDropdown" :disabled="selectedIds.length === 0"
+                  class="bg-indigo-600 flex items-center gap-2 rounded text-sm px-3 py-1.5 font-semibold hover:bg-indigo-700 text-white disabled:opacity-50">
+                  Mass Actions
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path d="M19 9l-7 7-7-7" />
+                  </svg>
+                </button>
 
-              <button
-                class="bg-pink-600 px-4 py-1 rounded text-sm font-semibold hover:bg-pink-700 text-white disabled:opacity-50 disabled:cursor-not-allowed"
-                @click="openMassAssignModal('executive')"
-                :disabled="selectedIds.length === 0"
-              >
-                Mass Assign Executive
-              </button>
+                <!-- Dropdown -->
+                <div v-if="showDropdown"
+                  class="absolute right-0 mt-2 w-72 bg-white border border-gray-200 rounded-lg shadow-lg z-50">
+                  <button @click="openMassUpdate" class="w-full text-left px-4 py-2 text-sm hover:bg-gray-100">
+                    🔄 Mass Update
+                  </button>
+
+                  <div class="border-t my-1"></div>
+
+                  <button @click="openMassAssignModal('marketing_manager')"
+                    class="w-full text-left px-4 py-2 text-sm hover:bg-gray-100">
+                    👤 Assign Markting Manager
+                  </button>
+
+                  <button @click="openMassAssignModal('marketing_executive')"
+                    class="w-full text-left px-4 py-2 text-sm hover:bg-gray-100">
+                    👥 Assign Marketing Executive
+                  </button>
+
+                  <div class="border-t my-1"></div>
+
+                  <button @click="openMassAssignModal('manager')"
+                    class="w-full text-left px-4 py-2 text-sm hover:bg-gray-100">
+                    💼 Assign Sales Manager
+                  </button>
+
+                  <button @click="openMassAssignModal('executive')"
+                    class="w-full text-left px-4 py-2 text-sm hover:bg-gray-100">
+                    📈 Assign Sales Executive
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
 
         <!-- MASS ASSIGN MODAL -->
-        <div
-          v-if="showMassAssignModal"
-          class="fixed inset-0 bg-black/40 flex items-center justify-center z-50"
-        >
+        <div v-if="showMassAssignModal" class="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
           <div class="bg-white w-full max-w-lg rounded-xl shadow-2xl animate-fadeIn">
             <!-- Header -->
             <div class="px-6 py-4 border-b flex justify-between items-center">
               <h2 class="text-xl font-semibold text-gray-800">
-                Assign {{ selectedAssignRole === 'manager' ? 'Manager' : 'Executive' }}
+                Assign
+                {{
+                  selectedAssignRole === 'manager'
+                    ? 'Sales Manager'
+                    : selectedAssignRole === 'executive'
+                      ? 'Sales Executive'
+                      : selectedAssignRole === 'marketing_manager'
+                        ? 'Marketing Manager'
+                        : 'Marketing Executive'
+                }}
               </h2>
               <button @click="closeMassAssign" class="text-xl">&times;</button>
             </div>
 
             <!-- Body -->
             <div class="px-6 py-5 space-y-4">
-              <label class="text-sm font-medium text-gray-700"
-                >Select {{ selectedAssignRole === 'manager' ? 'Manager' : 'Executive' }}</label
-              >
+              <label class="text-sm font-medium text-gray-700">Select
+                {{
+                  selectedAssignRole === 'manager'
+                    ? 'Sales Manager'
+                    : selectedAssignRole === 'executive'
+                      ? 'Sales Executive'
+                      : selectedAssignRole === 'marketing_manager'
+                        ? 'Marketing Manager'
+                        : 'Marketing Executive'
+                }}</label>
 
-              <select
-                v-model="assignUserId"
-                class="w-full border px-3 py-2 rounded-lg focus:ring-2 focus:ring-indigo-500"
-              >
+              <select v-model="assignUserId"
+                class="w-full border px-3 py-2 rounded-lg focus:ring-2 focus:ring-indigo-500">
                 <option value="" disabled>
-                  Select {{ selectedAssignRole === 'manager' ? 'Manager' : 'Executive' }}
+                  Select
+                  {{
+                    selectedAssignRole === 'manager'
+                      ? 'Sales Manager'
+                      : selectedAssignRole === 'executive'
+                        ? 'Sales Executive'
+                        : selectedAssignRole === 'marketing_manager'
+                          ? 'Marketing Manager'
+                          : 'Marketing Executive'
+                  }}
                 </option>
 
-                <option
-                  v-for="user in selectedAssignRole === 'manager' ? managers : executives"
-                  :key="user.id"
-                  :value="user.id"
-                >
-                  {{ user.name }} — {{ user.email }} 
+                <option v-for="user in selectedAssignRole === 'manager'
+                  ? managers
+                  : selectedAssignRole === 'executive'
+                    ? executives
+                    : selectedAssignRole === 'marketing_manager'
+                      ? marketing_managers
+                      : selectedAssignRole === 'marketing_executive'
+                        ? marketing_executives
+                        : []" :key="user.id" :value="user.id">
+                  {{ user.name }} — {{ user.email }}
                 </option>
               </select>
             </div>
 
             <!-- Footer -->
             <div class="px-6 py-4 border-t bg-gray-50 flex justify-end gap-3">
-              <button
-                @click="closeMassAssign"
-                class="px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300"
-              >
+              <button @click="closeMassAssign" class="px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300">
                 Cancel
               </button>
 
-              <button
-                @click="submitMassAssign"
-                :disabled="!assignUserId || assignLoading"
-                class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 disabled:opacity-50 flex items-center gap-2"
-              >
+              <button @click="submitMassAssign" :disabled="!assignUserId || assignLoading"
+                class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 disabled:opacity-50 flex items-center gap-2">
                 <span v-if="!assignLoading">Assign</span>
 
                 <span v-else class="flex items-center gap-2">
                   <svg class="animate-spin h-5 w-5" viewBox="0 0 24 24">
-                    <circle
-                      class="opacity-20"
-                      cx="12"
-                      cy="12"
-                      r="10"
-                      stroke="currentColor"
-                      stroke-width="4"
-                    />
-                    <path
-                      class="opacity-80"
-                      fill="currentColor"
-                      d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
-                    />
+                    <circle class="opacity-20" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" />
+                    <path class="opacity-80" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z" />
                   </svg>
                   Assigning…
                 </span>
@@ -508,38 +592,27 @@ onMounted(async () => {
           <table class="min-w-full divide-y divide-gray-200 table-zebra">
             <thead class="bg-gradient-to-r from-emerald-50 to-teal-50">
               <tr>
-                <th
-                  class="px-6 py-4 text-left border-x font-bold text-emerald-700 uppercase tracking-wider"
-                >
-                  <input
-                    type="checkbox"
-                    class="w-4 h-4 cursor-pointer"
-                    :checked="selectedIds.length === leads.length"
-                    @change="toggleAll($event)"
-                  />
+                <th class="px-6 py-2 text-left border-x font-bold text-emerald-700 uppercase tracking-wider">
+                  <input type="checkbox" class="w-4 h-4 cursor-pointer" :checked="selectedIds.length === leads.length"
+                    @change="toggleAll($event)" />
                 </th>
                 <th
-                  class="px-6 py-4 text-left border-x font-bold text-xs text-emerald-700 uppercase tracking-wider"
-                >
-                  Assigned Manager
+                  class="px-6 py-2 text-nowrap text-left border-x font-bold text-xs text-emerald-700 uppercase tracking-wider">
+                  Assigned Marketing Person
                 </th>
                 <th
-                  class="px-6 py-4 text-left border-x font-bold text-xs text-emerald-700 uppercase tracking-wider"
-                >
-                  Assigned Executive
+                  class="px-6 py-2 text-left text-nowrap border-x font-bold text-xs text-emerald-700 uppercase tracking-wider">
+                  Assigned Sales Person
                 </th>
-                <th
-                  v-for="field in fields"
-                  :key="field.id"
-                  class="px-6 py-4 text-nowrap text-left text-xs border-e font-bold text-emerald-700 uppercase tracking-wider"
-                >
+                <th v-for="field in fields" :key="field.id"
+                  class="px-6 py-2 text-nowrap text-left text-xs border-e font-bold text-emerald-700 uppercase tracking-wider">
                   {{ field.label }}
                 </th>
               </tr>
             </thead>
             <tbody class="bg-white divide-y divide-gray-100">
               <tr v-if="isLoading" class="hover:bg-emerald-50 transition-colors">
-                <td colspan="16" class="px-6 py-8 text-center text-gray-500">
+                <td colspan="8" class="px-6 py-8 text-center text-gray-500">
                   <div class="flex items-center justify-center gap-3">
                     <Icon name="eos-icons:loading" class="w-8 h-8 text-emerald-500 animate-spin" />
                     <span class="text-lg">Loading leads...</span>
@@ -547,27 +620,22 @@ onMounted(async () => {
                 </td>
               </tr>
               <tr v-else-if="leads.length === 0" class="hover:bg-emerald-50 transition-colors">
-                <td colspan="10" class="px-6 py-12 text-center text-gray-500">
+                <td colspan="8" class="px-6 py-12 text-center text-gray-500">
                   <div class="flex flex-col items-center gap-4">
                     <div class="relative">
-                      <div
-                        class="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center"
-                      >
+                      <div class="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center">
                         <Icon name="material-symbols:person" class="w-12 h-12 text-gray-400" />
                       </div>
                       <div
-                        class="absolute -bottom-2 -right-2 w-8 h-8 bg-emerald-100 rounded-full flex items-center justify-center"
-                      >
+                        class="absolute -bottom-2 -right-2 w-8 h-8 bg-emerald-100 rounded-full flex items-center justify-center">
                         <Icon name="material-symbols:settings" class="w-5 h-5 text-emerald-600" />
                       </div>
                     </div>
                     <div class="text-center">
                       <h3 class="text-xl font-semibold text-gray-700 mb-2">No leads found</h3>
                       <p class="text-gray-500 mb-4">Get started by creating your first Lead</p>
-                      <router-link
-                        to="/crm/leads/create"
-                        class="bg-gradient-to-r from-emerald-500 to-teal-600 text-white px-6 py-3 rounded-xl hover:from-emerald-600 hover:to-teal-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 flex items-center gap-2 mx-auto"
-                      >
+                      <router-link to="/crm/leads/create"
+                        class="bg-gradient-to-r from-emerald-500 to-teal-600 text-white px-6 py-3 rounded-xl hover:from-emerald-600 hover:to-teal-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 flex items-center gap-2 mx-auto">
                         <Icon name="material-symbols:add" class="w-5 h-5" />
                         + Create Lead
                       </router-link>
@@ -575,54 +643,63 @@ onMounted(async () => {
                   </div>
                 </td>
               </tr>
-              <tr
-                v-else
-                v-for="(lead, index) in leads"
-                :key="lead.id"
-                class="hover:bg-gradient-to-r hover:from-emerald-50 hover:to-teal-50 transition-all duration-300"
-              >
-                <td class="px-6 py-4 whitespace-nowrap">
-                  <input
-                    type="checkbox"
-                    class="w-4 h-4 cursor-pointer"
-                    :value="lead.id"
-                    :checked="selectedIds.includes(lead.id)"
-                    @change="toggleSelection(lead.id, $event)"
-                  />
+              <tr v-else v-for="(lead, index) in leads" :key="lead.id"
+                class="hover:bg-gradient-to-r hover:from-emerald-50 hover:to-teal-50 transition-all duration-300">
+                <td class="px-6 py-1 whitespace-nowrap">
+                  <input type="checkbox" class="w-4 h-4 cursor-pointer" :value="lead.id"
+                    :checked="selectedIds.includes(lead.id)" @change="toggleSelection(lead.id, $event)" />
                 </td>
 
-                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-medium">
+                <td class="px-6 py-1 whitespace-nowrap text-sm text-gray-600 font-medium">
                   <div class="flex flex-col gap-1 p-1">
                     <span class="border px-2 rounded border-emerald-600 text-emerald-600">
-                      {{ getManagerName(lead) || 'Not Assigned' }}</span
-                    >
-                  
+                      <router-link :to="{
+                        name: 'crm-Leads-leadsDetails-id',
+                        params: { id: lead.id }
+                      }">
+                        Manager: {{ getMarketingManagerName(lead) || 'Not Assigned' }}
+                      </router-link>
+                    </span>
+                    <span class="border px-2 rounded border-emerald-600 text-emerald-600">
+                      <router-link :to="{
+                        name: 'crm-Leads-leadsDetails-id',
+                        params: { id: lead.id }
+                      }">
+                        Executive: {{ getCsExecutiveName(lead) || 'Not Assigned' }}
+                      </router-link>
+                    </span>
                   </div>
                 </td>
-                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-medium">
+                <td class="px-6 py-1 whitespace-nowrap text-sm text-gray-600 font-medium">
                   <div class="flex flex-col gap-1 p-1">
-                    
-                    <span class="border px-2 rounded text-violet-600 border-violet-600"
-                      >{{ getExecutiveName(lead) || 'Not Assigned' }}</span
-                    >
+                    <span class="border px-2 rounded text-violet-600 border-violet-600">
+                      <router-link :to="{
+                        name: 'crm-Leads-leadsDetails-id',
+                        params: { id: lead.id }
+                      }">
+                        Manager: {{ getManagerName(lead) || 'Not Assigned' }}
+                      </router-link>
+                    </span>
+                    <span class="border px-2 rounded text-violet-600 border-violet-600">
+                      <router-link :to="{
+                        name: 'crm-Leads-leadsDetails-id',
+                        params: { id: lead.id }
+                      }">
+                        Executive: {{ getExecutiveName(lead) || 'Not Assigned' }}
+                      </router-link>
+                    </span>
                   </div>
                 </td>
                 <!-- <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-medium">
                   {{ getExecutiveName(lead) || 'Not Assigned' }}
                 </td> -->
-                <td
-                  v-for="field in fields"
-                  :key="field.id"
-                  class="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-medium"
-                >
-                  <router-link
-                    :to="{
-                      name: 'crm-Leads-leadsDetails-id',
-                      params: { id: lead.id }
-                    }"
-                    class="hover:underline"
-                  >
-                    {{ lead.values.find((e) => e.field_id == field.id)?.value }}
+                <td v-for="field in fields" :key="field.id"
+                  class="px-6 py-1 whitespace-nowrap text-sm text-gray-600 font-medium">
+                  <router-link :to="{
+                    name: 'crm-Leads-leadsDetails-id',
+                    params: { id: lead.id }
+                  }" class="hover:underline">
+                    {{lead.values.find((e) => e.field_id == field.id)?.value}}
                   </router-link>
 
                   <!-- {{lead.values.find(e=>e.field_id == field.id)?.value }} -->

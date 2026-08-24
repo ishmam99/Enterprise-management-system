@@ -308,6 +308,169 @@
 
       <!-- All Sections Content -->
       <main class="px-8 pb-10 flex-1 space-y-6">
+          <!--Marketing Notes Section -->
+        <section id="Marketing-Notes"
+          class="bg-orange-100/70 shadow-sm rounded-lg p-6 w-full border border-gray-200 transition-all duration-300 hover:shadow-md">
+          <div class="flex items-start justify-between">
+            <h2 class="text-xl font-semibold mb-4 flex items-center text-gray-800">
+              <div class="bg-blue-100 p-2 rounded-lg mr-3">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-600" fill="none" viewBox="0 0 24 24"
+                  stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                </svg>
+              </div>
+              Marketing Notes
+            </h2>
+
+            <!-- <div @click="addNotes"
+              class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg flex items-center gap-2 cursor-pointer">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+              </svg>
+              {{ showForm ? 'Cancel' : 'Add Marketing Notes' }}
+            </div> -->
+          </div>
+
+          <!-- ✅ Notes list (show when form hidden) -->
+          <div v-if="!showdsdForm" class="space-y-3 text-sm bg-gray-50 p-5 rounded-lg border border-gray-100">
+            <div v-if="isLoading" class="flex justify-center items-center py-16">
+              <div class="animate-spin rounded-full h-10 w-10 border-4 border-yellow-500 border-t-transparent"></div>
+            </div>
+
+            <!-- Table -->
+            <div v-else class="overflow-x-auto">
+              <table class="min-w-full divide-y divide-gray-200 table-zebra">
+                <thead class="bg-gradient-to-r from-emerald-50 to-teal-50">
+                  <tr>
+                    <th class="px-6 py-4 text-left border-x font-bold text-emerald-700 uppercase tracking-wider">
+                      #
+                    </th>
+                    <th v-for="field in marketingNotesFieldsData" :key="field.id"
+                      class="px-6 py-4 text-left text-xs border-e font-bold text-emerald-700 uppercase tracking-wider">
+                      {{ field.name }}
+                    </th>
+                  </tr>
+                </thead>
+                <tbody class="bg-white divide-y divide-gray-100">
+                  <tr v-if="isLoading" class="hover:bg-emerald-50 transition-colors">
+                    <td colspan="16" class="px-6 py-8 text-center text-gray-500">
+                      <div class="flex items-center justify-center gap-3">
+                        <Icon name="eos-icons:loading" class="w-8 h-8 text-emerald-500 animate-spin" />
+                        <span class="text-lg">Loading Notes...</span>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr v-else-if="marketingNotesFieldsData?.length == 0" class="hover:bg-emerald-50 transition-colors">
+                    <td colspan="16" class="px-6 py-12 text-center text-gray-500">
+                      <div class="flex flex-col items-center gap-4">
+                        <div class="relative">
+                          <div class="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center">
+                            <Icon name="material-symbols:person" class="w-12 h-12 text-gray-400" />
+                          </div>
+                          <div
+                            class="absolute -bottom-2 -right-2 w-8 h-8 bg-emerald-100 rounded-full flex items-center justify-center">
+                            <Icon name="material-symbols:settings" class="w-5 h-5 text-emerald-600" />
+                          </div>
+                        </div>
+                        <div class="text-center">
+                          <h3 class="text-xl font-semibold text-gray-700 mb-2">No Notes found</h3>
+                          <!-- <p class="text-gray-500 mb-4">Get started by creating your first Notes</p>
+                          <div @click="addNotes"
+                            class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg flex items-center justify-center gap-2 cursor-pointer">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                              stroke="currentColor">
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 4v16m8-8H4" />
+                            </svg>
+                            {{ showForm ? 'Cancel' : 'Add Notes' }}
+                          </div> -->
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr v-else v-for="(lead, index) in marketingNotesData" :key="lead.id"
+                    class="hover:bg-gradient-to-r hover:from-emerald-50 hover:to-teal-50 transition-all duration-300">
+                    <td class="px-6 py-4 whitespace-nowrap">
+                      {{ index + 1 }}
+                    </td>
+                    <td v-for="field in marketingNotesFieldsData" :key="field.id"
+                      class="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-medium">
+                      <router-link :to="{
+                        name: 'sales_management-accounts-accountsDetails-id',
+                        params: { id: lead.id }
+                      }" class="hover:underline">
+                        {{lead.values.find((e) => e.field_id == field.id)?.value}}
+                      </router-link>
+
+                      <!-- {{lead.values.find(e=>e.field_id == field.id)?.value }} -->
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div v-else
+            class="w-full bg-white/60 backdrop-blur-lg rounded-2xl shadow-2xl border border-white/40 p-8 transition-transform duration-300 hover:scale-[1.001]">
+            <h2
+              class="text-4xl font-bold mb-8 text-center text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 via-blue-500 to-pink-500 tracking-tight">
+              ✨ Create New Marketing Notes
+            </h2>
+
+            <div class="w-full gap-6">
+              <div v-for="field in visibleFields" :key="field.id"
+                class="flex flex-col bg-white/40 border border-slate-200 rounded-xl p-4 shadow-sm hover:shadow-md transition-all">
+                <label class="block font-semibold mb-2 text-gray-700">
+                  {{ field.label }}
+                </label>
+
+                <input v-if="['text', 'email', 'number'].includes(field.type)" v-model="form[field.name]"
+                  :type="field.type"
+                  class="border border-slate-300 rounded-lg p-2 py-6 w-full focus:ring-2 focus:ring-indigo-400 focus:border-indigo-400 transition-all outline-none"
+                  :placeholder="`Enter ${field.label}`" />
+
+                <select v-else-if="field.type === 'select'" v-model="form[field.name]"
+                  class="border border-slate-300 rounded-lg p-2 w-full focus:ring-2 focus:ring-indigo-400 focus:border-indigo-400 transition-all outline-none bg-white">
+                  <option value="" disabled selected>Select {{ field.label }}</option>
+                  <option v-for="opt in field.options" :key="opt" :value="opt" class="capitalize">
+                    {{ opt }}
+                  </option>
+                </select>
+              </div>
+            </div>
+
+            <div class="flex items-center justify-center gap-4 my-4">
+              <!-- Save Button -->
+              <button :disabled="loading"
+                class="bg-gradient-to-r from-blue-600 to-indigo-600 w-1/4 text-white px-6 py-3 rounded-lg shadow-md hover:shadow-xl hover:scale-[1.02] transition-all disabled:opacity-70 flex items-center justify-center gap-2"
+                @click="saveMarketingNoteRecord">
+                <span v-if="loading" class="flex items-center gap-2">
+                  <svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none"
+                    viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" />
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" />
+                  </svg>
+                  Saving...
+                </span>
+                <span v-else>Save</span>
+              </button>
+
+              <!-- Add Notes / Cancel Button -->
+              <div @click="addNotes"
+                class="px-6 py-3 rounded-lg flex items-center w-1/4 justify-center gap-2 cursor-pointer text-white font-medium shadow-md hover:shadow-lg transition-all"
+                :class="showForm ? 'bg-red-500 hover:bg-red-600' : 'bg-blue-500 hover:bg-blue-600'">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                  stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    :d="showForm ? 'M6 18L18 6M6 6l12 12' : 'M12 4v16m8-8H4'" />
+                </svg>
+                {{ showForm ? 'Cancel' : 'Add Notes' }}
+              </div>
+            </div>
+          </div>
+        </section>
         <!-- Notes Section -->
         <section id="notes"
           class="bg-cyan-100/70 shadow-sm rounded-lg p-6 w-full border border-gray-200 transition-all duration-300 hover:shadow-md">
@@ -921,7 +1084,8 @@ const saveNewValue = async (field) => {
 
 const sidebarItems = [
   { key: 'overview', label: 'Company Details' },
-  { key: 'rapid', label: 'Rapid Action' },
+  // { key: 'rapid', label: 'Rapid Action' },
+  { key: 'Marketing-Notes', label: 'Marketing Notes' },
   { key: 'notes', label: 'Notes' },
   { key: 'deals', label: 'Deals' },
   { key: 'contacts', label: 'Contacts' }
@@ -1115,8 +1279,8 @@ const emptyBottomGroup25 = computed(() => {
 
 const sections = computed(() => [
   {
-    id: 'rapid',
-    title: 'Accopunt Details',
+    id: 'overview',
+    title: 'Account Details',
     items: bottomGroup.value || [],
     emptyItems: emptyBottomGroup.value || [],
   },
@@ -1375,6 +1539,35 @@ const fetchNotes = async () => {
   }
 }
 
+const marketingNotesFieldsData = ref(null)
+const fetchMarketingNotesFields = async () => {
+  isLoading.value = true
+  try {
+    const { data } = await api().get(`/crm/modules/9/fields`)
+    marketingNotesFieldsData.value = data.data || []
+  } catch (err) {
+    console.error(err)
+    alert('Failed to fetch fields')
+  } finally {
+    isLoading.value = false
+  }
+}
+
+const marketingNotesData = ref([])
+const fetchMarketingNotes = async () => {
+  try {
+    isLoading.value = true
+    const { data } = await api().get(`/crm/record-child-get/${route.params.id}/Accounts-Marketing Notes`)
+    marketingNotesData.value = data.data
+  } catch (error) {
+    console.error('Failed to fetch leads:', error)
+    showToast('Failed to fetch leads', 'error')
+  } finally {
+    isLoading.value = false
+  }
+}
+
+
 const visibleFields = computed(() => notesFieldsData.value.filter((field) => field.type !== 'date'))
 
 const parent_id = route.params.id
@@ -1407,6 +1600,44 @@ const saveRecord = async () => {
     showForm.value = false
     await fetchNotesFields()
     await fetchNotes()
+    form.value = {}
+  } catch (err) {
+    console.error(err)
+    alert('Failed to create record')
+  } finally {
+    loading.value = false
+  }
+}
+
+const saveMarketingNoteRecord = async () => {
+  loading.value = true
+  try {
+    const payload = marketingNotesFieldsData.value.map((field) => ({
+      field_id: field.id,
+      value: form.value[field.name] || null
+    }))
+    const dateField = marketingNotesFieldsData.value.find((f) => f.type === 'date')
+    if (dateField) {
+      payload.push({
+        field_id: dateField.id,
+        value: new Date().toISOString().split('T')[0]
+      })
+    }
+
+    const { data } = await api().post(`/crm/modules/9/records`, {
+      fields: payload
+    })
+
+    if (data) {
+      await api().post(`/crm/record-child-create`, {
+        parent_record_id: parent_id,
+        child_record_id: data.id
+      })
+    }
+    showToast('Record created successfully!')
+    showForm.value = false
+    await fetchMarketingNotesFields()
+    await fetchMarketingNotes()
     form.value = {}
   } catch (err) {
     console.error(err)
@@ -1463,6 +1694,8 @@ onMounted(() => {
   fetchNotesFields()
   fetchContactFields()
   fetchNotes()
+    fetchMarketingNotesFields()
+  fetchMarketingNotes()
   if (route.hash) {
     const sectionId = route.hash.replace('#', '')
     setTimeout(() => {

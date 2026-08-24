@@ -88,13 +88,13 @@
       </div>
 
       <!-- Bottom CTA -->
-      <div class="text-center mt-16">
+      <!-- <div class="text-center mt-16">
         <button
           class="bg-blue-600 hover:bg-blue-700 text-white px-10 py-4 rounded-xl font-bold transition shadow-lg shadow-blue-600/30"
         >
           View All Capabilities
         </button>
-      </div>
+      </div> -->
     </div>
   </section>
 </template>
