@@ -5,17 +5,22 @@
     <div class="absolute inset-0 overflow-hidden">
 
       <!-- Image 1 -->
+      
       <div class="hero-bg hero-bg-1 absolute inset-0 bg-cover bg-center"
-        style="background-image: url('/src/assets/hero.jpg');"></div>
-
+      style="background-image: url('/src/assets/hero.jpg');"></div>
+      
       <!-- Image 2 -->
       <div class="hero-bg hero-bg-2 absolute inset-0 bg-cover bg-center"
-        style="background-image: url('/src/assets/vermont/vermont_1.webp');"></div>
-
+      style="background-image: url('/src/assets/vermont/vermont_1.webp');"></div>
+      
       <!-- Image 3 -->
       <div class="hero-bg hero-bg-3 absolute inset-0 bg-cover bg-center"
-        style="background-image: url('/src/assets/vermont/vermont_2.jpg');"></div>
-
+      style="background-image: url('/src/assets/vermont/vermont_2.jpg');"></div>
+      
+      <!-- Image 4 -->
+      <div class="hero-bg hero-bg-1 absolute inset-0 bg-cover bg-center"
+        style="background-image: url('/src/assets/vermont/vermont_3.jpg');"></div>
+        
       <!-- Dark cinematic overlay -->
       <div class="absolute inset-0 bg-gradient-to-r from-slate-950/70 via-slate-900/55 to-slate-700/20 z-10"></div>
       <!-- Bottom fade -->

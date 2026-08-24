@@ -6,10 +6,7 @@
         <!-- Brand -->
         <div>
           <div class="flex items-center gap-2 mb-4">
-            <div class="w-10 h-10 rounded-xl bg-blue-600/20 flex items-center justify-center">
-              <span class="text-blue-400 font-black text-lg">VC</span>
-            </div>
-            <h3 class="text-2xl font-bold text-white">Vermont Composites</h3>
+             <img src="/logo-white.png" alt="Vermont Composites Logo" class="w-36 rounded " />
           </div>
           <p class="text-gray-400 text-sm leading-relaxed max-w-xs">
             Precision composite structures for aerospace, defense, and medical imaging – engineered for the world's most critical missions.

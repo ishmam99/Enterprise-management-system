@@ -292,7 +292,7 @@ const benefits = [
             View All Openings
           </button>
           <router-link
-            to="/contact"
+            to="/home/contactView"
             class="border border-white/30 hover:bg-white hover:text-slate-900 px-10 py-4 rounded-xl font-bold transition"
           >
             Contact HR
