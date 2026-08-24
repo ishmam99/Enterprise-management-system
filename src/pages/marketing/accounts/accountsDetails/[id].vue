@@ -306,7 +306,7 @@
       <!-- All Sections Content -->
       <main class="px-8 pb-10 flex-1 space-y-6">
          <!--Marketing Notes Section -->
-        <section id="Martking-Notes"
+        <section id="Marketing-Notes"
           class="bg-orange-100/70 shadow-sm rounded-lg p-6 w-full border border-gray-200 transition-all duration-300 hover:shadow-md">
           <div class="flex items-start justify-between">
             <h2 class="text-xl font-semibold mb-4 flex items-center text-gray-800">
@@ -395,7 +395,7 @@
                     <td v-for="field in marketingNotesFieldsData" :key="field.id"
                       class="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-medium">
                       <router-link :to="{
-                        name: 'sales_management-accounts-accountsDetails-id',
+                        name: 'marketing-accounts-accountsDetails-id',
                         params: { id: lead.id }
                       }" class="hover:underline">
                         {{lead.values.find((e) => e.field_id == field.id)?.value}}
@@ -558,7 +558,7 @@
                     <td v-for="field in notesFieldsData" :key="field.id"
                       class="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-medium">
                       <router-link :to="{
-                        name: 'sales_management-accounts-accountsDetails-id',
+                        name: 'marketing-accounts-accountsDetails-id',
                         params: { id: lead.id }
                       }" class="hover:underline">
                         {{lead.values.find((e) => e.field_id == field.id)?.value}}
@@ -655,7 +655,7 @@
                 <option :value="50">50</option>
               </select>
             </div>
-            <!-- <router-link :to="`/sales_management/Accounts/createDeal?parent_id=${route.params.id}&company_name=${singleLeads.find((a) => a.field?.name === 'company_name')?.value
+            <!-- <router-link :to="`/marketing/Accounts/createDeal?parent_id=${route.params.id}&company_name=${singleLeads.find((a) => a.field?.name === 'company_name')?.value
               }&parent_company=${singleLeads.find((a) => a.field?.name === 'parent_company')?.value
               }`" class="bg-purple-500 hover:bg-purple-600 text-white px-4 py-2 rounded-lg flex items-center gap-2">
               <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
@@ -711,7 +711,7 @@
                         <div class="text-center">
                           <h3 class="text-xl font-semibold text-gray-700 mb-2">No Deals found</h3>
                           <p class="text-gray-500 mb-4">Get started by creating your first Deals</p>
-                          <!-- <router-link :to="`/sales_management/Accounts/createDeal?parent_id=${route.params.id
+                          <!-- <router-link :to="`/marketing/Accounts/createDeal?parent_id=${route.params.id
                             }&company_name=${singleLeads.find((a) => a.field?.name === 'company_name')?.value
                             }&parent_company=${singleLeads.find((a) => a.field?.name === 'parent_company')?.value
                             }`"
@@ -731,7 +731,7 @@
                     <td v-for="field in dealFields" :key="field.id"
                       class="px-6 py-4 whitespace-nowrap border-e text-sm text-gray-600 font-medium">
                       <router-link :to="{
-                        name: 'sales_management-deals-dealDetails-id',
+                        name: 'marketing-deals-dealDetails-id',
                         params: { id: lead.id }
                       }" class="hover:underline">
                         {{lead.values.find((e) => e.field_id == field.id)?.value}}
@@ -799,7 +799,7 @@
                 <option :value="50">50</option>
               </select>
             </div>
-            <router-link :to="`/sales_management/accounts/createContacts?parent_id=${route.params.id
+            <router-link :to="`/marketing/accounts/createContacts?parent_id=${route.params.id
               }&company_name=${singleLeads.find((a) => a.field?.name === 'company_name')?.value
               }&parent_company=${singleLeads.find((a) => a.field?.name === 'parent_company')?.value
               }`" class="bg-cyan-500 hover:bg-cyan-600 text-white px-4 py-2 rounded-lg flex items-center gap-2">
@@ -859,7 +859,7 @@
                           <p class="text-gray-500 mb-4">
                             Get started by creating your first Contact
                           </p>
-                          <router-link :to="`/sales_management/accounts/createContacts?parent_id=${route.params.id
+                          <router-link :to="`/marketing/accounts/createContacts?parent_id=${route.params.id
                             }&company_name=${singleLeads.find((a) => a.field?.name === 'company_name')?.value
                             }&parent_company=${singleLeads.find((a) => a.field?.name === 'parent_company')?.value
                             }`"
@@ -879,7 +879,7 @@
                     <td v-for="field in contactFields" :key="field.id"
                       class="px-6 py-4 whitespace-nowrap border-e text-sm text-gray-600 font-medium">
                       <router-link :to="{
-                        name: 'sales_management-contact-contactDetails-id',
+                        name: 'marketing-contact-contactDetails-id',
                         params: { id: lead.id }
                       }" class="hover:underline">
                         {{lead.values.find((e) => e.field_id == field.id)?.value}}
@@ -1082,7 +1082,7 @@ const saveNewValue = async (field) => {
 const sidebarItems = [
   { key: 'overview', label: 'Company Details' },
   { key: 'rapid', label: 'Account Details' },
-  { key: 'Martking-Notes', label: 'Marteking Notes' },
+  { key: 'Marketing-Notes', label: 'Marketing Notes' },
   { key: 'notes', label: 'Notes' },
   { key: 'deals', label: 'Deals' },
   { key: 'contacts', label: 'Contacts' }
@@ -1668,7 +1668,7 @@ const deleteRecord = async () => {
       showConfirmButton: false
     })
 
-    router.push('/sales_management/accounts/allAccounts')
+    router.push('/marketing/accounts/allAccounts')
     await fetchLead()
   } catch (err) {
     console.error(err)

@@ -168,7 +168,7 @@ onMounted(async () => {
                       <h3 class="text-xl font-semibold text-gray-700 mb-2">No Deals found</h3>
                       <!-- <p class="text-gray-500 mb-4">Get started by creating your first lead</p> -->
                       <!-- <router-link
-                        to="/sales_management/leads/createLeads"
+                        to="/marketing/leads/createLeads"
                         class="bg-gradient-to-r from-emerald-500 to-teal-600 text-white px-6 py-3 rounded-xl hover:from-emerald-600 hover:to-teal-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 flex items-center gap-2 mx-auto"
                       >
                         <Icon name="material-symbols:add" class="w-5 h-5" />
@@ -186,7 +186,7 @@ onMounted(async () => {
                 <td v-for="field in fields" :key="field.id"
                   class="px-6 py-1 whitespace-nowrap text-sm text-gray-600 font-medium">
                   <router-link :to="{
-                    name: 'sales_management-deals-dealDetails-id',
+                    name: 'marketing-deals-dealDetails-id',
                     params: { id: lead.id },
 
                   }" class="hover:underline">

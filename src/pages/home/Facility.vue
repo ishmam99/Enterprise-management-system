@@ -72,7 +72,7 @@
           </div>
           <div>
             <img
-              src="https://images.unsplash.com/photo-1581093588401-fbb62a02f120?w=1200"
+              src="/src/assets/vermont/Vermont_4.jpg"
               alt="Vermont Composites facility"
               class="rounded-xl shadow-xl w-full h-[400px] object-cover"
             />

@@ -20,7 +20,7 @@
         >
           <span class="w-2 h-2 bg-blue-400 rounded-full"></span>
           <span class="text-sm font-medium tracking-wide text-blue-300">
-            Composite Capabilities
+            Composite Structure Capabilities
           </span>
         </div>
         <h1 class="text-4xl md:text-5xl font-black mb-4">

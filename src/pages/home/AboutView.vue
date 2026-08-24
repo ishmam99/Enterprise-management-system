@@ -143,7 +143,7 @@
     </section>
 
     <!-- Meet the Leadership -->
-    <section class="py-16">
+    <!-- <section class="py-16">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-12">
           <div
@@ -162,7 +162,6 @@
           </p>
         </div>
 
-        <!-- Cards generated from data -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           <div
             v-for="(leader, index) in leaders"
@@ -186,7 +185,6 @@
                 {{ leader.title }}
               </p>
 
-              <!-- Accordion -->
               <div class="mt-3 border-t border-gray-100 pt-3">
                 <button
                   @click="toggleAccordion(index)"
@@ -239,7 +237,7 @@
           </div>
         </div>
       </div>
-    </section>
+    </section> -->
 
     <!-- Stats Section -->
     <section
