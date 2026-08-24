@@ -20,11 +20,11 @@
         >
           <span class="w-2 h-2 bg-blue-400 rounded-full"></span>
           <span class="text-sm font-medium tracking-wide text-blue-300">
-            Markets
+            Industries
           </span>
         </div>
         <h1 class="text-4xl md:text-5xl font-black mb-4">
-          Markets <span class="text-blue-400">We Serve</span>
+          Industries <span class="text-blue-400">We Serve</span>
         </h1>
         <p class="text-xl max-w-3xl mx-auto text-gray-300">
           Specialized composite solutions across three core industries.
@@ -185,18 +185,136 @@
       </div>
     </section>
 
-    <!-- Medical Imaging -->
+    <!-- Automotive -->
     <section class="py-16 bg-slate-50">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div class="order-2 lg:order-1">
             <img
-              src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=1200"
-              alt="Medical imaging composite components"
+              src="https://images.unsplash.com/photo-1580273916550-e323be2ae537?w=1200"
+              alt="Automotive composite components"
               class="rounded-xl shadow-xl w-full h-[400px] object-cover"
             />
           </div>
           <div class="order-1 lg:order-2">
+            <div
+              class="inline-flex items-center gap-2 bg-blue-50 border border-blue-200 px-4 py-2 rounded-full mb-4"
+            >
+              <span class="w-2 h-2 bg-blue-600 rounded-full"></span>
+              <span class="text-sm font-medium text-blue-700"
+                >Automotive</span
+              >
+            </div>
+            <h2 class="text-3xl font-black text-slate-800 mb-4">
+              Lightweight <span class="text-blue-600">Composite</span>
+              Solutions for the Automotive Industry
+            </h2>
+            <p class="text-gray-600 mb-4 leading-relaxed">
+              We supply high-performance composite components for electric and
+              conventional vehicles, including:
+            </p>
+            <ul class="space-y-2 mb-4">
+              <li class="flex items-start gap-3">
+                <svg
+                  class="w-5 h-5 text-blue-600 mt-1 flex-shrink-0"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M5 13l4 4L19 7"
+                  />
+                </svg>
+                <span class="text-gray-700"
+                  >Lightweight body panels and closures</span
+                >
+              </li>
+              <li class="flex items-start gap-3">
+                <svg
+                  class="w-5 h-5 text-blue-600 mt-1 flex-shrink-0"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M5 13l4 4L19 7"
+                  />
+                </svg>
+                <span class="text-gray-700"
+                  >Structural reinforcements and crash management systems</span
+                >
+              </li>
+              <li class="flex items-start gap-3">
+                <svg
+                  class="w-5 h-5 text-blue-600 mt-1 flex-shrink-0"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M5 13l4 4L19 7"
+                  />
+                </svg>
+                <span class="text-gray-700"
+                  >Battery enclosures for electric vehicles</span
+                >
+              </li>
+              <li class="flex items-start gap-3">
+                <svg
+                  class="w-5 h-5 text-blue-600 mt-1 flex-shrink-0"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M5 13l4 4L19 7"
+                  />
+                </svg>
+                <span class="text-gray-700"
+                  >Interior and underbody composite assemblies</span
+                >
+              </li>
+            </ul>
+            <div class="flex flex-wrap gap-2 mt-4">
+              <span
+                class="text-xs bg-slate-100 text-slate-700 px-3 py-1 rounded-full"
+                >Tesla</span
+              >
+              <span
+                class="text-xs bg-slate-100 text-slate-700 px-3 py-1 rounded-full"
+                >Ford</span
+              >
+              <span
+                class="text-xs bg-slate-100 text-slate-700 px-3 py-1 rounded-full"
+                >BMW</span
+              >
+              <span
+                class="text-xs bg-slate-100 text-slate-700 px-3 py-1 rounded-full"
+                >Toyota</span
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Medical Imaging -->
+    <section class="py-16 bg-white">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          <div>
             <div
               class="inline-flex items-center gap-2 bg-blue-50 border border-blue-200 px-4 py-2 rounded-full mb-4"
             >
@@ -302,130 +420,10 @@
               >
             </div>
           </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Commercial & Space -->
-    <section class="py-16 bg-white">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          <div>
-            <div
-              class="inline-flex items-center gap-2 bg-blue-50 border border-blue-200 px-4 py-2 rounded-full mb-4"
-            >
-              <span class="w-2 h-2 bg-blue-600 rounded-full"></span>
-              <span class="text-sm font-medium text-blue-700"
-                >Commercial &amp; Space</span
-              >
-            </div>
-            <h2 class="text-3xl font-black text-slate-800 mb-4">
-              Composite Structures for
-              <span class="text-blue-600">Commercial &amp; Space</span>
-              Applications
-            </h2>
-            <p class="text-gray-600 mb-4 leading-relaxed">
-              Our advanced composites serve the commercial aviation and space
-              sectors, supplying programs for leading OEMs with:
-            </p>
-            <ul class="space-y-2 mb-4">
-              <li class="flex items-start gap-3">
-                <svg
-                  class="w-5 h-5 text-blue-600 mt-1 flex-shrink-0"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M5 13l4 4L19 7"
-                  />
-                </svg>
-                <span class="text-gray-700"
-                  >Reflectors and radome assemblies</span
-                >
-              </li>
-              <li class="flex items-start gap-3">
-                <svg
-                  class="w-5 h-5 text-blue-600 mt-1 flex-shrink-0"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M5 13l4 4L19 7"
-                  />
-                </svg>
-                <span class="text-gray-700"
-                  >Wing-to-body fairings and aerodynamic surfaces</span
-                >
-              </li>
-              <li class="flex items-start gap-3">
-                <svg
-                  class="w-5 h-5 text-blue-600 mt-1 flex-shrink-0"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M5 13l4 4L19 7"
-                  />
-                </svg>
-                <span class="text-gray-700"
-                  >Interior components and structural assemblies</span
-                >
-              </li>
-              <li class="flex items-start gap-3">
-                <svg
-                  class="w-5 h-5 text-blue-600 mt-1 flex-shrink-0"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M5 13l4 4L19 7"
-                  />
-                </svg>
-                <span class="text-gray-700"
-                  >Lightweight composite structures for launch vehicles and
-                  satellites</span
-                >
-              </li>
-            </ul>
-            <div class="flex flex-wrap gap-2 mt-4">
-              <span
-                class="text-xs bg-slate-100 text-slate-700 px-3 py-1 rounded-full"
-                >Orion</span
-              >
-              <span
-                class="text-xs bg-slate-100 text-slate-700 px-3 py-1 rounded-full"
-                >Boeing</span
-              >
-              <span
-                class="text-xs bg-slate-100 text-slate-700 px-3 py-1 rounded-full"
-                >Airbus</span
-              >
-              <span
-                class="text-xs bg-slate-100 text-slate-700 px-3 py-1 rounded-full"
-                >Lockheed Martin</span
-              >
-            </div>
-          </div>
           <div>
             <img
-              src="https://images.unsplash.com/photo-1516849677043-ef67c9557e16?w=1200"
-              alt="Commercial and space composite applications"
+              src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=1200"
+              alt="Medical imaging composite components"
               class="rounded-xl shadow-xl w-full h-[400px] object-cover"
             />
           </div>
@@ -467,11 +465,11 @@
           <span class="text-blue-600">Market Requirements</span>?
         </h2>
         <p class="text-xl text-gray-600 mb-8">
-          Whether you're in aerospace, defense, medical imaging, or commercial
-          space – we have the expertise to deliver.
+          Whether you're in aerospace, automotive, medical imaging, or defense
+          – we have the expertise to deliver.
         </p>
         <router-link
-          to="/contact"
+          to="/home/contactView"
           class="inline-block bg-blue-600 hover:bg-blue-700 text-white px-10 py-4 rounded-xl font-bold text-lg transition shadow-lg shadow-blue-600/30"
         >
           Contact Our Market Experts
@@ -480,11 +478,3 @@
     </section>
   </div>
 </template>
-
-<script setup>
-// No additional logic needed
-</script>
-
-<style scoped>
-/* optional style overrides */
-</style>
