@@ -273,6 +273,21 @@ const menuAdmin = ref([
         label: "Executive", icon: "fa-solid fa-briefcase", color: "green" }
     ]
   },
+  {
+    to: "/website_Management_Login",
+    label: "Website Management",
+    icon: "fas fa-globe",
+    subMenus: [
+      { to: "/login?name=Website&role=Director&email=Website_director@hitechsoftsys.net", 
+        label: "Director", icon: "fa-solid fa-crown", color: "gold" },
+      { to: "/login?name=Website&role=VP&email=Website_vp@hitechsoftsys.net", 
+        label: "VP", icon: "fa-solid fa-star", color: "purple" },
+      { to: "/login?name=Website&role=Manager&email=Website_manager@hitechsoftsys.net", 
+        label: "Manager", icon: "fa-solid fa-chart-line", color: "blue" },
+      { to:"/login?name=Website&role=Executive&email=Website_executive@hitechsoftsys.net", 
+        label: "Executive", icon: "fa-solid fa-briefcase", color: "green" }
+    ]
+  },
   // {
   //   to: "/project_Management_Login",
   //   label: "Project Management",

@@ -24,6 +24,7 @@ import CustomerSuccessTeamSalesLayout from '@/layouts/CustomerSuccessTeamSalesLa
 import BusinessManagementLayout from '@/layouts/BusinessManagementLayout.vue'
 import MarketingManagementLayout from '@/layouts/MarketingManagementLayout.vue'
 import ProjectManagementLayout from '@/layouts/ProjectManagementLayout.vue'
+import WebsiteManagementLayout from '@/layouts/WebsiteManagementLayout.vue'
 
 const layoutRoutes = routes.map(route => {
   // Wrap all pages except those with meta.noLayout
@@ -58,11 +59,7 @@ const industryManagementRoutes = makeChildren('/industry_management', routes.fil
 const crmRoutes = makeChildren('/crm', routes.filter(r => r.path.startsWith('/crm')))
 const salesManagementRoutes = makeChildren('/sales_management',routes.filter(r => r.path.startsWith('/sales_management')))
 const projectManagementRoutes = makeChildren('/project_management',routes.filter(r => r.path.startsWith('/project_management')))
-
-
-
-
-
+const websiteManagementRoutes = makeChildren('/website_management',routes.filter(r => r.path.startsWith('/website_management')))
 const businessManagementRoutes = makeChildren('/business_management', routes.filter(r => r.path.startsWith('/business_management')))
 const marketingManagementRoutes = makeChildren('/marketing', routes.filter(r => r.path.startsWith('/marketing')))
 
@@ -186,6 +183,11 @@ const finalRoutes = [
     component: ProjectManagementLayout,
     children: projectManagementRoutes,
   },
+    {
+    path: '/website_management',
+    component: WebsiteManagementLayout,
+    children: websiteManagementRoutes,
+  },
 
 
 
@@ -225,6 +227,7 @@ const finalRoutes = [
     !r.path.startsWith('/business_management') &&
     !r.path.startsWith('/marketing') &&
     !r.path.startsWith('/project_management') &&
+    !r.path.startsWith('/website_management') &&
 
 
 

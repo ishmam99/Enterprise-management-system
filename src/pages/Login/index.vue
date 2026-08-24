@@ -160,6 +160,7 @@ const getBypassDashboard = () => {
   if (name === 'project' || role?.includes('project')) return 'project_management'
   if (name === 'business' || role?.includes('business')) return 'business_management'
   if (name === 'marketing' || role?.includes('marketing')) return 'marketing_management'
+  if (name === 'website' || role?.includes('website')) return 'website_management'
 
   return null
 }
