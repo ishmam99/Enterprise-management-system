@@ -69,7 +69,7 @@
             <button
               class="px-3 py-2 text-sm font-medium text-gray-300 hover:text-white transition-colors rounded-lg hover:bg-white/10 flex items-center gap-1"
             >
-              Capabilities
+              Things We Do
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
               </svg>
@@ -82,23 +82,30 @@
                   to="/home/composite"
                   class="block px-4 py-2.5 text-sm text-gray-300 hover:bg-blue-600/20 hover:text-white transition-colors border-b border-white/5"
                 >
-                  Composite Capabilities
+                  Composite Structure Capabilities
                 </router-link>
                 <router-link
                   to="/home/equipment"
                   class="block px-4 py-2.5 text-sm text-gray-300 hover:bg-blue-600/20 hover:text-white transition-colors border-b border-white/5"
                 >
-                  Equipment &amp; Services
+                  Tooling & Equipment
                 </router-link>
-                <router-link
+                 <router-link
                   to="/home/market"
                   class="block px-4 py-2.5 text-sm text-gray-300 hover:bg-blue-600/20 hover:text-white transition-colors"
                 >
-                  Markets
+                  Industries We Serve
                 </router-link>
               </div>
             </div>
           </div>
+          <!-- Customers (direct link) -->
+          <router-link
+            to="/home/careers"
+            class="px-3 py-2 text-sm font-medium text-gray-300 hover:text-white transition-colors rounded-lg hover:bg-white/10"
+          >
+            Customers
+          </router-link>
 
           <!-- Careers (direct link) -->
           <router-link
