@@ -145,13 +145,13 @@ const getExecutiveName = (lead) => {
   const exec = lead.assignments?.find((a) => a.role === 'sales-executive')
   return exec?.user?.name || null
 }
-const getCsManagerName = (lead) => {
-  const cs_manager = lead.assignments?.find((a) => a.role === 'manager-cs')
-  return cs_manager?.user?.name || null
+const getMarketingManagerName = (lead) => {
+  const marketing_manager = lead.assignments?.find((a) => a.role === 'marketing-manager')
+  return marketing_manager?.user?.name || null
 }
 
 const getCsExecutiveName = (lead) => {
-  const cs_exec = lead.assignments?.find((a) => a.role === 'executive-cs')
+  const cs_exec = lead.assignments?.find((a) => a.role === 'marketing-executive')
   return cs_exec?.user?.name || null
 }
 const showMassAssignModal = ref(false)
@@ -161,8 +161,8 @@ const assignLoading = ref(false)
 
 const executives = ref([])
 const managers = ref([])
-const cs_executives = ref([])
-const cs_managers = ref([])
+const marketing_executives = ref([])
+const marketing_managers = ref([])
 
 const fetchExecutives = async () => {
   try {
@@ -186,23 +186,23 @@ const fetchManagers = async () => {
   }
 }
 
-const fetchCsExecutives = async () => {
+const fetchMarketingExecutives = async () => {
   try {
     const { data } = await api().get(
-      `/users?where=[{"column":"role","operator":"=","value":"executive-cs"}]`
+      `/users?where=[{"column":"role","operator":"=","value":"marketing-executive"}]`
     )
-    cs_executives.value = data.data
+    marketing_executives.value = data.data
   } catch (e) {
     console.log(e)
   }
 }
 
-const fetchCsManagers = async () => {
+const fetchMarketingManagers = async () => {
   try {
     const { data } = await api().get(
-      `/users?where=[{"column":"role","operator":"=","value":"manager-cs"}]`
+      `/users?where=[{"column":"role","operator":"=","value":"marketing-manager"}]`
     )
-    cs_managers.value = data.data
+    marketing_managers.value = data.data
   } catch (e) {
     console.log(e)
   }
@@ -218,10 +218,10 @@ const openMassAssignModal = async (roleType) => {
     await fetchManagers()
   } else if (roleType === 'executive') {
     await fetchExecutives()
-  } else if (roleType === 'cs_manager') {
-    await fetchCsManagers()
-  } else if (roleType === 'cs_executive') {
-    await fetchCsExecutives()
+  } else if (roleType === 'marketing_manager') {
+    await fetchMarketingManagers()
+  } else if (roleType === 'marketing_executive') {
+    await fetchMarketingExecutives()
   }
 }
 
@@ -245,12 +245,12 @@ const submitMassAssign = async () => {
       role: 'sales-executive',
       permission: 'view'
     },
-    cs_manager: {
-      role: 'manager-cs',
+    marketing_manager: {
+      role: 'marketing-manager',
       permission: 'edit'
     },
-    cs_executive: {
-      role: 'executive-cs',
+    marketing_executive: {
+      role: 'marketing-executive',
       permission: 'view'
     }
   }
@@ -326,8 +326,8 @@ onMounted(async () => {
     fetchLeads(),
     fetchExecutives(),
     fetchManagers(),
-    fetchCsExecutives(),
-    fetchCsManagers()
+    fetchMarketingExecutives(),
+    fetchMarketingManagers()
   ])
 })
 </script>
@@ -345,11 +345,8 @@ onMounted(async () => {
             <h2 class="text-2xl font-bold text-gray-800 mb-1">Accounts</h2>
             <div class="flex items-center gap-2">
               <!-- <label for="perPage" class="text-sm text-gray-600">Showing:</label> -->
-              <select
-                id="perPage"
-                v-model="perPage"
-                class="border rounded-lg pe-5 py-1 text-sm focus:ring-2 focus:ring-yellow-500 focus:outline-none"
-              >
+              <select id="perPage" v-model="perPage"
+                class="border rounded-lg pe-5 py-1 text-sm focus:ring-2 focus:ring-yellow-500 focus:outline-none">
                 <option value="20">20 Per Page</option>
                 <option value="50">50 Per Page</option>
                 <option value="100">100 Per Page</option>
@@ -364,29 +361,19 @@ onMounted(async () => {
           <div class="flex items-center gap-2">
             <div class="flex items-center justify-center gap-3">
               <!-- Import -->
-              <button
-                @click="openImportModal"
-                class="bg-cyan-600 flex items-center gap-1 rounded text-sm px-3 py-1.5 font-semibold hover:bg-cyan-700 text-white"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  width="14"
-                  height="14"
-                  fill="currentColor"
-                >
+              <button @click="openImportModal"
+                class="bg-cyan-600 flex items-center gap-1 rounded text-sm px-3 py-1.5 font-semibold hover:bg-cyan-700 text-white">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="14" height="14" fill="currentColor">
                   <path
-                    d="M2.85858 2.87732L15.4293 1.0815C15.7027 1.04245 15.9559 1.2324 15.995 1.50577C15.9983 1.52919 16 1.55282 16 1.57648V22.4235C16 22.6996 15.7761 22.9235 15.5 22.9235C15.4763 22.9235 15.4527 22.9218 15.4293 22.9184L2.85858 21.1226C2.36593 21.0522 2 20.6303 2 20.1327V3.86727C2 3.36962 2.36593 2.9477 2.85858 2.87732ZM4 4.73457V19.2654L14 20.694V3.30599L4 4.73457ZM17 19H20V4.99997H17V2.99997H21C21.5523 2.99997 22 3.44769 22 3.99997V20C22 20.5523 21.5523 21 21 21H17V19ZM10.2 12L13 16H10.6L9 13.7143L7.39999 16H5L7.8 12L5 7.99997H7.39999L9 10.2857L10.6 7.99997H13L10.2 12Z"
-                  ></path>
+                    d="M2.85858 2.87732L15.4293 1.0815C15.7027 1.04245 15.9559 1.2324 15.995 1.50577C15.9983 1.52919 16 1.55282 16 1.57648V22.4235C16 22.6996 15.7761 22.9235 15.5 22.9235C15.4763 22.9235 15.4527 22.9218 15.4293 22.9184L2.85858 21.1226C2.36593 21.0522 2 20.6303 2 20.1327V3.86727C2 3.36962 2.36593 2.9477 2.85858 2.87732ZM4 4.73457V19.2654L14 20.694V3.30599L4 4.73457ZM17 19H20V4.99997H17V2.99997H21C21.5523 2.99997 22 3.44769 22 3.99997V20C22 20.5523 21.5523 21 21 21H17V19ZM10.2 12L13 16H10.6L9 13.7143L7.39999 16H5L7.8 12L5 7.99997H7.39999L9 10.2857L10.6 7.99997H13L10.2 12Z">
+                  </path>
                 </svg>
                 Import from Excel
               </button>
 
               <!-- Create -->
-              <router-link
-                to="/crm/accounts/create"
-                class="bg-blue-600 flex items-center gap-1 rounded text-sm px-3 py-1 font-semibold hover:bg-blue-700 text-white"
-              >
+              <router-link to="/crm/accounts/create"
+                class="bg-blue-600 flex items-center gap-1 rounded text-sm px-3 py-1 font-semibold hover:bg-blue-700 text-white">
                 <svg class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M11 12V9H13V12H16V14H13V17H11V14H8V12H11Z" />
                 </svg>
@@ -395,64 +382,42 @@ onMounted(async () => {
 
               <!-- Mass Actions Dropdown -->
               <div class="relative" ref="dropdownRef">
-                <button
-                  @click="toggleDropdown"
-                  :disabled="selectedIds.length === 0"
-                  class="bg-indigo-600 flex items-center gap-2 rounded text-sm px-3 py-1.5 font-semibold hover:bg-indigo-700 text-white disabled:opacity-50"
-                >
+                <button @click="toggleDropdown" :disabled="selectedIds.length === 0"
+                  class="bg-indigo-600 flex items-center gap-2 rounded text-sm px-3 py-1.5 font-semibold hover:bg-indigo-700 text-white disabled:opacity-50">
                   Mass Actions
-                  <svg
-                    class="w-4 h-4"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    viewBox="0 0 24 24"
-                  >
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                     <path d="M19 9l-7 7-7-7" />
                   </svg>
                 </button>
 
                 <!-- Dropdown -->
-                <div
-                  v-if="showDropdown"
-                  class="absolute right-0 mt-2 w-72 bg-white border border-gray-200 rounded-lg shadow-lg z-50"
-                >
-                  <button
-                    @click="openMassUpdate"
-                    class="w-full text-left px-4 py-2 text-sm hover:bg-gray-100"
-                  >
+                <div v-if="showDropdown"
+                  class="absolute right-0 mt-2 w-72 bg-white border border-gray-200 rounded-lg shadow-lg z-50">
+                  <button @click="openMassUpdate" class="w-full text-left px-4 py-2 text-sm hover:bg-gray-100">
                     🔄 Mass Update
                   </button>
 
                   <div class="border-t my-1"></div>
 
-                  <button
-                    @click="openMassAssignModal('cs_manager')"
-                    class="w-full text-left px-4 py-2 text-sm hover:bg-gray-100"
-                  >
-                    👤 Assign Customer Success Manager
+                  <button @click="openMassAssignModal('marketing_manager')"
+                    class="w-full text-left px-4 py-2 text-sm hover:bg-gray-100">
+                    👤 Assign Markting Manager
                   </button>
 
-                  <button
-                    @click="openMassAssignModal('cs_executive')"
-                    class="w-full text-left px-4 py-2 text-sm hover:bg-gray-100"
-                  >
-                    👥 Assign Customer Success Executive
+                  <button @click="openMassAssignModal('marketing_executive')"
+                    class="w-full text-left px-4 py-2 text-sm hover:bg-gray-100">
+                    👥 Assign Marketing Executive
                   </button>
 
                   <div class="border-t my-1"></div>
 
-                  <button
-                    @click="openMassAssignModal('manager')"
-                    class="w-full text-left px-4 py-2 text-sm hover:bg-gray-100"
-                  >
+                  <button @click="openMassAssignModal('manager')"
+                    class="w-full text-left px-4 py-2 text-sm hover:bg-gray-100">
                     💼 Assign Sales Manager
                   </button>
 
-                  <button
-                    @click="openMassAssignModal('executive')"
-                    class="w-full text-left px-4 py-2 text-sm hover:bg-gray-100"
-                  >
+                  <button @click="openMassAssignModal('executive')"
+                    class="w-full text-left px-4 py-2 text-sm hover:bg-gray-100">
                     📈 Assign Sales Executive
                   </button>
                 </div>
@@ -462,10 +427,7 @@ onMounted(async () => {
         </div>
 
         <!-- MASS ASSIGN MODAL -->
-        <div
-          v-if="showMassAssignModal"
-          class="fixed inset-0 bg-black/40 flex items-center justify-center z-50"
-        >
+        <div v-if="showMassAssignModal" class="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
           <div class="bg-white w-full max-w-lg rounded-xl shadow-2xl animate-fadeIn">
             <!-- Header -->
             <div class="px-6 py-4 border-b flex justify-between items-center">
@@ -475,10 +437,10 @@ onMounted(async () => {
                   selectedAssignRole === 'manager'
                     ? 'Sales Manager'
                     : selectedAssignRole === 'executive'
-                    ? 'Sales Executive'
-                    : selectedAssignRole === 'cs_manager'
-                    ? 'Customer Success Manager'
-                    : 'Customer Success Executive'
+                      ? 'Sales Executive'
+                      : selectedAssignRole === 'marketing_manager'
+                        ? 'Customer Success Manager'
+                        : 'Customer Success Executive'
                 }}
               </h2>
               <button @click="closeMassAssign" class="text-xl">&times;</button>
@@ -486,49 +448,41 @@ onMounted(async () => {
 
             <!-- Body -->
             <div class="px-6 py-5 space-y-4">
-              <label class="text-sm font-medium text-gray-700"
-                >Select
+              <label class="text-sm font-medium text-gray-700">Select
                 {{
                   selectedAssignRole === 'manager'
                     ? 'Sales Manager'
                     : selectedAssignRole === 'executive'
-                    ? 'Sales Executive'
-                    : selectedAssignRole === 'cs_manager'
-                    ? 'Customer Success Manager'
-                    : 'Customer Success Executive'
-                }}</label
-              >
+                      ? 'Sales Executive'
+                      : selectedAssignRole === 'marketing_manager'
+                        ? 'Customer Success Manager'
+                        : 'Customer Success Executive'
+                }}</label>
 
-              <select
-                v-model="assignUserId"
-                class="w-full border px-3 py-2 rounded-lg focus:ring-2 focus:ring-indigo-500"
-              >
+              <select v-model="assignUserId"
+                class="w-full border px-3 py-2 rounded-lg focus:ring-2 focus:ring-indigo-500">
                 <option value="" disabled>
                   Select
                   {{
                     selectedAssignRole === 'manager'
                       ? 'Sales Manager'
                       : selectedAssignRole === 'executive'
-                      ? 'Sales Executive'
-                      : selectedAssignRole === 'cs_manager'
-                      ? 'Customer Success Manager'
-                      : 'Customer Success Executive'
+                        ? 'Sales Executive'
+                        : selectedAssignRole === 'marketing_manager'
+                          ? 'Customer Success Manager'
+                          : 'Customer Success Executive'
                   }}
                 </option>
 
-                <option
-                  v-for="user in selectedAssignRole === 'manager'
-                    ? managers
-                    : selectedAssignRole === 'executive'
+                <option v-for="user in selectedAssignRole === 'manager'
+                  ? managers
+                  : selectedAssignRole === 'executive'
                     ? executives
-                    : selectedAssignRole === 'cs_manager'
-                    ? cs_managers
-                    : selectedAssignRole === 'cs_executive'
-                    ? cs_executives
-                    : []"
-                  :key="user.id"
-                  :value="user.id"
-                >
+                    : selectedAssignRole === 'marketing_manager'
+                      ? marketing_managers
+                      : selectedAssignRole === 'marketing_executive'
+                        ? marketing_executives
+                        : []" :key="user.id" :value="user.id">
                   {{ user.name }} — {{ user.email }}
                 </option>
               </select>
@@ -536,35 +490,18 @@ onMounted(async () => {
 
             <!-- Footer -->
             <div class="px-6 py-4 border-t bg-gray-50 flex justify-end gap-3">
-              <button
-                @click="closeMassAssign"
-                class="px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300"
-              >
+              <button @click="closeMassAssign" class="px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300">
                 Cancel
               </button>
 
-              <button
-                @click="submitMassAssign"
-                :disabled="!assignUserId || assignLoading"
-                class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 disabled:opacity-50 flex items-center gap-2"
-              >
+              <button @click="submitMassAssign" :disabled="!assignUserId || assignLoading"
+                class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 disabled:opacity-50 flex items-center gap-2">
                 <span v-if="!assignLoading">Assign</span>
 
                 <span v-else class="flex items-center gap-2">
                   <svg class="animate-spin h-5 w-5" viewBox="0 0 24 24">
-                    <circle
-                      class="opacity-20"
-                      cx="12"
-                      cy="12"
-                      r="10"
-                      stroke="currentColor"
-                      stroke-width="4"
-                    />
-                    <path
-                      class="opacity-80"
-                      fill="currentColor"
-                      d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
-                    />
+                    <circle class="opacity-20" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" />
+                    <path class="opacity-80" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z" />
                   </svg>
                   Assigning…
                 </span>
@@ -574,10 +511,7 @@ onMounted(async () => {
         </div>
 
         <!-- IMPORT EXCEL MODAL -->
-        <div
-          v-if="showImportModal"
-          class="fixed inset-0 bg-black/40 flex items-center justify-center z-50"
-        >
+        <div v-if="showImportModal" class="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
           <div class="bg-white w-full max-w-md rounded-xl shadow-2xl animate-fadeIn">
             <!-- Header -->
             <div class="px-6 py-4 border-b flex justify-between items-center">
@@ -591,45 +525,24 @@ onMounted(async () => {
                 Select Excel File (.xls, .xlsx)
               </label>
 
-              <input
-                type="file"
-                accept=".xls,.xlsx"
-                @change="handleFileChange"
-                class="w-full border px-3 py-2 rounded-lg focus:ring-2 focus:ring-indigo-500"
-              />
+              <input type="file" accept=".xls,.xlsx" @change="handleFileChange"
+                class="w-full border px-3 py-2 rounded-lg focus:ring-2 focus:ring-indigo-500" />
             </div>
 
             <!-- Footer -->
             <div class="px-6 py-4 border-t bg-gray-50 flex justify-end gap-3">
-              <button
-                @click="closeImportModal"
-                class="px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300"
-              >
+              <button @click="closeImportModal" class="px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300">
                 Cancel
               </button>
 
-              <button
-                @click="submitImport"
-                :disabled="importLoading"
-                class="px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 disabled:opacity-50 flex items-center gap-2"
-              >
+              <button @click="submitImport" :disabled="importLoading"
+                class="px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 disabled:opacity-50 flex items-center gap-2">
                 <span v-if="!importLoading">Upload &amp; Import</span>
 
                 <span v-else class="flex items-center gap-2">
                   <svg class="animate-spin h-5 w-5" viewBox="0 0 24 24">
-                    <circle
-                      class="opacity-20"
-                      cx="12"
-                      cy="12"
-                      r="10"
-                      stroke="currentColor"
-                      stroke-width="4"
-                    />
-                    <path
-                      class="opacity-80"
-                      fill="currentColor"
-                      d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
-                    />
+                    <circle class="opacity-20" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" />
+                    <path class="opacity-80" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z" />
                   </svg>
                   Uploading…
                 </span>
@@ -640,9 +553,7 @@ onMounted(async () => {
 
         <!-- Loader -->
         <div v-if="isLoading" class="flex justify-center items-center py-16">
-          <div
-            class="animate-spin rounded-full h-10 w-10 border-4 border-yellow-500 border-t-transparent"
-          ></div>
+          <div class="animate-spin rounded-full h-10 w-10 border-4 border-yellow-500 border-t-transparent"></div>
         </div>
 
         <!-- Table Content -->
@@ -650,31 +561,20 @@ onMounted(async () => {
           <table class="min-w-full divide-y divide-gray-200 table-zebra">
             <thead class="bg-gradient-to-r from-emerald-50 to-teal-50">
               <tr>
-                <th
-                  class="px-6 py-2 text-left border-x font-bold text-emerald-700 uppercase tracking-wider"
-                >
-                  <input
-                    type="checkbox"
-                    class="w-4 h-4 cursor-pointer"
-                    :checked="selectedIds.length === leads.length"
-                    @change="toggleAll($event)"
-                  />
+                <th class="px-6 py-2 text-left border-x font-bold text-emerald-700 uppercase tracking-wider">
+                  <input type="checkbox" class="w-4 h-4 cursor-pointer" :checked="selectedIds.length === leads.length"
+                    @change="toggleAll($event)" />
                 </th>
                 <th
-                  class="px-6 py-2 text-nowrap text-left border-x font-bold text-xs text-emerald-700 uppercase tracking-wider"
-                >
-                  Assigned Customer Success
+                  class="px-6 py-2 text-nowrap text-left border-x font-bold text-xs text-emerald-700 uppercase tracking-wider">
+                  Assigned Marketing Person
                 </th>
                 <th
-                  class="px-6 py-2 text-left text-nowrap border-x font-bold text-xs text-emerald-700 uppercase tracking-wider"
-                >
+                  class="px-6 py-2 text-left text-nowrap border-x font-bold text-xs text-emerald-700 uppercase tracking-wider">
                   Assigned Sales Person
                 </th>
-                <th
-                  v-for="field in fields"
-                  :key="field.id"
-                  class="px-6 py-2 text-nowrap text-left text-xs border-e font-bold text-emerald-700 uppercase tracking-wider"
-                >
+                <th v-for="field in fields" :key="field.id"
+                  class="px-6 py-2 text-nowrap text-left text-xs border-e font-bold text-emerald-700 uppercase tracking-wider">
                   {{ field.label }}
                 </th>
               </tr>
@@ -692,24 +592,19 @@ onMounted(async () => {
                 <td colspan="8" class="px-6 py-12 text-center text-gray-500">
                   <div class="flex flex-col items-center gap-4">
                     <div class="relative">
-                      <div
-                        class="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center"
-                      >
+                      <div class="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center">
                         <Icon name="material-symbols:person" class="w-12 h-12 text-gray-400" />
                       </div>
                       <div
-                        class="absolute -bottom-2 -right-2 w-8 h-8 bg-emerald-100 rounded-full flex items-center justify-center"
-                      >
+                        class="absolute -bottom-2 -right-2 w-8 h-8 bg-emerald-100 rounded-full flex items-center justify-center">
                         <Icon name="material-symbols:settings" class="w-5 h-5 text-emerald-600" />
                       </div>
                     </div>
                     <div class="text-center">
                       <h3 class="text-xl font-semibold text-gray-700 mb-2">No accounts found</h3>
                       <p class="text-gray-500 mb-4">Get started by creating your first Account</p>
-                      <router-link
-                        to="/crm/accounts/create"
-                        class="bg-gradient-to-r from-emerald-500 to-teal-600 text-white px-6 py-3 rounded-xl hover:from-emerald-600 hover:to-teal-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 flex items-center gap-2 mx-auto"
-                      >
+                      <router-link to="/crm/accounts/create"
+                        class="bg-gradient-to-r from-emerald-500 to-teal-600 text-white px-6 py-3 rounded-xl hover:from-emerald-600 hover:to-teal-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 flex items-center gap-2 mx-auto">
                         <Icon name="material-symbols:add" class="w-5 h-5" />
                         + Create Account
                       </router-link>
@@ -717,41 +612,28 @@ onMounted(async () => {
                   </div>
                 </td>
               </tr>
-              <tr
-                v-else
-                v-for="(lead, index) in leads"
-                :key="lead.id"
-                class="hover:bg-gradient-to-r hover:from-emerald-50 hover:to-teal-50 transition-all duration-300"
-              >
+              <tr v-else v-for="(lead, index) in leads" :key="lead.id"
+                class="hover:bg-gradient-to-r hover:from-emerald-50 hover:to-teal-50 transition-all duration-300">
                 <td class="px-6 py-1 whitespace-nowrap">
-                  <input
-                    type="checkbox"
-                    class="w-4 h-4 cursor-pointer"
-                    :value="lead.id"
-                    :checked="selectedIds.includes(lead.id)"
-                    @change="toggleSelection(lead.id, $event)"
-                  />
+                  <input type="checkbox" class="w-4 h-4 cursor-pointer" :value="lead.id"
+                    :checked="selectedIds.includes(lead.id)" @change="toggleSelection(lead.id, $event)" />
                 </td>
 
                 <td class="px-6 py-1 whitespace-nowrap text-sm text-gray-600 font-medium">
                   <div class="flex flex-col gap-1 p-1">
                     <span class="border px-2 rounded border-emerald-600 text-emerald-600">
-                      <router-link
-                        :to="{
-                          name: 'crm-Accounts-accountsDetails-id',
-                          params: { id: lead.id }
-                        }"
-                      >
-                        Manager: {{ getCsManagerName(lead) || 'Not Assigned' }}
+                      <router-link :to="{
+                        name: 'crm-Accounts-accountsDetails-id',
+                        params: { id: lead.id }
+                      }">
+                        Manager: {{ getMarketingManagerName(lead) || 'Not Assigned' }}
                       </router-link>
                     </span>
                     <span class="border px-2 rounded border-emerald-600 text-emerald-600">
-                      <router-link
-                        :to="{
-                          name: 'crm-Accounts-accountsDetails-id',
-                          params: { id: lead.id }
-                        }"
-                      >
+                      <router-link :to="{
+                        name: 'crm-Accounts-accountsDetails-id',
+                        params: { id: lead.id }
+                      }">
                         Executive: {{ getCsExecutiveName(lead) || 'Not Assigned' }}
                       </router-link>
                     </span>
@@ -760,22 +642,18 @@ onMounted(async () => {
                 <td class="px-6 py-1 whitespace-nowrap text-sm text-gray-600 font-medium">
                   <div class="flex flex-col gap-1 p-1">
                     <span class="border px-2 rounded text-violet-600 border-violet-600">
-                      <router-link
-                        :to="{
-                          name: 'crm-Accounts-accountsDetails-id',
-                          params: { id: lead.id }
-                        }"
-                      >
+                      <router-link :to="{
+                        name: 'crm-Accounts-accountsDetails-id',
+                        params: { id: lead.id }
+                      }">
                         Manager: {{ getManagerName(lead) || 'Not Assigned' }}
                       </router-link>
                     </span>
                     <span class="border px-2 rounded text-violet-600 border-violet-600">
-                      <router-link
-                        :to="{
-                          name: 'crm-Accounts-accountsDetails-id',
-                          params: { id: lead.id }
-                        }"
-                      >
+                      <router-link :to="{
+                        name: 'crm-Accounts-accountsDetails-id',
+                        params: { id: lead.id }
+                      }">
                         Executive: {{ getExecutiveName(lead) || 'Not Assigned' }}
                       </router-link>
                     </span>
@@ -784,19 +662,13 @@ onMounted(async () => {
                 <!-- <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-medium">
                   {{ getExecutiveName(lead) || 'Not Assigned' }}
                 </td> -->
-                <td
-                  v-for="field in fields"
-                  :key="field.id"
-                  class="px-6 py-1 whitespace-nowrap text-sm text-gray-600 font-medium"
-                >
-                  <router-link
-                    :to="{
-                      name: 'crm-Accounts-accountsDetails-id',
-                      params: { id: lead.id }
-                    }"
-                    class="hover:underline"
-                  >
-                    {{ lead.values.find((e) => e.field_id == field.id)?.value }}
+                <td v-for="field in fields" :key="field.id"
+                  class="px-6 py-1 whitespace-nowrap text-sm text-gray-600 font-medium">
+                  <router-link :to="{
+                    name: 'crm-Accounts-accountsDetails-id',
+                    params: { id: lead.id }
+                  }" class="hover:underline">
+                    {{lead.values.find((e) => e.field_id == field.id)?.value}}
                   </router-link>
 
                   <!-- {{lead.values.find(e=>e.field_id == field.id)?.value }} -->
@@ -810,17 +682,12 @@ onMounted(async () => {
         <div class="flex justify-between items-center mt-6">
           <p class="text-sm text-gray-600">
             Showing page <span class="font-semibold">{{ currentPage }}</span> of
-            <span class="font-semibold"
-              >{{ totalPages }} || Total Accounts {{ totalAccounts }}</span
-            >
+            <span class="font-semibold">{{ totalPages }} || Total Accounts {{ totalAccounts }}</span>
           </p>
 
           <div class="flex items-center gap-2">
-            <button
-              @click="goToPage(currentPage - 1)"
-              :disabled="currentPage === 1"
-              class="px-4 py-2 rounded-lg border text-sm font-medium bg-white text-gray-700 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
-            >
+            <button @click="goToPage(currentPage - 1)" :disabled="currentPage === 1"
+              class="px-4 py-2 rounded-lg border text-sm font-medium bg-white text-gray-700 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed">
               Prev
             </button>
 
@@ -834,11 +701,8 @@ onMounted(async () => {
               {{ page }}
             </button> -->
 
-            <button
-              @click="goToPage(currentPage + 1)"
-              :disabled="currentPage === totalPages"
-              class="px-4 py-2 rounded-lg border text-sm font-medium bg-white text-gray-700 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
-            >
+            <button @click="goToPage(currentPage + 1)" :disabled="currentPage === totalPages"
+              class="px-4 py-2 rounded-lg border text-sm font-medium bg-white text-gray-700 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed">
               Next
             </button>
           </div>
@@ -847,10 +711,7 @@ onMounted(async () => {
     </div>
   </div>
   <!-- MASS UPDATE MODAL -->
-  <div
-    v-if="showMassModal"
-    class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50"
-  >
+  <div v-if="showMassModal" class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
     <div class="bg-white rounded-xl shadow-2xl w-full max-w-lg animate-fadeIn">
       <!-- HEADER -->
       <div class="px-6 py-4 border-b flex justify-between items-center">
@@ -865,10 +726,8 @@ onMounted(async () => {
         <!-- Field Dropdown -->
         <div>
           <label class="text-sm font-medium text-gray-700">Select Field</label>
-          <select
-            v-model="selectedField"
-            class="mt-1 w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
-          >
+          <select v-model="selectedField"
+            class="mt-1 w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500">
             <option disabled value="">-- Choose Field --</option>
             <option v-for="field in fields" :key="field.id" :value="field">
               {{ field.label }}
@@ -881,19 +740,13 @@ onMounted(async () => {
           <label class="text-sm font-medium text-gray-700">Value</label>
 
           <!-- Text / Number -->
-          <input
-            v-if="selectedField.type === 'text' || selectedField.type === 'number'"
-            v-model="fieldValue"
+          <input v-if="selectedField.type === 'text' || selectedField.type === 'number'" v-model="fieldValue"
             :type="selectedField.type"
-            class="mt-1 w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
-          />
+            class="mt-1 w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500" />
 
           <!-- Select -->
-          <select
-            v-if="selectedField.type === 'select'"
-            v-model="fieldValue"
-            class="mt-1 w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
-          >
+          <select v-if="selectedField.type === 'select'" v-model="fieldValue"
+            class="mt-1 w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500">
             <option disabled value="">Select…</option>
             <option v-for="o in selectedField.options" :key="o" :value="o">
               {{ o }}
@@ -901,51 +754,27 @@ onMounted(async () => {
           </select>
 
           <!-- Date -->
-          <input
-            v-if="selectedField.type === 'date'"
-            v-model="fieldValue"
-            type="date"
-            class="mt-1 w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
-          />
+          <input v-if="selectedField.type === 'date'" v-model="fieldValue" type="date"
+            class="mt-1 w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500" />
         </div>
       </div>
 
       <!-- FOOTER -->
       <div class="px-6 py-4 border-t flex justify-end space-x-3 bg-gray-50 rounded-b-xl">
-        <button
-          @click="closeMassUpdate"
-          class="bg-red-500 hover:bg-red-700 text-white px-4 py-2 rounded-lg font-medium"
-        >
+        <button @click="closeMassUpdate"
+          class="bg-red-500 hover:bg-red-700 text-white px-4 py-2 rounded-lg font-medium">
           Cancel
         </button>
-        <button
-          @click="submitMassUpdate"
-          :disabled="isUpdating"
-          class="px-4 py-2 rounded-lg bg-blue-600 text-white font-medium hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
-        >
+        <button @click="submitMassUpdate" :disabled="isUpdating"
+          class="px-4 py-2 rounded-lg bg-blue-600 text-white font-medium hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2">
           <span v-if="!isUpdating">Update Records</span>
 
           <!-- Loader -->
           <span v-else class="flex items-center gap-2">
-            <svg
-              class="animate-spin h-5 w-5 text-white"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-            >
-              <circle
-                class="opacity-25"
-                cx="12"
-                cy="12"
-                r="10"
-                stroke="currentColor"
-                stroke-width="4"
-              ></circle>
-              <path
-                class="opacity-75"
-                fill="currentColor"
-                d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
-              ></path>
+            <svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none"
+              viewBox="0 0 24 24">
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
             </svg>
             Updating…
           </span>
@@ -967,6 +796,7 @@ onMounted(async () => {
     opacity: 0;
     transform: translateY(30px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -978,6 +808,7 @@ onMounted(async () => {
     opacity: 0;
     transform: translateX(30px);
   }
+
   to {
     opacity: 1;
     transform: translateX(0);
@@ -989,29 +820,31 @@ onMounted(async () => {
     opacity: 0;
     transform: translateY(20px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
   }
 }
+
 .animate-fadeIn {
   animation: fadeIn 0.25s ease-out;
 }
 
 /* Apply animations to elements */
-.accounts-management-dashboard > * {
+.accounts-management-dashboard>* {
   animation: fadeInUp 0.6s ease-out;
 }
 
-.accounts-management-dashboard > *:nth-child(2) {
+.accounts-management-dashboard>*:nth-child(2) {
   animation-delay: 0.1s;
 }
 
-.accounts-management-dashboard > *:nth-child(3) {
+.accounts-management-dashboard>*:nth-child(3) {
   animation-delay: 0.2s;
 }
 
-.accounts-management-dashboard > *:nth-child(4) {
+.accounts-management-dashboard>*:nth-child(4) {
   animation-delay: 0.3s;
 }
 
@@ -1091,10 +924,12 @@ select:focus {
 
 /* Loading animation enhancement */
 @keyframes pulse {
+
   0%,
   100% {
     opacity: 1;
   }
+
   50% {
     opacity: 0.5;
   }
@@ -1132,13 +967,16 @@ select:focus {
 .table-zebra tr:nth-child(even) {
   background-color: #f9fafb8e;
 }
+
 /* ✨ Alternate row background (striped look) */
 tbody tr:nth-child(odd) td {
-  background-color: #f8fcff7e; /* very light cyan */
+  background-color: #f8fcff7e;
+  /* very light cyan */
 }
 
 tbody tr:nth-child(even) td {
-  background-color: #e5f6ff; /* soft blue tint */
+  background-color: #e5f6ff;
+  /* soft blue tint */
   border: 0.5px solid #909aa146;
 }
 
@@ -1148,9 +986,11 @@ tbody tr:hover td {
   transition: background-color 0.25s ease;
   border: 0.5px solid #909aa146;
 }
+
 tbody tr td {
   border: 0.5px solid #909aa146;
 }
+
 tbody tr th {
   border: 0.5px solid #909aa146;
 }

@@ -91,7 +91,14 @@ const ROLE_DASHBOARD_MAP = {
   customer: 'customer',
   'end-user': 'user',
   partner: 'partner',
-  trainer: 'trainer'
+  trainer: 'trainer',
+
+  // Marketing roles
+  'marketing-manager': 'marketing',
+  'marketing-director': 'marketing',
+  'marketing-executive': 'marketing',
+
+
 }
 
 // Computed properties
@@ -159,7 +166,6 @@ const getBypassDashboard = () => {
 
   if (name === 'project' || role?.includes('project')) return 'project_management'
   if (name === 'business' || role?.includes('business')) return 'business_management'
-  if (name === 'marketing' || role?.includes('marketing')) return 'marketing_management'
   if (name === 'website' || role?.includes('website')) return 'website_management'
 
   return null

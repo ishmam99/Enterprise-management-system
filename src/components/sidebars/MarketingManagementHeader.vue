@@ -7,8 +7,8 @@
         <router-link to="/marketing"
           class="px-6 py-2 rounded-lg text-lg font-semibold border border-gray-400/20 shadow-lg transition-all duration-300 flex items-center justify-center"
           :class="route.path.startsWith('/marketing')
-              ? 'bg-blue-600 text-white shadow-md'
-              : 'text-gray-400 hover:text-white hover:bg-gray-700'
+            ? 'bg-blue-600 text-white shadow-md'
+            : 'text-gray-400 hover:text-white hover:bg-gray-700'
             ">
           Marketing Management System
         </router-link>
@@ -16,8 +16,8 @@
         <router-link :to="{ path: '/customer_success_team_sales' }"
           class="px-6 py-2 rounded-lg text-lg font-semibold border border-gray-400/20 shadow-lg transition-all duration-300 flex items-center justify-center"
           :class="route.path.startsWith('/customer_success_team_sales')
-              ? 'bg-blue-600 text-white shadow-md'
-              : 'text-gray-400 hover:text-white hover:bg-gray-700'
+            ? 'bg-blue-600 text-white shadow-md'
+            : 'text-gray-400 hover:text-white hover:bg-gray-700'
             ">
           Customer Management System
         </router-link>
@@ -25,8 +25,8 @@
         <router-link :to="{ path: '/training_management' }"
           class="px-6 py-2 rounded-lg text-lg font-semibold border border-gray-400/20 shadow-lg transition-all duration-300 flex items-center justify-center"
           :class="route.path.startsWith('/customer_success_team_sales')
-              ? 'bg-blue-600 text-white shadow-md'
-              : 'text-gray-400 hover:text-white hover:bg-gray-700'
+            ? 'bg-blue-600 text-white shadow-md'
+            : 'text-gray-400 hover:text-white hover:bg-gray-700'
             ">
           Training Management System
         </router-link>
@@ -104,8 +104,7 @@
               </p>
             </div>
           </div>
-          <button
-            class="p-1 rounded-full hover:bg-red-700 hover:text-white text-red-500 transition-colors"
+          <button class="p-1 rounded-full hover:bg-red-700 hover:text-white text-red-500 transition-colors"
             @click="logoutUser">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
               <path
@@ -118,28 +117,25 @@
         <!-- Mobile System Tabs -->
         <div class="grid grid-cols-3 gap-1">
           <router-link to="/marketing"
-            class="px-2 py-1.5 rounded-lg text-xs font-semibold border border-gray-400/20 text-center truncate"
-            :class="route.path.startsWith('/marketing')
-                ? 'bg-blue-600 text-white'
-                : 'text-gray-400 bg-gray-800/60'
+            class="px-2 py-1.5 rounded-lg text-xs font-semibold border border-gray-400/20 text-center truncate" :class="route.path.startsWith('/marketing')
+              ? 'bg-blue-600 text-white'
+              : 'text-gray-400 bg-gray-800/60'
               ">
             Sales
           </router-link>
 
           <router-link :to="{ path: '/customer_success_team_sales' }"
-            class="px-2 py-1.5 rounded-lg text-xs font-semibold border border-gray-400/20 text-center truncate"
-            :class="route.path.startsWith('/customer_success_team_sales')
-                ? 'bg-blue-600 text-white'
-                : 'text-gray-400 bg-gray-800/60'
+            class="px-2 py-1.5 rounded-lg text-xs font-semibold border border-gray-400/20 text-center truncate" :class="route.path.startsWith('/customer_success_team_sales')
+              ? 'bg-blue-600 text-white'
+              : 'text-gray-400 bg-gray-800/60'
               ">
             Customer
           </router-link>
 
           <router-link :to="{ path: '/training_management' }"
-            class="px-2 py-1.5 rounded-lg text-xs font-semibold border border-gray-400/20 text-center truncate"
-            :class="route.path.startsWith('/training_management')
-                ? 'bg-blue-600 text-white'
-                : 'text-gray-400 bg-gray-800/60'
+            class="px-2 py-1.5 rounded-lg text-xs font-semibold border border-gray-400/20 text-center truncate" :class="route.path.startsWith('/training_management')
+              ? 'bg-blue-600 text-white'
+              : 'text-gray-400 bg-gray-800/60'
               ">
             Training
           </router-link>
@@ -166,13 +162,6 @@
             exact-active-class="bg-blue-600 hover:bg-blue-700">
             <Icon name="material-symbols:home" class="text-lg" />
             <span>Dashboard</span>
-          </router-link>
- <router-link to="/marketing/email_updates"
-            class="px-4 py-2 rounded hover:bg-gray-700 transition-colors flex items-center gap-2" :class="{
-              'bg-blue-600 hover:bg-blue-700': route?.path.includes('/marketing/email_updates')
-            }"
-            exact-active-class="bg-gradient-to-b from-blue-500 to-blue-600 text-white shadow-2xl translate-y-0 border-b-4 border-blue-700">
-            <span class="z-10 drop-shadow-sm">Email Updates</span>
           </router-link>
           <router-link to="/marketing/leads/allLeads"
             class="px-4 py-2 rounded hover:bg-gray-700 transition-colors flex items-center gap-2" :class="{
@@ -204,56 +193,18 @@
             <Icon name="material-symbols:inventory" class="text-lg" />
             <span>Deals</span>
           </router-link>
-          <router-link to="/marketing/proposal/allProposal"
-            class="px-4 py-2 rounded hover:bg-gray-700 transition-colors flex items-center gap-2" :class="{
-              'bg-blue-600 hover:bg-blue-700': route?.path.includes('/marketing/proposal')
-            }" exact-active-class="bg-blue-600 hover:bg-blue-700">
-            <Icon name="material-symbols:inventory" class="text-lg" />
-            <span>Proposal</span>
-          </router-link>
-          <router-link to="/marketing/contracts"
-            class="px-4 py-2 rounded hover:bg-gray-700 transition-colors flex items-center gap-2" :class="{
-              'bg-blue-600 hover:bg-blue-700': route?.path.includes('/marketing/contracts')
-            }" exact-active-class="bg-blue-600 hover:bg-blue-700">
-            <Icon name="material-symbols:mail" class="text-lg" />
-            <span>Contracts</span>
-          </router-link>
-          <router-link to="/marketing/customer/allCustomers"
-            class="px-4 py-2 rounded hover:bg-gray-700 transition-colors flex items-center gap-2" :class="{
-              'bg-blue-600 hover:bg-blue-700': route?.path.includes('/marketing/customer')
-            }" exact-active-class="bg-blue-600 hover:bg-blue-700">
-            <Icon name="material-symbols:mail" class="text-lg" />
-            <span>Customers</span>
-          </router-link>
 
-          <router-link to="/marketing/timecard"
-            class="px-4 py-2 rounded hover:bg-gray-700 transition-colors flex items-center gap-2" :class="{
-              'bg-blue-600 hover:bg-blue-700': route?.path.includes('/marketing/timecard')
-            }"
-            exact-active-class="bg-gradient-to-b from-blue-500 to-blue-600 text-white shadow-2xl translate-y-0 border-b-4 border-blue-700">
-            <span class="z-10 drop-shadow-sm">Timecard</span>
-          </router-link>
-          <router-link to="/marketing/employees/assignRole"
-            v-if="authStore.role != 'sales-executive'"
-            class="px-4 py-2 rounded hover:bg-gray-700 transition-colors flex items-center gap-2" :class="{
-              'bg-blue-600 hover:bg-blue-700': route?.path.includes(
-                '/marketing/employees/assignRole'
-              )
-            }"
-            exact-active-class="bg-gradient-to-b from-blue-500 to-blue-600 text-white shadow-2xl translate-y-0 border-b-4 border-blue-700">
-            <span class="z-10 drop-shadow-sm">Employees</span>
-          </router-link>
-           <!-- <router-link to="/marketing/online_requested_deal"
+          <!-- <router-link to="/marketing/online_requested_deal"
             class="px-4 py-2 rounded hover:bg-gray-700 transition-colors flex items-center gap-2" :class="{
               'bg-blue-600 hover:bg-blue-700': route?.path.includes('/marketing/online_requested_deal')
             }"
             exact-active-class="bg-gradient-to-b from-blue-500 to-blue-600 text-white shadow-2xl translate-y-0 border-b-4 border-blue-700">
             <span class="z-10 drop-shadow-sm">Online Requested Deal</span>
           </router-link> -->
-          
+
         </nav>
 
-         <div v-if="authStore.role !='sales-executive'" class="flex items-center justify-end gap-2">
+        <div v-if="authStore.role != 'sales-executive'" class="flex items-center justify-end gap-2">
           <img src="/src/assets/people.png" class="h-10 w-10 rounded-full" alt="" />
           <div class="text-sm">
             <!-- <p class="text-gray-300">{{ authStore?.user?.name }}</p> -->
@@ -291,7 +242,7 @@
           </button>
         </div>
 
-        <div v-if="authStore.role =='sales-executive'"></div>
+        <div v-if="authStore.role == 'sales-executive'"></div>
       </div>
 
       <!-- Mobile Navigation -->
@@ -307,12 +258,14 @@
             </button>
             <span class="font-semibold text-sm">Sales Management</span>
           </div>
-          
+
           <!-- Mobile Quick Actions -->
           <div class="flex items-center gap-1">
             <button @click="showSearch = !showSearch" class="p-2 rounded-md hover:bg-gray-700">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
               </svg>
             </button>
           </div>
@@ -320,74 +273,64 @@
 
         <!-- Mobile Menu (Dropdown) -->
         <div v-if="mobileMenuOpen" class="pb-3 space-y-1 max-h-[70vh] overflow-y-auto">
-          <router-link to="/marketing"
-            class="block px-4 py-2.5 rounded hover:bg-gray-700 transition-colors text-sm"
-            :class="route.path === '/marketing' ? 'bg-blue-600' : ''"
-            @click="mobileMenuOpen = false">
+          <router-link to="/marketing" class="block px-4 py-2.5 rounded hover:bg-gray-700 transition-colors text-sm"
+            :class="route.path === '/marketing' ? 'bg-blue-600' : ''" @click="mobileMenuOpen = false">
             <Icon name="material-symbols:home" class="inline mr-2" />
             Dashboard
           </router-link>
 
           <router-link to="/marketing/leads/allLeads"
             class="block px-4 py-2.5 rounded hover:bg-gray-700 transition-colors text-sm"
-            :class="route?.path.includes('/marketing/leads') ? 'bg-blue-600' : ''"
-            @click="mobileMenuOpen = false">
+            :class="route?.path.includes('/marketing/leads') ? 'bg-blue-600' : ''" @click="mobileMenuOpen = false">
             <Icon name="material-symbols:leaderboard" class="inline mr-2" />
             Leads
           </router-link>
 
           <router-link to="/marketing/accounts/allAccounts"
             class="block px-4 py-2.5 rounded hover:bg-gray-700 transition-colors text-sm"
-            :class="route?.path.includes('/marketing/accounts') ? 'bg-blue-600' : ''"
-            @click="mobileMenuOpen = false">
+            :class="route?.path.includes('/marketing/accounts') ? 'bg-blue-600' : ''" @click="mobileMenuOpen = false">
             <Icon name="material-symbols:leaderboard" class="inline mr-2" />
             Accounts
           </router-link>
 
           <router-link to="/marketing/contact/allContacts"
             class="block px-4 py-2.5 rounded hover:bg-gray-700 transition-colors text-sm"
-            :class="route?.path.includes('/marketing/contact') ? 'bg-blue-600' : ''"
-            @click="mobileMenuOpen = false">
+            :class="route?.path.includes('/marketing/contact') ? 'bg-blue-600' : ''" @click="mobileMenuOpen = false">
             <Icon name="material-symbols:mail" class="inline mr-2" />
             Contacts
           </router-link>
 
           <router-link to="/marketing/deals/allDeals"
             class="block px-4 py-2.5 rounded hover:bg-gray-700 transition-colors text-sm"
-            :class="route?.path.includes('/marketing/deals') ? 'bg-blue-600' : ''"
-            @click="mobileMenuOpen = false">
+            :class="route?.path.includes('/marketing/deals') ? 'bg-blue-600' : ''" @click="mobileMenuOpen = false">
             <Icon name="material-symbols:inventory" class="inline mr-2" />
             Deals
           </router-link>
 
           <router-link to="/marketing/proposal/allProposal"
             class="block px-4 py-2.5 rounded hover:bg-gray-700 transition-colors text-sm"
-            :class="route?.path.includes('/marketing/proposal') ? 'bg-blue-600' : ''"
-            @click="mobileMenuOpen = false">
+            :class="route?.path.includes('/marketing/proposal') ? 'bg-blue-600' : ''" @click="mobileMenuOpen = false">
             <Icon name="material-symbols:inventory" class="inline mr-2" />
             Proposal
           </router-link>
 
           <router-link to="/marketing/contracts"
             class="block px-4 py-2.5 rounded hover:bg-gray-700 transition-colors text-sm"
-            :class="route?.path.includes('/marketing/contracts') ? 'bg-blue-600' : ''"
-            @click="mobileMenuOpen = false">
+            :class="route?.path.includes('/marketing/contracts') ? 'bg-blue-600' : ''" @click="mobileMenuOpen = false">
             <Icon name="material-symbols:mail" class="inline mr-2" />
             Contracts
           </router-link>
 
           <router-link to="/marketing/customer/allCustomers"
             class="block px-4 py-2.5 rounded hover:bg-gray-700 transition-colors text-sm"
-            :class="route?.path.includes('/marketing/customer') ? 'bg-blue-600' : ''"
-            @click="mobileMenuOpen = false">
+            :class="route?.path.includes('/marketing/customer') ? 'bg-blue-600' : ''" @click="mobileMenuOpen = false">
             <Icon name="material-symbols:mail" class="inline mr-2" />
             Customers
           </router-link>
 
           <router-link to="/marketing/timecard"
             class="block px-4 py-2.5 rounded hover:bg-gray-700 transition-colors text-sm"
-            :class="route?.path.includes('/marketing/timecard') ? 'bg-blue-600' : ''"
-            @click="mobileMenuOpen = false">
+            :class="route?.path.includes('/marketing/timecard') ? 'bg-blue-600' : ''" @click="mobileMenuOpen = false">
             Timecard
           </router-link>
 
@@ -401,8 +344,8 @@
 
         <!-- Mobile Search Bar (if needed) -->
         <div v-if="showSearch" class="pb-3">
-          <input type="text" placeholder="Search..." 
-                 class="w-full px-4 py-2 bg-gray-700 rounded-lg text-sm text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500">
+          <input type="text" placeholder="Search..."
+            class="w-full px-4 py-2 bg-gray-700 rounded-lg text-sm text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500">
         </div>
       </div>
     </div>

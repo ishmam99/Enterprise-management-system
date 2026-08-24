@@ -237,12 +237,7 @@ const menuAdmin = ref([
         label: "Manager", icon: "fa-solid fa-chart-line", color: "blue" },
       { to: "/login?name=Sales&role=Executive&email=azmain.iqbal@hitechsoftsys.net", 
         label: "Executive", icon: "fa-solid fa-briefcase", color: "green" },
-      { to: "/login?name=Sales&role=Customer_Success_Director&email=", 
-        label: "CS Director", icon: "fa-solid fa-medal", color: "orange" },
-      { to: "/login?name=Sales&role=Customer_Success_Manager&email=", 
-        label: "CS Manager", icon: "fa-solid fa-user-check", color: "teal" },
-      { to: "/login?name=Sales&role=Customer_Success_Executive&email=", 
-        label: "CS Executive", icon: "fa-solid fa-hand-peace", color: "pink" }
+      
     ]
   },
   {
@@ -263,13 +258,11 @@ const menuAdmin = ref([
     label: "Marketing Management",
     icon: "fas fa-people-arrows",
     subMenus: [
-      { to: "/login?name=Marketing&role=Director&email=Marketing_director@mail.com", 
+      { to: "/login?name=Marketing&role=Director&email=marketing_director@mail.com", 
         label: "Director", icon: "fa-solid fa-crown", color: "gold" },
-      { to: "/login?name=Marketing&role=VP&email=Marketing_vp@hitechsoftsys.net", 
-        label: "VP", icon: "fa-solid fa-star", color: "purple" },
-      { to: "/login?name=Marketing&role=Manager&email=Marketing_manager@hitechsoftsys.net", 
+      { to: "/login?name=Marketing&role=Manager&email=marketing_manager@mail.com", 
         label: "Manager", icon: "fa-solid fa-chart-line", color: "blue" },
-      { to: "/login?name=Marketing&role=Executive&email=Marketing_executive@hitechsoftsys.net", 
+      { to: "/login?name=Marketing&role=Executive&email=marketing_executive@mail.com", 
         label: "Executive", icon: "fa-solid fa-briefcase", color: "green" }
     ]
   },
@@ -280,8 +273,6 @@ const menuAdmin = ref([
     subMenus: [
       { to: "/login?name=Website&role=Director&email=Website_director@hitechsoftsys.net", 
         label: "Director", icon: "fa-solid fa-crown", color: "gold" },
-      { to: "/login?name=Website&role=VP&email=Website_vp@hitechsoftsys.net", 
-        label: "VP", icon: "fa-solid fa-star", color: "purple" },
       { to: "/login?name=Website&role=Manager&email=Website_manager@hitechsoftsys.net", 
         label: "Manager", icon: "fa-solid fa-chart-line", color: "blue" },
       { to:"/login?name=Website&role=Executive&email=Website_executive@hitechsoftsys.net", 

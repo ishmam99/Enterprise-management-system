@@ -401,21 +401,11 @@ const fetchCompanyNames = async () => {
 // === Main Nav ===
 const mainNav = [
   // { to: '/marketing', label: 'Dashboard', icon: 'ri-dashboard-3-line' },
-  { to: '/marketing/email_updates', label: 'Email Updates', icon: 'ri-mail-line' },
   { to: '/marketing/leads/allLeads', label: 'Leads', icon: 'ri-user-search-line' },
   { to: '/marketing/accounts/allAccounts', label: 'Accounts', icon: 'ri-building-line' },
   { to: '/marketing/contact/allContacts', label: 'Contacts', icon: 'ri-contacts-line' },
   { to: '/marketing/deals/allDeals', label: 'Deals', icon: 'ri-shake-hands-line' },
-  { to: '/marketing/proposal/allProposal', label: 'Proposal', icon: 'ri-file-text-line' },
-  { to: '/marketing/contract', label: 'Contracts', icon: 'ri-contract-line' },
-  { to: '/marketing/customer/allCustomers', label: 'Customers', icon: 'ri-building-line' },
-  // { to: '/marketing/projects', label: 'Projects', icon: 'ri-folder-open-line' },
-  { to: '/marketing/timecard', label: 'Timecard', icon: 'ri-folder-open-line' },
-  {
-    to: '/marketing/employees/createEmployee',
-    label: 'Employees',
-    icon: 'ri-folder-open-line'
-  }
+
 ]
 
 // === Reusable: Leads & Accounts & Customers ===

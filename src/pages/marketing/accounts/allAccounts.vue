@@ -198,7 +198,7 @@ onMounted(async () => {
                 >
                   <router-link
                     :to="{
-                      name: 'sales_management-accounts-accountsDetails-id',
+                      name: 'marketing-accounts-accountsDetails-id',
                       params: { id: lead.id },
                       
                     }"

@@ -495,7 +495,7 @@
                 <option :value="50">50</option>
               </select>
             </div>
-            <router-link :to="`/crm/Accounts/createDeal?parent_id=${route.params.id}&company_name=${singleLeads.find((a) => a.field?.name === 'company_name')?.value
+            <router-link :to="`/sales_management/Accounts/createDeal?parent_id=${route.params.id}&company_name=${singleLeads.find((a) => a.field?.name === 'company_name')?.value
               }&parent_company=${singleLeads.find((a) => a.field?.name === 'parent_company')?.value
               }`" class="bg-purple-500 hover:bg-purple-600 text-white px-4 py-2 rounded-lg flex items-center gap-2">
               <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
@@ -551,7 +551,7 @@
                         <div class="text-center">
                           <h3 class="text-xl font-semibold text-gray-700 mb-2">No Deals found</h3>
                           <p class="text-gray-500 mb-4">Get started by creating your first Deals</p>
-                          <router-link :to="`/crm/Accounts/createDeal?parent_id=${route.params.id
+                          <router-link :to="`/sales_management/Accounts/createDeal?parent_id=${route.params.id
                             }&company_name=${singleLeads.find((a) => a.field?.name === 'company_name')?.value
                             }&parent_company=${singleLeads.find((a) => a.field?.name === 'parent_company')?.value
                             }`"
@@ -1025,78 +1025,10 @@ const topGroup = computed(() => {
 })
 
 const bottomGroup = computed(() => {
-  return lead.value?.values?.filter((item) => Number(item.field.order_group) == 1) || []
+  return lead.value?.values?.filter((item) => Number(item.field.order_group) == 0) || []
 })
 
-const bottomGroup2 = computed(() => {
-  return lead.value?.values?.filter((item) => Number(item.field.order_group) == 2) || []
-})
-const bottomGroup3 = computed(() => {
-  return lead.value?.values?.filter((item) => Number(item.field.order_group) == 3) || []
-})
-const bottomGroup4 = computed(() => {
-  return lead.value?.values?.filter((item) => Number(item.field.order_group) == 4) || []
-})
-const bottomGroup5 = computed(() => {
-  return lead.value?.values?.filter((item) => Number(item.field.order_group) == 5) || []
-})
-const bottomGroup6 = computed(() => {
-  return lead.value?.values?.filter((item) => Number(item.field.order_group) == 6) || []
-})
-const bottomGroup7 = computed(() => {
-  return lead.value?.values?.filter((item) => Number(item.field.order_group) == 7) || []
-})
-const bottomGroup8 = computed(() => {
-  return lead.value?.values?.filter((item) => Number(item.field.order_group) == 8) || []
-})
-const bottomGroup9 = computed(() => {
-  return lead.value?.values?.filter((item) => Number(item.field.order_group) == 9) || []
-})
-const bottomGroup10 = computed(() => {
-  return lead.value?.values?.filter((item) => Number(item.field.order_group) == 10) || []
-})
-const bottomGroup11 = computed(() => {
-  return lead.value?.values?.filter((item) => Number(item.field.order_group) == 11) || []
-})
-const bottomGroup12 = computed(() => {
-  return lead.value?.values?.filter((item) => Number(item.field.order_group) == 12) || []
-})
-const bottomGroup13 = computed(() => {
-  return lead.value?.values?.filter((item) => Number(item.field.order_group) == 13) || []
-})
-const bottomGroup14 = computed(() => {
-  return lead.value?.values?.filter((item) => Number(item.field.order_group) == 14) || []
-})
-const bottomGroup15 = computed(() => {
-  return lead.value?.values?.filter((item) => Number(item.field.order_group) == 15) || []
-})
-const bottomGroup16 = computed(() => {
-  return lead.value?.values?.filter((item) => Number(item.field.order_group) == 16) || []
-})
-const bottomGroup18 = computed(() => {
-  return lead.value?.values?.filter((item) => Number(item.field.order_group) == 18) || []
-})
-const bottomGroup19 = computed(() => {
-  return lead.value?.values?.filter((item) => Number(item.field.order_group) == 19) || []
-})
-const bottomGroup20 = computed(() => {
-  return lead.value?.values?.filter((item) => Number(item.field.order_group) == 20) || []
-})
-const bottomGroup21 = computed(() => {
-  return lead.value?.values?.filter((item) => Number(item.field.order_group) == 21) || []
-})
-const bottomGroup22 = computed(() => {
-  return lead.value?.values?.filter((item) => Number(item.field.order_group) == 22) || []
-})
-const bottomGroup23 = computed(() => {
-  return lead.value?.values?.filter((item) => Number(item.field.order_group) == 23) || []
-})
-const bottomGroup24 = computed(() => {
-  return lead.value?.values?.filter((item) => Number(item.field.order_group) == 24) || []
-})
-const bottomGroup25 = computed(() => {
-  return lead.value?.values?.filter((item) => Number(item.field.order_group) == 25) || []
-})
+
 
 const emptyFields = computed(() => {
   const filledFieldIds = lead.value?.values.map((v) => Number(v.field_id)) || []
@@ -1184,154 +1116,11 @@ const emptyBottomGroup25 = computed(() => {
 const sections = computed(() => [
   {
     id: 'rapid',
-    title: 'B. Account: 0_Rapid Actions',
+    title: 'Accopunt Details',
     items: bottomGroup.value || [],
     emptyItems: emptyBottomGroup.value || [],
   },
-  {
-    id: 'rapid-2',
-    title: 'A. Industry & Market Segment',
-    items: bottomGroup2.value || [],
-    emptyItems: emptyBottomGroup2.value || [],
-  },
-  {
-    id: 'rapid-3',
-    title: 'B. Account: 1_Detail Information',
-    items: bottomGroup3.value || [],
-    emptyItems: emptyBottomGroup3.value || [],
-  },
-  {
-    id: 'rapid-4',
-    title: 'C. Account Review Status: 1_Contact Updates',
-    items: bottomGroup4.value || [],
-    emptyItems: emptyBottomGroup4.value || [],
-  },
-  {
-    id: 'rapid-5',
-    title: 'C. Account Review Status: 2_Service Type',
-    items: bottomGroup5.value || [],
-    emptyItems: emptyBottomGroup5.value || [],
-  },
-  {
-    id: 'rapid-6',
-    title: 'C. Account Review Status: 3_Engineering Sector',
-    items: bottomGroup6.value || [],
-    emptyItems: emptyBottomGroup6.value || [],
-  },
-  {
-    id: 'rapid-7',
-    title: 'D. Sales Review Status:1_Software',
-    items: bottomGroup7.value || [],
-    emptyItems: emptyBottomGroup7.value || [],
-  },
-  {
-    id: 'rapid-8',
-    title: 'D. Sales Review Status: 1_Software : Structure',
-    items: bottomGroup8.value || [],
-    emptyItems: emptyBottomGroup8.value || [],
-  },
-  {
-    id: 'rapid-9',
-    title: 'D. Sales Review Status: 1_Software: SystemDynamics',
-    items: bottomGroup9.value || [],
-    emptyItems: emptyBottomGroup9.value || [],
-  },
-  {
-    id: 'rapid-10',
-    title: 'D. Sales Review Status: 1_Software :Acoustics',
-    items: bottomGroup10.value || [],
-    emptyItems: emptyBottomGroup10.value || [],
-  },
-  {
-    id: 'rapid-11',
-    title: 'D. Sales Review Status: 1_Software : Fluids',
-    items: bottomGroup11.value || [],
-    emptyItems: emptyBottomGroup11.value || [],
-  },
-  {
-    id: 'rapid-12',
-    title: 'D. Sales Review Status: 1_Software : Autonomous',
-    items: bottomGroup12.value || [],
-    emptyItems: emptyBottomGroup12.value || [],
-  },
-  {
-    id: 'rapid-13',
-    title: 'D. Sales Review Status: 1_Software : VM&C',
-    items: bottomGroup13.value || [],
-    emptyItems: emptyBottomGroup13.value || [],
-  },
-  {
-    id: 'rapid-14',
-    title: 'D. Sales Review Status: 1_SoftwareICME (Materials)',
-    items: bottomGroup14.value || [],
-    emptyItems: emptyBottomGroup14.value || [],
-  },
-  {
-    id: 'rapid-15',
-    title: 'D. Sales Review Status: 2_Engg Service: Design',
-    items: bottomGroup15.value || [],
-    emptyItems: emptyBottomGroup15.value || [],
-  },
-  {
-    id: 'rapid-16',
-    title: 'D. Sales Review Status: 2_Engg Service : Analysis',
-    items: bottomGroup16.value || [],
-    emptyItems: emptyBottomGroup16.value || [],
-  },
-  // {
-  //   id: 'rapid-17',
-  //   title: '',
-  //   items: bottomGroup17.value || [],
-  //   emptyItems: emptyBottomGroup17.value || [],
-  // },
-  {
-    id: 'rapid-18',
-    title: 'D. Sales Review Status: 3_Training',
-    items: bottomGroup18.value || [],
-    emptyItems: emptyBottomGroup18.value || [],
-  },
-  {
-    id: 'rapid-19',
-    title: 'E. Contacts Details: 1_Accounts',
-    items: bottomGroup19.value || [],
-    emptyItems: emptyBottomGroup19.value || [],
-  },
-  {
-    id: 'rapid-20',
-    title: 'E. Contacts Details: 1_Vendor',
-    items: bottomGroup20.value || [],
-    emptyItems: emptyBottomGroup20.value || [],
-  },
-  {
-    id: 'rapid-21',
-    title: 'F. Sales Action: 1_General Activity',
-    items: bottomGroup21.value || [],
-    emptyItems: emptyBottomGroup21.value || [],
-  },
-  {
-    id: 'rapid-22',
-    title: 'F. Sales Action: 2_Sales Executive Activity',
-    items: bottomGroup22.value || [],
-    emptyItems: emptyBottomGroup22.value || [],
-  },
-  {
-    id: 'rapid-23',
-    title: 'F. Sales Action: 3_Senior Sales Activity',
-    items: bottomGroup23.value || [],
-    emptyItems: emptyBottomGroup23.value || [],
-  },
-  {
-    id: 'rapid-24',
-    title: 'F. Sales Action: 4_VIP Sales Activity',
-    items: bottomGroup24.value || [],
-    emptyItems: emptyBottomGroup24.value || [],
-  },
-  {
-    id: 'rapid-25',
-    title: 'G. Competitor Analysis: CS User List -3DS',
-    items: bottomGroup25.value || [],
-    emptyItems: emptyBottomGroup25.value || [],
-  },
+  
 ])
 
 const convertToCustomer = async () => {
