@@ -19,10 +19,10 @@
         {{lead?.values.find((e) => e.field?.name == 'company_name')?.value || 'N/A'}}
       </div>
 
-      <ul class="space-y-1">
-        <li v-for="(item, index) in sidebarItems" :key="index" class="transition-all duration-200">
+      <ul class="space-y-1.5">
+        <li v-for="(item, index) in sidebarItems" :key="index" class="transition-all border shadow rounded-lg duration-200">
           <button
-            class="w-full text-left hover:px-2 py-2 rounded-lg flex items-center justify-between hover:bg-slate-700/70"
+            class="w-full text-left hover:px-2 py-2 rounded-lg flex px-2 items-center justify-between hover:bg-slate-700/70"
             :class="{ 'bg-blue-600 text-white px-2 shadow-md': activeSidebar === item.key }"
             @click="scrollToSection(item.key)">
             <span>{{ item.label }}</span>
@@ -468,6 +468,7 @@
             </div>
           </div>
         </section>
+
         <!-- Email Section -->
         <section id="email"
           class="bg-pink-100/70 shadow-sm rounded-lg p-6 w-full border border-gray-200 transition-all duration-300 hover:shadow-md">
@@ -480,7 +481,7 @@
                     d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                 </svg>
               </div>
-              Email
+              Marketing Email
             </h2>
 
             <div @click="addEmail"
@@ -489,7 +490,7 @@
                 stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
               </svg>
-              {{ emailShowForm ? 'Cancel' : 'Add Email' }}
+              {{ emailShowForm ? 'Cancel' : 'Add Marketing Email' }}
             </div>
           </div>
 
@@ -626,7 +627,7 @@
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                     :d="emailShowForm ? 'M6 18L18 6M6 6l12 12' : 'M12 4v16m8-8H4'" />
                 </svg>
-                {{ emailShowForm ? 'Cancel' : 'Add Email' }}
+                {{ emailShowForm ? 'Cancel' : 'Add Marketing Email' }}
               </div>
             </div>
           </div>
@@ -643,7 +644,7 @@
                     d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                 </svg>
               </div>
-              Phone
+              Marketing Phone
             </h2>
 
             <div @click="addPhone"
@@ -652,7 +653,7 @@
                 stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
               </svg>
-              {{ phoneShowForm ? 'Cancel' : 'Add Phone' }}
+              {{ phoneShowForm ? 'Cancel' : 'Add Marketing Phone' }}
             </div>
           </div>
 
@@ -707,7 +708,7 @@
                               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M12 4v16m8-8H4" />
                             </svg>
-                            Add Phone
+                            Add Marketing Phone
                           </div>
                         </div>
                       </div>
@@ -794,6 +795,7 @@
             </div>
           </div>
         </section>
+
         <!-- Notes Section -->
         <section id="notes"
           class="bg-cyan-100/70 shadow-sm rounded-lg p-6 w-full border border-gray-200 transition-all duration-300 hover:shadow-md">
@@ -1409,8 +1411,8 @@ const sidebarItems = [
   { key: 'overview', label: 'Company Details' },
   { key: 'rapid', label: 'Account Details' },
   { key: 'Marketing-Notes', label: 'Marketing Notes' },
-  { key: 'email', label: 'Email' },
-  { key: 'phone', label: 'Phone' },
+  { key: 'email', label: 'Marketing Email' },
+  { key: 'phone', label: 'Marketing Phone' },
   { key: 'notes', label: 'Notes' },
   { key: 'deals', label: 'Deals' },
   { key: 'contacts', label: 'Contacts' }

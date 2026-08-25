@@ -435,6 +435,7 @@
 
             <!-- All Sections Content -->
       <main class="px-8 pb-10 flex-1 space-y-6">
+
          <!--Marketing Notes Section -->
         <section id="Marketing-Notes"
           class="bg-orange-100/70 shadow-sm rounded-lg p-6 w-full border border-gray-200 transition-all duration-300 hover:shadow-md">
@@ -594,6 +595,333 @@
                     :d="showForm ? 'M6 18L18 6M6 6l12 12' : 'M12 4v16m8-8H4'" />
                 </svg>
                 {{ showForm ? 'Cancel' : 'Add Notes' }}
+              </div>
+            </div>
+          </div>
+        </section>
+
+                <!-- Email Section -->
+        <section id="email"
+          class="bg-pink-100/70 shadow-sm rounded-lg p-6 w-full border border-gray-200 transition-all duration-300 hover:shadow-md">
+          <div class="flex items-start justify-between">
+            <h2 class="text-xl font-semibold mb-4 flex items-center text-gray-800">
+              <div class="bg-blue-100 p-2 rounded-lg mr-3">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-600" fill="none" viewBox="0 0 24 24"
+                  stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                </svg>
+              </div>
+              Marketing Email
+            </h2>
+
+            <div @click="addEmail"
+              class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg flex items-center gap-2 cursor-pointer">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+              </svg>
+              {{ emailShowForm ? 'Cancel' : 'Add Marketing Email' }}
+            </div>
+          </div>
+
+          <!-- Email list (show when form hidden) -->
+          <div v-if="!emailShowForm" class="space-y-3 text-sm bg-gray-50 p-5 rounded-lg border border-gray-100">
+            <div v-if="emailLoading" class="flex justify-center items-center py-16">
+              <div class="animate-spin rounded-full h-10 w-10 border-4 border-yellow-500 border-t-transparent"></div>
+            </div>
+
+            <!-- Table -->
+            <div v-else class="overflow-x-auto">
+              <table class="min-w-full divide-y divide-gray-200 table-zebra">
+                <thead class="bg-gradient-to-r from-emerald-50 to-teal-50">
+                  <tr>
+                    <th class="px-6 py-4 text-left border-x font-bold text-emerald-700 uppercase tracking-wider">
+                      #
+                    </th>
+                    <th v-for="field in emailFieldsData" :key="field.id"
+                      class="px-6 py-4 text-left text-xs border-e font-bold text-emerald-700 uppercase tracking-wider">
+                      {{ field.name }}
+                    </th>
+                  </tr>
+                </thead>
+                <tbody class="bg-white divide-y divide-gray-100">
+                  <tr v-if="emailLoading" class="hover:bg-emerald-50 transition-colors">
+                    <td colspan="16" class="px-6 py-8 text-center text-gray-500">
+                      <div class="flex items-center justify-center gap-3">
+                        <Icon name="eos-icons:loading" class="w-8 h-8 text-emerald-500 animate-spin" />
+                        <span class="text-lg">Loading Emails...</span>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr v-else-if="emailData?.length == 0" class="hover:bg-emerald-50 transition-colors">
+                    <td colspan="16" class="px-6 py-12 text-center text-gray-500">
+                      <div class="flex flex-col items-center gap-4">
+                        <div class="relative">
+                          <div class="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center">
+                            <Icon name="material-symbols:person" class="w-12 h-12 text-gray-400" />
+                          </div>
+                          <div
+                            class="absolute -bottom-2 -right-2 w-8 h-8 bg-emerald-100 rounded-full flex items-center justify-center">
+                            <Icon name="material-symbols:settings" class="w-5 h-5 text-emerald-600" />
+                          </div>
+                        </div>
+                        <div class="text-center">
+                          <h3 class="text-xl font-semibold text-gray-700 mb-2">No Emails found</h3>
+                          <p class="text-gray-500 mb-4">Get started by creating your first Email</p>
+                          <div @click="addEmail"
+                            class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg flex items-center justify-center gap-2 cursor-pointer">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                              stroke="currentColor">
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 4v16m8-8H4" />
+                            </svg>
+                            Add Email
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr v-else v-for="(lead, index) in emailData" :key="lead.id"
+                    class="hover:bg-gradient-to-r hover:from-emerald-50 hover:to-teal-50 transition-all duration-300">
+                    <td class="px-6 py-4 whitespace-nowrap">
+                      {{ index + 1 }}
+                    </td>
+                    <td v-for="field in emailFieldsData" :key="field.id"
+                      class="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-medium">
+                      <router-link :to="{
+                        name: 'marketing-accounts-accountsDetails-id',
+                        params: { id: lead.id }
+                      }" class="hover:underline">
+                        {{lead.values.find((e) => e.field_id == field.id)?.value}}
+                      </router-link>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Email Create Form -->
+          <div v-else
+            class="w-full bg-white/60 backdrop-blur-lg rounded-2xl shadow-2xl border border-white/40 p-8 transition-transform duration-300 hover:scale-[1.001]">
+            <h2
+              class="text-4xl font-bold mb-8 text-center text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 via-blue-500 to-pink-500 tracking-tight">
+              ✨ Create New Email
+            </h2>
+
+            <div class="w-full gap-6">
+              <div v-for="field in emailFieldsData" :key="field.id"
+                class="flex flex-col bg-white/40 border border-slate-200 rounded-xl p-4 shadow-sm hover:shadow-md transition-all">
+                <label class="block font-semibold mb-2 text-gray-700">
+                  {{ field.label }}
+                </label>
+
+                <input v-if="['text', 'email', 'number'].includes(field.type)" v-model="emailForm[field.name]"
+                  :type="field.type"
+                  class="border border-slate-300 rounded-lg p-2 py-6 w-full focus:ring-2 focus:ring-indigo-400 focus:border-indigo-400 transition-all outline-none"
+                  :placeholder="`Enter ${field.label}`" />
+
+                <input v-else-if="field.type === 'date'" v-model="emailForm[field.name]" type="date"
+                  class="border border-slate-300 rounded-lg p-2 py-6 w-full focus:ring-2 focus:ring-indigo-400 focus:border-indigo-400 transition-all outline-none" />
+
+                <select v-else-if="field.type === 'select'" v-model="emailForm[field.name]"
+                  class="border border-slate-300 rounded-lg p-2 w-full focus:ring-2 focus:ring-indigo-400 focus:border-indigo-400 transition-all outline-none bg-white">
+                  <option value="" disabled selected>Select {{ field.label }}</option>
+                  <option v-for="opt in field.options" :key="opt" :value="opt" class="capitalize">
+                    {{ opt }}
+                  </option>
+                </select>
+              </div>
+            </div>
+
+            <div class="flex items-center justify-center gap-4 my-4">
+              <button :disabled="emailLoading"
+                class="bg-gradient-to-r from-blue-600 to-indigo-600 w-1/4 text-white px-6 py-3 rounded-lg shadow-md hover:shadow-xl hover:scale-[1.02] transition-all disabled:opacity-70 flex items-center justify-center gap-2"
+                @click="saveEmailRecord">
+                <span v-if="emailLoading" class="flex items-center gap-2">
+                  <svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none"
+                    viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" />
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" />
+                  </svg>
+                  Saving...
+                </span>
+                <span v-else>Save</span>
+              </button>
+
+              <div @click="addEmail"
+                class="px-6 py-3 rounded-lg flex items-center w-1/4 justify-center gap-2 cursor-pointer text-white font-medium shadow-md hover:shadow-lg transition-all"
+                :class="emailShowForm ? 'bg-red-500 hover:bg-red-600' : 'bg-blue-500 hover:bg-blue-600'">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                  stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    :d="emailShowForm ? 'M6 18L18 6M6 6l12 12' : 'M12 4v16m8-8H4'" />
+                </svg>
+                {{ emailShowForm ? 'Cancel' : 'Add Marketing Email' }}
+              </div>
+            </div>
+          </div>
+        </section>
+        <!-- Phone Section -->
+        <section id="phone"
+          class="bg-yellow-100/70 shadow-sm rounded-lg p-6 w-full border border-gray-200 transition-all duration-300 hover:shadow-md">
+          <div class="flex items-start justify-between">
+            <h2 class="text-xl font-semibold mb-4 flex items-center text-gray-800">
+              <div class="bg-blue-100 p-2 rounded-lg mr-3">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-600" fill="none" viewBox="0 0 24 24"
+                  stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                </svg>
+              </div>
+              Marketing Phone
+            </h2>
+
+            <div @click="addPhone"
+              class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg flex items-center gap-2 cursor-pointer">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+              </svg>
+              {{ phoneShowForm ? 'Cancel' : 'Add Marketing Phone' }}
+            </div>
+          </div>
+
+          <!-- Phone list (show when form hidden) -->
+          <div v-if="!phoneShowForm" class="space-y-3 text-sm bg-gray-50 p-5 rounded-lg border border-gray-100">
+            <div v-if="phoneLoading" class="flex justify-center items-center py-16">
+              <div class="animate-spin rounded-full h-10 w-10 border-4 border-yellow-500 border-t-transparent"></div>
+            </div>
+
+            <!-- Table -->
+            <div v-else class="overflow-x-auto">
+              <table class="min-w-full divide-y divide-gray-200 table-zebra">
+                <thead class="bg-gradient-to-r from-emerald-50 to-teal-50">
+                  <tr>
+                    <th class="px-6 py-4 text-left border-x font-bold text-emerald-700 uppercase tracking-wider">
+                      #
+                    </th>
+                    <th v-for="field in phoneFieldsData" :key="field.id"
+                      class="px-6 py-4 text-left text-xs border-e font-bold text-emerald-700 uppercase tracking-wider">
+                      {{ field.name }}
+                    </th>
+                  </tr>
+                </thead>
+                <tbody class="bg-white divide-y divide-gray-100">
+                  <tr v-if="phoneLoading" class="hover:bg-emerald-50 transition-colors">
+                    <td colspan="16" class="px-6 py-8 text-center text-gray-500">
+                      <div class="flex items-center justify-center gap-3">
+                        <Icon name="eos-icons:loading" class="w-8 h-8 text-emerald-500 animate-spin" />
+                        <span class="text-lg">Loading Phones...</span>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr v-else-if="phoneData?.length == 0" class="hover:bg-emerald-50 transition-colors">
+                    <td colspan="16" class="px-6 py-12 text-center text-gray-500">
+                      <div class="flex flex-col items-center gap-4">
+                        <div class="relative">
+                          <div class="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center">
+                            <Icon name="material-symbols:person" class="w-12 h-12 text-gray-400" />
+                          </div>
+                          <div
+                            class="absolute -bottom-2 -right-2 w-8 h-8 bg-emerald-100 rounded-full flex items-center justify-center">
+                            <Icon name="material-symbols:settings" class="w-5 h-5 text-emerald-600" />
+                          </div>
+                        </div>
+                        <div class="text-center">
+                          <h3 class="text-xl font-semibold text-gray-700 mb-2">No Phones found</h3>
+                          <p class="text-gray-500 mb-4">Get started by creating your first Phone</p>
+                          <div @click="addPhone"
+                            class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg flex items-center justify-center gap-2 cursor-pointer">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                              stroke="currentColor">
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 4v16m8-8H4" />
+                            </svg>
+                            Add Marketing Phone
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr v-else v-for="(lead, index) in phoneData" :key="lead.id"
+                    class="hover:bg-gradient-to-r hover:from-emerald-50 hover:to-teal-50 transition-all duration-300">
+                    <td class="px-6 py-4 whitespace-nowrap">
+                      {{ index + 1 }}
+                    </td>
+                    <td v-for="field in phoneFieldsData" :key="field.id"
+                      class="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-medium">
+                      <router-link :to="{
+                        name: 'marketing-accounts-accountsDetails-id',
+                        params: { id: lead.id }
+                      }" class="hover:underline">
+                        {{lead.values.find((e) => e.field_id == field.id)?.value}}
+                      </router-link>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Phone Create Form -->
+          <div v-else
+            class="w-full bg-white/60 backdrop-blur-lg rounded-2xl shadow-2xl border border-white/40 p-8 transition-transform duration-300 hover:scale-[1.001]">
+            <h2
+              class="text-4xl font-bold mb-8 text-center text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 via-blue-500 to-pink-500 tracking-tight">
+              ✨ Create New Phone
+            </h2>
+
+            <div class="w-full gap-6">
+              <div v-for="field in phoneFieldsData" :key="field.id"
+                class="flex flex-col bg-white/40 border border-slate-200 rounded-xl p-4 shadow-sm hover:shadow-md transition-all">
+                <label class="block font-semibold mb-2 text-gray-700">
+                  {{ field.label }}
+                </label>
+
+                <input v-if="['text', 'email', 'number'].includes(field.type)" v-model="phoneForm[field.name]"
+                  :type="field.type"
+                  class="border border-slate-300 rounded-lg p-2 py-6 w-full focus:ring-2 focus:ring-indigo-400 focus:border-indigo-400 transition-all outline-none"
+                  :placeholder="`Enter ${field.label}`" />
+
+                <input v-else-if="field.type === 'date'" v-model="phoneForm[field.name]" type="date"
+                  class="border border-slate-300 rounded-lg p-2 py-6 w-full focus:ring-2 focus:ring-indigo-400 focus:border-indigo-400 transition-all outline-none" />
+
+                <select v-else-if="field.type === 'select'" v-model="phoneForm[field.name]"
+                  class="border border-slate-300 rounded-lg p-2 w-full focus:ring-2 focus:ring-indigo-400 focus:border-indigo-400 transition-all outline-none bg-white">
+                  <option value="" disabled selected>Select {{ field.label }}</option>
+                  <option v-for="opt in field.options" :key="opt" :value="opt" class="capitalize">
+                    {{ opt }}
+                  </option>
+                </select>
+              </div>
+            </div>
+
+            <div class="flex items-center justify-center gap-4 my-4">
+              <button :disabled="phoneLoading"
+                class="bg-gradient-to-r from-blue-600 to-indigo-600 w-1/4 text-white px-6 py-3 rounded-lg shadow-md hover:shadow-xl hover:scale-[1.02] transition-all disabled:opacity-70 flex items-center justify-center gap-2"
+                @click="savePhoneRecord">
+                <span v-if="phoneLoading" class="flex items-center gap-2">
+                  <svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none"
+                    viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" />
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" />
+                  </svg>
+                  Saving...
+                </span>
+                <span v-else>Save</span>
+              </button>
+
+              <div @click="addPhone"
+                class="px-6 py-3 rounded-lg flex items-center w-1/4 justify-center gap-2 cursor-pointer text-white font-medium shadow-md hover:shadow-lg transition-all"
+                :class="phoneShowForm ? 'bg-red-500 hover:bg-red-600' : 'bg-blue-500 hover:bg-blue-600'">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                  stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    :d="phoneShowForm ? 'M6 18L18 6M6 6l12 12' : 'M12 4v16m8-8H4'" />
+                </svg>
+                {{ phoneShowForm ? 'Cancel' : 'Add Phone' }}
               </div>
             </div>
           </div>
@@ -1426,6 +1754,8 @@ const saveNewValue = async (field) => {
 const sidebarItems = [
   { key: 'overview', label: 'Company Details' },
   { key: 'Marketing-Notes', label: 'Marketing Notes' },
+    { key: 'email', label: 'Marketing Email' },
+  { key: 'phone', label: 'Marketing Phone' },
   { key: 'notes', label: 'Notes' },
   { key: 'nextStep', label: 'Next Step Summary' },
   { key: 'contacts', label: 'Contacts' }
@@ -1804,6 +2134,157 @@ const deleteRecord = async () => {
   }
 }
 
+
+// Email Module (ID: 10)
+const emailFieldsData = ref(null)
+const emailData = ref([])
+const emailShowForm = ref(false)
+const emailForm = ref({})
+const emailLoading = ref(false)
+
+const fetchEmailFields = async () => {
+  emailLoading.value = true
+  try {
+    const { data } = await api().get(`/crm/modules/10/fields`)
+    emailFieldsData.value = data.data || []
+  } catch (err) {
+    console.error(err)
+    alert('Failed to fetch email fields')
+  } finally {
+    emailLoading.value = false
+  }
+}
+
+const fetchEmails = async () => {
+  try {
+    emailLoading.value = true
+    const { data } = await api().get(`/crm/record-child-get/${route.params.id}/Leads-Email`)
+    emailData.value = data.data
+  } catch (error) {
+    console.error('Failed to fetch emails:', error)
+    showToast('Failed to fetch emails', 'error')
+  } finally {
+    emailLoading.value = false
+  }
+}
+
+const addEmail = () => {
+  emailShowForm.value = !emailShowForm.value
+}
+
+const saveEmailRecord = async () => {
+  emailLoading.value = true
+  try {
+    const payload = emailFieldsData.value.map((field) => ({
+      field_id: field.id,
+      value: emailForm.value[field.name] || null
+    }))
+    const dateField = emailFieldsData.value.find((f) => f.type === 'date')
+    // if (dateField) {
+    //   payload.push({
+    //     field_id: dateField.id,
+    //     value: new Date().toISOString().split('T')[0]
+    //   })
+    // }
+
+    const { data } = await api().post(`/crm/modules/10/records`, {
+      fields: payload
+    })
+
+    if (data) {
+      await api().post(`/crm/record-child-create`, {
+        parent_record_id: parent_id,
+        child_record_id: data.id
+      })
+    }
+    showToast('Email record created successfully!')
+    emailShowForm.value = false
+    await fetchEmailFields()
+    await fetchEmails()
+    emailForm.value = {}
+  } catch (err) {
+    console.error(err)
+    alert('Failed to create email record')
+  } finally {
+    emailLoading.value = false
+  }
+}
+
+// Phone Module (ID: 11)
+const phoneFieldsData = ref(null)
+const phoneData = ref([])
+const phoneShowForm = ref(false)
+const phoneForm = ref({})
+const phoneLoading = ref(false)
+
+const fetchPhoneFields = async () => {
+  phoneLoading.value = true
+  try {
+    const { data } = await api().get(`/crm/modules/11/fields`)
+    phoneFieldsData.value = data.data || []
+  } catch (err) {
+    console.error(err)
+    alert('Failed to fetch phone fields')
+  } finally {
+    phoneLoading.value = false
+  }
+}
+
+const fetchPhones = async () => {
+  try {
+    phoneLoading.value = true
+    const { data } = await api().get(`/crm/record-child-get/${route.params.id}/Leads-Phone`)
+    phoneData.value = data.data
+  } catch (error) {
+    console.error('Failed to fetch phones:', error)
+    showToast('Failed to fetch phones', 'error')
+  } finally {
+    phoneLoading.value = false
+  }
+}
+
+const addPhone = () => {
+  phoneShowForm.value = !phoneShowForm.value
+}
+
+const savePhoneRecord = async () => {
+  phoneLoading.value = true
+  try {
+    const payload = phoneFieldsData.value.map((field) => ({
+      field_id: field.id,
+      value: phoneForm.value[field.name] || null
+    }))
+    const dateField = phoneFieldsData.value.find((f) => f.type === 'date')
+    if (dateField) {
+      payload.push({
+        field_id: dateField.id,
+        value: new Date().toISOString().split('T')[0]
+      })
+    }
+
+    const { data } = await api().post(`/crm/modules/11/records`, {
+      fields: payload
+    })
+
+    if (data) {
+      await api().post(`/crm/record-child-create`, {
+        parent_record_id: parent_id,
+        child_record_id: data.id
+      })
+    }
+    showToast('Phone record created successfully!')
+    phoneShowForm.value = false
+    await fetchPhoneFields()
+    await fetchPhones()
+    phoneForm.value = {}
+  } catch (err) {
+    console.error(err)
+    alert('Failed to create phone record')
+  } finally {
+    phoneLoading.value = false
+  }
+}
+
 onMounted(() => {
   fetchLead()
   fetchFields()
@@ -1816,6 +2297,10 @@ onMounted(() => {
   fetchNotesFields2()
     fetchMarketingNotesFields()
   fetchMarketingNotes()
+    fetchEmailFields()
+  fetchEmails()
+  fetchPhoneFields()
+  fetchPhones()
   if (route.hash) {
     const sectionId = route.hash.replace('#', '')
     setTimeout(() => {
