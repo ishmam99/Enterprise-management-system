@@ -8,9 +8,8 @@
           <p class="text-blue-600 text-lg">Track your marketing performance and manage leads effectively</p>
         </div>
         <div class="text-right">
-          <!-- <p class="text-3xl font-bold text-slate-700 capitalize">{{ authStore?.user?.name ? authStore?.user?.name : 'Sales' }}, 
-            {{ authStore?.role == 'manager-cs' ? 'Customer Success Manager' : authStore?.role == 'executive-cs' ? 'Customer Success Executive' : authStore?.role }}</p> -->
-          <p class="text-3xl font-bold text-slate-700 capitalize">Marketing Director, 
+          <p class="text-3xl font-bold text-slate-700 capitalize">{{ authStore?.user?.name ? authStore?.user?.name : 'Admin' }}</p>
+          <p class="text-3xl font-bold text-slate-700 capitalize">
             <!-- {{ authStore?.role == 'manager-cs' ? 'Customer Success Manager' : authStore?.role == 'executive-cs' ? 'Customer Success Executive' : authStore?.role }} -->
           </p>
           <p class="text-blue-600">Welcome back!</p>
